@@ -7,22 +7,19 @@ import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
 import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.entity.User;
 import com.depromeet.archive.domain.user.info.UserInfo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserReader userReader;
-
-    @Autowired
-    private UserStore userStore;
-
-    @Autowired
-    private StringEncryptor encryptor;
+    private final UserReader userReader;
+    private final UserStore userStore;
+    private final StringEncryptor encryptor;
 
     public long updateNonCredentialUser(BasicRegisterCommand registerInfo) {
         try {
