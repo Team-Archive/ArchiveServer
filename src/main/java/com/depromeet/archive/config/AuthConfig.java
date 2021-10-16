@@ -7,6 +7,7 @@ import com.depromeet.archive.security.oauth.UserPrincipalConverter;
 import com.depromeet.archive.security.oauth.converter.KakaoPrincipalConverter;
 import com.depromeet.archive.security.token.JwtTokenProvider;
 import com.depromeet.archive.security.token.JwtTokenSupport;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,12 +16,14 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
+@RequiredArgsConstructor
 public class AuthConfig {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
     @Value("${jwt.secret-key}")
     private String secretKey;
+
     @Bean
     public UserNamePasswordAuthenticationProvider directLoginProvider() {
         return new UserNamePasswordAuthenticationProvider(userService);
