@@ -11,5 +11,4 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BasicRegisterCommand {
     private String mailAddress;
-    private String userName;
 }

@@ -30,10 +30,6 @@ public class User {
     private UserRole role;
 
     @NonNull
-    @Column(name = "user_name")
-    private String userName;
-
-    @NonNull
     @Embedded
     private UserCredential credential;
 
@@ -44,15 +40,15 @@ public class User {
     }
 
     public UserInfo getUserInfo() {
-        return new UserInfo(mailAddress, role, userId, userName);
+        return new UserInfo(mailAddress, role, userId);
     }
 
     public static User fromRegisterCommand(BasicRegisterCommand request) {
-        return new User(request.getMailAddress(), UserRole.GENERAL, request.getUserName(), new UserCredential("", false));
+        return new User(request.getMailAddress(), UserRole.GENERAL, new UserCredential("", false));
     }
 
     public static User fromCredentialRegisterCommand(CredentialRegisterCommand credentialRegisterCommand) {
-        return new User(credentialRegisterCommand.getMailAddress(), UserRole.GENERAL, credentialRegisterCommand.getUserName(),
+        return new User(credentialRegisterCommand.getMailAddress(), UserRole.GENERAL,
                 new UserCredential(credentialRegisterCommand.getCredential(), true));
     }
 }

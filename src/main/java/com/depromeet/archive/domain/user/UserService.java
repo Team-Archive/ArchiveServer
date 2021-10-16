@@ -24,6 +24,15 @@ public class UserService {
     @Autowired
     private StringEncryptor encryptor;
 
+    public boolean checkEmailDuplicate(String email) {
+        try {
+            userReader.findUserByMail(email);
+            return true;
+        } catch (ResourceNotFoundException e) {
+            return false;
+        }
+    }
+
     public long updateNonCredentialUser(BasicRegisterCommand registerInfo) {
         try {
             User foundUser = userReader.findUserByMail(registerInfo.getMailAddress());
@@ -44,22 +53,13 @@ public class UserService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void registerUser(CredentialRegisterCommand command) {
-        if (isDuplicateUser(command))
+        if (checkEmailDuplicate(command.getMailAddress()))
             throw new DuplicateResourceException("이미 가입된 메일입니다: " + command.getMailAddress());
         String unencryptedPassword = command.getCredential();
         String encrypted = encryptor.encrypt(unencryptedPassword);
         command.setCredential(encrypted);
         User user = User.fromCredentialRegisterCommand(command);
         userStore.saveUser(user);
-    }
-
-    private boolean isDuplicateUser(BasicRegisterCommand command) {
-        try {
-            userReader.findUserByMail(command.getMailAddress());
-            return true;
-        } catch (ResourceNotFoundException e) {
-            return false;
-        }
     }
 
     public void deleteUser(long userId) {

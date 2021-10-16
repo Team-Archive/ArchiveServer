@@ -4,7 +4,7 @@ import com.depromeet.archive.common.exception.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.security.exception.WrappingAuthenticationException;
-import com.depromeet.archive.security.vo.UserPrincipal;
+import com.depromeet.archive.security.common.UserPrincipal;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -40,7 +40,7 @@ public class OAuthUserService extends DefaultOAuth2UserService {
     }
 
     private void registerOrUpdateUser(UserPrincipal principal) {
-        BasicRegisterCommand registerCommand = new BasicRegisterCommand(principal.getName(), principal.getUserName());
+        BasicRegisterCommand registerCommand = new BasicRegisterCommand(principal.getName());
         long userId = userService.updateNonCredentialUser(registerCommand);
         principal.setUserId(userId);
     }

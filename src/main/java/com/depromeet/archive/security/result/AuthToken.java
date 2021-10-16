@@ -1,12 +1,10 @@
-package com.depromeet.archive.security.vo;
+package com.depromeet.archive.security.result;
 
 import com.depromeet.archive.domain.user.entity.UserRole;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

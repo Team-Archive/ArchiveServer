@@ -3,7 +3,7 @@ package com.depromeet.archive.security.oauth.converter;
 
 import com.depromeet.archive.domain.user.entity.UserRole;
 import com.depromeet.archive.security.oauth.UserPrincipalConverter;
-import com.depromeet.archive.security.vo.UserPrincipal;
+import com.depromeet.archive.security.common.UserPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Map;

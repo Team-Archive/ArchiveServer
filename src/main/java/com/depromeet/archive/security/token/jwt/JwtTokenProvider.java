@@ -1,9 +1,9 @@
-package com.depromeet.archive.security.token;
+package com.depromeet.archive.security.token.jwt;
 
 
 import com.depromeet.archive.domain.user.entity.UserRole;
-import com.depromeet.archive.security.login.TokenProvider;
-import com.depromeet.archive.security.vo.AuthToken;
+import com.depromeet.archive.security.token.TokenProvider;
+import com.depromeet.archive.security.result.AuthToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

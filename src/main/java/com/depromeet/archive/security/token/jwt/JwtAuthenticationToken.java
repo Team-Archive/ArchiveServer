@@ -1,8 +1,7 @@
-package com.depromeet.archive.security.login;
+package com.depromeet.archive.security.token.jwt;
 
-import com.depromeet.archive.domain.user.entity.UserRole;
-import com.depromeet.archive.security.vo.AuthToken;
-import com.depromeet.archive.security.vo.UserPrincipal;
+import com.depromeet.archive.security.result.AuthToken;
+import com.depromeet.archive.security.common.UserPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
