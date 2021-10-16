@@ -1,11 +1,11 @@
-package com.depromeet.archive.security.login;
+package com.depromeet.archive.security.general;
 
 import com.depromeet.archive.common.exception.BaseException;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.security.exception.WrappingAuthenticationException;
-import com.depromeet.archive.security.vo.UserPrincipal;
+import com.depromeet.archive.security.common.UserPrincipal;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,7 +50,6 @@ public class UserNamePasswordAuthenticationProvider implements AuthenticationPro
                 .userId(loginUser.getUserId())
                 .userRole(loginUser.getUserRole())
                 .mailAddress(loginUser.getMailAddress())
-                .userName(loginUser.getUserName())
                 .build();
         return new UsernamePasswordAuthenticationToken(principal,
                 credential, principal.getAuthorities());

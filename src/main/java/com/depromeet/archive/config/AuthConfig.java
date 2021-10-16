@@ -1,12 +1,16 @@
 package com.depromeet.archive.config;
 
+import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
+import com.depromeet.archive.security.result.LoginSuccessHandler;
+import com.depromeet.archive.security.token.jwt.JwtTokenPersistFilter;
 import com.depromeet.archive.domain.user.UserService;
-import com.depromeet.archive.security.login.*;
+import com.depromeet.archive.security.token.HttpAuthTokenSupport;
+import com.depromeet.archive.security.token.TokenProvider;
 import com.depromeet.archive.security.oauth.OAuthUserService;
 import com.depromeet.archive.security.oauth.UserPrincipalConverter;
 import com.depromeet.archive.security.oauth.converter.KakaoPrincipalConverter;
-import com.depromeet.archive.security.token.JwtTokenProvider;
-import com.depromeet.archive.security.token.JwtTokenSupport;
+import com.depromeet.archive.security.token.jwt.JwtTokenProvider;
+import com.depromeet.archive.security.token.jwt.JwtTokenSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

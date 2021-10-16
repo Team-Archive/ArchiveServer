@@ -1,6 +1,6 @@
-package com.depromeet.archive.security.login;
+package com.depromeet.archive.security.token;
 
-import com.depromeet.archive.security.vo.AuthToken;
+import com.depromeet.archive.security.result.AuthToken;
 
 public interface TokenProvider {
     public String createToken(AuthToken token);

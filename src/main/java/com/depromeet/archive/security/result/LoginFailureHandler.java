@@ -1,4 +1,4 @@
-package com.depromeet.archive.security.login;
+package com.depromeet.archive.security.result;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

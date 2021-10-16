@@ -1,7 +1,7 @@
-package com.depromeet.archive.security.token;
+package com.depromeet.archive.security.token.jwt;
 
 import com.depromeet.archive.security.exception.TokenNotFoundException;
-import com.depromeet.archive.security.login.HttpAuthTokenSupport;
+import com.depromeet.archive.security.token.HttpAuthTokenSupport;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;

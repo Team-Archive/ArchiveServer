@@ -1,4 +1,4 @@
-package com.depromeet.archive.security.vo;
+package com.depromeet.archive.security.common;
 
 import com.depromeet.archive.domain.user.entity.UserRole;
 import lombok.Builder;
@@ -17,17 +17,15 @@ public class UserPrincipal implements OAuth2User {
     private final String mailAddress;
     private long userId;
     private final UserRole userRole;
-    private final String userName;
     private final Map<String, Object> attributes;
     private Collection<GrantedAuthority> authorities = new LinkedList<>();
 
     @Builder
-    public UserPrincipal(String mailAddress, String userName, UserRole userRole, long userId, Map<String, Object> attributes) {
+    public UserPrincipal(String mailAddress, UserRole userRole, long userId, Map<String, Object> attributes) {
         this.mailAddress = mailAddress;
         this.userRole = userRole;
-        this.attributes = attributes;
-        this.userName = userName;
         this.userId = userId;
+        this.attributes = attributes;
         authorities.add(new SimpleGrantedAuthority(userRole.toString()));
     }
 

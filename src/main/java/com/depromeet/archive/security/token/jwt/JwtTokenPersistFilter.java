@@ -1,7 +1,10 @@
-package com.depromeet.archive.security.login;
+package com.depromeet.archive.security.token.jwt;
 
 import com.depromeet.archive.security.exception.TokenNotFoundException;
-import com.depromeet.archive.security.vo.AuthToken;
+import com.depromeet.archive.security.token.HttpAuthTokenSupport;
+import com.depromeet.archive.security.token.TokenProvider;
+import com.depromeet.archive.security.result.AuthToken;
+import com.depromeet.archive.security.token.jwt.JwtAuthenticationToken;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -17,7 +20,6 @@ public class JwtTokenPersistFilter extends HttpFilter {
 
     private final HttpAuthTokenSupport httpTokenExtractor;
     private final TokenProvider tokenProvider;
-
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
