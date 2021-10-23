@@ -11,11 +11,9 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -49,8 +47,7 @@ public class Archive extends BaseTimeEntity {
     @Column(name = "companions")
     private List<String> companions;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "archive_image_id")
+    @OneToMany(mappedBy = "archive", cascade = CascadeType.ALL)
     private List<ArchiveImage> archiveImages;
 
 }
