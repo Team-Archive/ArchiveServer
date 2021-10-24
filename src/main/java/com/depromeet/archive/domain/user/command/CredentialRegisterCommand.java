@@ -13,7 +13,7 @@ public class CredentialRegisterCommand extends BasicRegisterCommand {
     private String credential;
 
     public CredentialRegisterCommand(String userMail, String userName, String credential) {
-        super(userMail, userName);
+        super(userMail);
         this.credential = credential;
     }
 

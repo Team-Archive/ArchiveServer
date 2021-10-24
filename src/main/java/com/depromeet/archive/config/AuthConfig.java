@@ -1,5 +1,7 @@
 package com.depromeet.archive.config;
 
+import com.depromeet.archive.domain.user.StringEncryptor;
+import com.depromeet.archive.infra.user.StringEncryptorMock;
 import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
 import com.depromeet.archive.security.result.LoginSuccessHandler;
 import com.depromeet.archive.security.token.jwt.JwtTokenPersistFilter;
@@ -20,21 +22,19 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-@RequiredArgsConstructor
 public class AuthConfig {
 
-    private final UserService userService;
 
     @Value("${jwt.secret-key}")
     private String secretKey;
 
     @Bean
-    public UserNamePasswordAuthenticationProvider directLoginProvider() {
+    public UserNamePasswordAuthenticationProvider directLoginProvider(UserService userService) {
         return new UserNamePasswordAuthenticationProvider(userService);
     }
 
     @Bean
-    public OAuthUserService oAuthUserService(List<UserPrincipalConverter> converterList)  {
+    public OAuthUserService oAuthUserService(UserService userService, List<UserPrincipalConverter> converterList)  {
         OAuthUserService oAuthUserService =  new OAuthUserService(userService);
         for (UserPrincipalConverter converter : converterList)
             oAuthUserService.addPrincipalConverter(converter);
@@ -64,5 +64,10 @@ public class AuthConfig {
     @Bean
     public JwtTokenPersistFilter tokenPersistFilter() {
         return new JwtTokenPersistFilter(tokenSupport(), tokenProvider());
+    }
+
+    @Bean
+    public StringEncryptor stringEncryptorMock() {
+        return new StringEncryptorMock();
     }
 }
