@@ -1,4 +1,4 @@
-package com.depromeet.archive.domain.archive.entity;
+package com.depromeet.archive.domain.archive;
 
 import com.depromeet.archive.domain.archive.entity.Archive;
 import org.springframework.data.jpa.repository.JpaRepository;
