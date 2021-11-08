@@ -1,8 +1,8 @@
 package com.depromeet.archive.domain.archive.service;
 
 import com.depromeet.archive.controller.dto.archive.ArchiveDto;
+import com.depromeet.archive.domain.archive.ArchiveRepository;
 import com.depromeet.archive.domain.archive.entity.Archive;
-import com.depromeet.archive.domain.archive.entity.ArchiveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
