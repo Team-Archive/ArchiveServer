@@ -1,11 +1,10 @@
 package com.depromeet.archive.config;
 
-import com.depromeet.archive.security.token.jwt.JwtTokenPersistFilter;
-import com.depromeet.archive.security.result.LoginSuccessHandler;
 import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
 import com.depromeet.archive.security.oauth.OAuthUserService;
+import com.depromeet.archive.security.result.LoginSuccessHandler;
+import com.depromeet.archive.security.token.jwt.JwtTokenPersistFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +24,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        // TODO: for using local h2 db -> 추후 로컬/상용 환경 나눠 적용할
+        http
+                .headers().frameOptions().sameOrigin()
+                .and().authorizeRequests().antMatchers("/h2-console/**").permitAll()
+                .and().csrf().disable();
+
         http
                 .formLogin()
                 .loginProcessingUrl("/auth/login")
