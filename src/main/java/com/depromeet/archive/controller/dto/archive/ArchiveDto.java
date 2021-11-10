@@ -2,6 +2,9 @@ package com.depromeet.archive.controller.dto.archive;
 
 import com.depromeet.archive.domain.archive.entity.Archive;
 import com.depromeet.archive.domain.archive.entity.Emotion;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,7 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
+@JsonInclude(Include.NON_NULL)
 public class ArchiveDto {
 
     private final Long archiveId;
@@ -20,11 +24,10 @@ public class ArchiveDto {
     private final List<String> companions;
     private final List<ArchiveImageDto> images;
 
-    public static ArchiveDto from(Archive archive) {
+    public static ArchiveDto specificFrom(Archive archive) {
         var archiveImages = archive.getArchiveImages().stream()
                 .map(ArchiveImageDto::from)
                 .collect(Collectors.toList());
-
         return ArchiveDto.builder()
                 .archiveId(archive.getId())
                 .name(archive.getName())
@@ -33,6 +36,17 @@ public class ArchiveDto {
                 .mainImage(archive.getMainImage())
                 .companions(archive.getCompanions())
                 .images(archiveImages)
+                .build();
+    }
+
+    public static ArchiveDto simpleFrom(Archive archive) {
+        return ArchiveDto.builder()
+                .archiveId(archive.getId())
+                .name(archive.getName())
+                .watchedOn(archive.getWatchedOn())
+                .emotion(archive.getEmotion())
+                .companions(archive.getCompanions())
+                .mainImage(archive.getMainImage())
                 .build();
     }
 
