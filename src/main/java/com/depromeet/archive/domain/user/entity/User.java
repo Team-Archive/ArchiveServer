@@ -12,7 +12,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Getter
 @Entity
-@Table(name = "user_info")
+@Table(name = "user")
 @Access(AccessType.FIELD)
 public class User {
 
