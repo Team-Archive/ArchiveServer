@@ -1,6 +1,5 @@
 package com.depromeet.archive.config;
 
-import com.depromeet.archive.domain.user.UserReader;
 import com.depromeet.archive.infra.user.UserRepository;
 import com.depromeet.archive.infra.user.jpa.UserJpaRepository;
 import org.springframework.context.annotation.Bean;
@@ -13,4 +12,5 @@ public class UserDAOConfig {
     public UserRepository userRepository(UserJpaRepository jpaRepository) {
         return new UserRepository(jpaRepository);
     }
+
 }

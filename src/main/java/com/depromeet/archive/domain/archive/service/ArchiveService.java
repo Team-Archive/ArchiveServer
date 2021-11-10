@@ -16,7 +16,8 @@ public class ArchiveService {
     @Transactional(readOnly = true)
     public ArchiveDto findById(Long id) {
         Archive archive = archiveRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 아카이브가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 아카이브가 없습니다."));
         return ArchiveDto.from(archive);
     }
+
 }

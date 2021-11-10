@@ -4,8 +4,8 @@ import com.depromeet.archive.common.exception.BaseException;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.info.UserInfo;
-import com.depromeet.archive.security.exception.WrappingAuthenticationException;
 import com.depromeet.archive.security.common.UserPrincipal;
+import com.depromeet.archive.security.exception.WrappingAuthenticationException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -59,4 +59,5 @@ public class UserNamePasswordAuthenticationProvider implements AuthenticationPro
     public boolean supports(Class<?> aClass) {
         return aClass.equals(UsernamePasswordAuthenticationToken.class);
     }
+
 }

@@ -1,7 +1,11 @@
 package com.depromeet.archive.security.result;
 
 import com.depromeet.archive.domain.user.entity.UserRole;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -9,8 +13,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthToken {
+
     private long userId;
     private String mailAddress;
     private UserRole userRole;
     private String userName;
+
 }

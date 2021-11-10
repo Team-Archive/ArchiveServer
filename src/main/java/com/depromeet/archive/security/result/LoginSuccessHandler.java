@@ -1,9 +1,9 @@
 package com.depromeet.archive.security.result;
 
 
+import com.depromeet.archive.security.common.UserPrincipal;
 import com.depromeet.archive.security.token.HttpAuthTokenSupport;
 import com.depromeet.archive.security.token.TokenProvider;
-import com.depromeet.archive.security.common.UserPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -32,6 +32,5 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                 .build();
         tokenSupport.injectToken(httpServletResponse, provider.createToken(authToken));
     }
-
 
 }
