@@ -1,8 +1,8 @@
-package com.depromeet.archive.controller;
+package com.depromeet.archive.api;
 
-import com.depromeet.archive.controller.dto.archive.ArchiveDto;
-import com.depromeet.archive.controller.dto.archive.ArchiveListDto;
-import com.depromeet.archive.domain.archive.service.ArchiveService;
+import com.depromeet.archive.api.dto.archive.ArchiveDto;
+import com.depromeet.archive.api.dto.archive.ArchiveListDto;
+import com.depromeet.archive.domain.archive.ArchiveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

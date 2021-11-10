@@ -1,4 +1,4 @@
-package com.depromeet.archive.controller.dto.archive;
+package com.depromeet.archive.api.dto.archive;
 
 import lombok.Getter;
 
