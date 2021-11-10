@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ArchiveService {
 
     private final ArchiveRepository archiveRepository;
 
-    @Transactional(readOnly = true)
     public ArchiveDto findById(Long id) {
         Archive archive = archiveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아카이브가 없습니다."));
