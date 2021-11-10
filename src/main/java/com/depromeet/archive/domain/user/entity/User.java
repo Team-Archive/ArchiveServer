@@ -1,5 +1,6 @@
 package com.depromeet.archive.domain.user.entity;
 
+import com.depromeet.archive.domain.common.BaseTimeEntity;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
 import com.depromeet.archive.domain.user.exception.LoginFailException;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 @Access(AccessType.FIELD)
-public class User {
+public class User extends BaseTimeEntity {
 
     @Setter
     @Id @GeneratedValue
