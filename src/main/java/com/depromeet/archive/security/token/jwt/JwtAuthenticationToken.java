@@ -1,7 +1,7 @@
 package com.depromeet.archive.security.token.jwt;
 
-import com.depromeet.archive.security.result.AuthToken;
 import com.depromeet.archive.security.common.UserPrincipal;
+import com.depromeet.archive.security.result.AuthToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -63,4 +63,5 @@ public class JwtAuthenticationToken implements Authentication {
     public String getName() {
         return principal.getName();
     }
+
 }

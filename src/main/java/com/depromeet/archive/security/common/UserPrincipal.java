@@ -18,7 +18,7 @@ public class UserPrincipal implements OAuth2User {
     private long userId;
     private final UserRole userRole;
     private final Map<String, Object> attributes;
-    private Collection<GrantedAuthority> authorities = new LinkedList<>();
+    private final Collection<GrantedAuthority> authorities = new LinkedList<>();
 
     @Builder
     public UserPrincipal(String mailAddress, UserRole userRole, long userId, Map<String, Object> attributes) {
@@ -47,4 +47,5 @@ public class UserPrincipal implements OAuth2User {
     public String getName() {
         return mailAddress;
     }
+
 }

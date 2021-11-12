@@ -20,7 +20,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -P local # TODO: use prd profile after setting env variables
 
       - name: Make Directory
         run: mkdir -p deploy

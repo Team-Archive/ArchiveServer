@@ -18,18 +18,18 @@ spring:
             user-name-attribute: id
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${PRD_DB_URL}
+    url: ${DEV_DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        format_sql: false
+        format_sql: true
 jwt:
-  secret-key: ${JWT_SECRET_KEY}
+  secret-key: testKey

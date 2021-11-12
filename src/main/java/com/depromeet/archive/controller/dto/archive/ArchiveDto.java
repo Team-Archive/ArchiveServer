@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 @Builder
 public class ArchiveDto {
 
-    private Long id;
-    private String name;
-    private String watchedOn;
-    private Emotion emotion;
-    private String mainImage;
-    private List<String> companions;
-    private List<ArchiveImageDto> archiveImages;
+    private final Long id;
+    private final String name;
+    private final String watchedOn;
+    private final Emotion emotion;
+    private final String mainImage;
+    private final List<String> companions;
+    private final List<ArchiveImageDto> archiveImages;
 
     public static ArchiveDto from(Archive archive) {
         var archiveImages = archive.getArchiveImages().stream()
@@ -35,4 +35,5 @@ public class ArchiveDto {
                 .archiveImages(archiveImages)
                 .build();
     }
+
 }

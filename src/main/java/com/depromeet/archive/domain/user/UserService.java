@@ -8,7 +8,6 @@ import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.entity.User;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,4 +62,5 @@ public class UserService {
         User user = userReader.findUserById(userId);
         userStore.removeUser(user);
     }
+
 }

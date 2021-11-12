@@ -8,9 +8,9 @@ import lombok.Getter;
 @Builder
 public class ArchiveImageDto {
 
-    private Long id;
-    private String image;
-    private String review;
+    private final Long id;
+    private final String image;
+    private final String review;
 
     public static ArchiveImageDto from(ArchiveImage archiveImage) {
         return ArchiveImageDto.builder()

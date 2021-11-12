@@ -2,8 +2,8 @@ package com.depromeet.archive.security.token.jwt;
 
 
 import com.depromeet.archive.domain.user.entity.UserRole;
-import com.depromeet.archive.security.token.TokenProvider;
 import com.depromeet.archive.security.result.AuthToken;
+import com.depromeet.archive.security.token.TokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,15 +24,15 @@ public class JwtTokenProvider implements TokenProvider {
         Date date = new Date();
         date.setTime(date.getTime() + 1000 * 60 * 60 * 2);
         return Jwts
-                    .builder()
-                    .setSubject("user")
-                    .claim("id", info)
-                    .setHeaderParam("typ", "JWT")
-                    .setHeaderParam("alg", "ES56")
-                    .setHeaderParam("kid", "default")
-                    .setExpiration(date)
-                    .signWith(SignatureAlgorithm.HS256, SECRET_KEY.getBytes())
-                    .compact();
+                .builder()
+                .setSubject("user")
+                .claim("id", info)
+                .setHeaderParam("typ", "JWT")
+                .setHeaderParam("alg", "ES56")
+                .setHeaderParam("kid", "default")
+                .setExpiration(date)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY.getBytes())
+                .compact();
     }
 
     public AuthToken parseUserInfoFromToken(String token) {
@@ -49,4 +49,5 @@ public class JwtTokenProvider implements TokenProvider {
                 .userName(map.get("userName"))
                 .build();
     }
+
 }
