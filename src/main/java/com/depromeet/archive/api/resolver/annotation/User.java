@@ -1,4 +1,4 @@
-package com.depromeet.archive.controller.resolver.annotation;
+package com.depromeet.archive.api.resolver.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
