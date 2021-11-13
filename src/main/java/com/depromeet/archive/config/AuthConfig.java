@@ -2,7 +2,9 @@ package com.depromeet.archive.config;
 
 import com.depromeet.archive.domain.user.StringEncryptor;
 import com.depromeet.archive.infra.user.StringEncryptorMock;
+import com.depromeet.archive.security.general.BodyCredentialAuthenticationFilter;
 import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
+import com.depromeet.archive.security.result.LoginFailureHandler;
 import com.depromeet.archive.security.result.LoginSuccessHandler;
 import com.depromeet.archive.security.token.jwt.JwtTokenPersistFilter;
 import com.depromeet.archive.domain.user.UserService;
@@ -13,11 +15,13 @@ import com.depromeet.archive.security.oauth.UserPrincipalConverter;
 import com.depromeet.archive.security.oauth.converter.KakaoPrincipalConverter;
 import com.depromeet.archive.security.token.jwt.JwtTokenProvider;
 import com.depromeet.archive.security.token.jwt.JwtTokenSupport;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 
 import java.util.List;
 
@@ -62,9 +66,7 @@ public class AuthConfig {
     }
 
     @Bean
-    public JwtTokenPersistFilter tokenPersistFilter() {
-        return new JwtTokenPersistFilter(tokenSupport(), tokenProvider());
-    }
+    public LoginFailureHandler failureHandler() {return new LoginFailureHandler(); }
 
     @Bean
     public StringEncryptor stringEncryptorMock() {
