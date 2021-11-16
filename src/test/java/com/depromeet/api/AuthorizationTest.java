@@ -1,17 +1,24 @@
 package com.depromeet.api;
 
 import com.depromeet.archive.ArchiveApplication;
+import com.depromeet.archive.common.exception.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
 import com.depromeet.archive.domain.user.command.LoginCommand;
+import com.depromeet.archive.domain.user.entity.User;
+import com.depromeet.archive.infra.user.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+
+import javax.persistence.EntityManager;
 
 @SpringBootTest(classes = ArchiveApplication.class, webEnvironment =  SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class AuthorizationTest {
@@ -28,12 +35,22 @@ public class AuthorizationTest {
     private static CredentialRegisterCommand testRegisterInfo;
     private static LoginCommand loginCommand;
 
+    @Autowired
+    private UserRepository repository;
+
     @BeforeAll
     public static void initDTO() {
         testRegisterInfo = new CredentialRegisterCommand("testMail@naver.com", "abcABC123");
         loginCommand = new LoginCommand(testRegisterInfo.getMailAddress(), testRegisterInfo.getCredential());
     }
 
+    @BeforeEach
+    public void removeUser() {
+        try {
+            User user = repository.findUserByMail(testRegisterInfo.getMailAddress());
+            repository.removeUser(user);
+        } catch (ResourceNotFoundException ignored) { }
+    }
 
     @Test
     public void registerUser() {
