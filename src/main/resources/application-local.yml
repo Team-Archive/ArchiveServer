@@ -36,3 +36,9 @@ spring:
     open-in-view: false
 jwt:
   secret-key: testKey
+server:
+  port: 8080
+logging:
+  level:
+    root: info
+    com.depromeet.archive: debug

@@ -23,9 +23,9 @@ public class UserService {
     public boolean checkEmailDuplicate(String email) {
         try {
             userReader.findUserByMail(email);
-            return true;
-        } catch (ResourceNotFoundException e) {
             return false;
+        } catch (ResourceNotFoundException e) {
+            return true;
         }
     }
 
@@ -47,10 +47,7 @@ public class UserService {
         return user.getUserInfo();
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void registerUser(CredentialRegisterCommand command) {
-        if (checkEmailDuplicate(command.getMailAddress()))
-            throw new DuplicateResourceException("이미 가입된 메일입니다: " + command.getMailAddress());
         String unencryptedPassword = command.getCredential();
         String encrypted = encryptor.encrypt(unencryptedPassword);
         command.setCredential(encrypted);

@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .formLogin()
-                .loginProcessingUrl("/auth/login")
+                .loginProcessingUrl("/api/v1/archive/login")
                 .successHandler(successHandler);
         http
                 .httpBasic()
