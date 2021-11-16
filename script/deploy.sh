@@ -20,4 +20,4 @@ else
 fi
 
 echo "> $JAR_PATH deploy"
-nohup java -jar -Dspring.profiles.active=local $JAR_PATH >~/log/archive.log 2>&1 &  # TODO: use prd profile after setting env variables
+nohup java -jar -Dspring.profiles.active=prd $JAR_PATH >~/log/archive.log 2>&1 &
