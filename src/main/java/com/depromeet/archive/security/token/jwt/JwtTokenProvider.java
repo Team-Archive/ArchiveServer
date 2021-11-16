@@ -24,15 +24,15 @@ public class JwtTokenProvider implements TokenProvider {
         Date date = new Date();
         date.setTime(date.getTime() + 1000 * 60 * 60 * 2);
         return Jwts
-                    .builder()
-                    .setSubject("user")
-                    .claim("id", info)
-                    .setHeaderParam("typ", "JWT")
-                    .setHeaderParam("alg", "ES56")
-                    .setHeaderParam("kid", "default")
-                    .setExpiration(date)
-                    .signWith(SignatureAlgorithm.HS256, SECRET_KEY.getBytes())
-                    .compact();
+                .builder()
+                .setSubject("user")
+                .claim("id", info)
+                .setHeaderParam("typ", "JWT")
+                .setHeaderParam("alg", "ES56")
+                .setHeaderParam("kid", "default")
+                .setExpiration(date)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY.getBytes())
+                .compact();
     }
 
     public UserInfo parseUserInfoFromToken(String token) {
@@ -48,4 +48,5 @@ public class JwtTokenProvider implements TokenProvider {
                 .mailAddress(map.get("mailAddress"))
                 .build();
     }
+
 }

@@ -7,8 +7,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +22,7 @@ import javax.persistence.Table;
 public class ArchiveImage extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "archive_image_id")
     private Long id;
 
@@ -27,5 +31,9 @@ public class ArchiveImage extends BaseTimeEntity {
 
     @Column(name = "review")
     private String review;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "archive_id")
+    private Archive archive;
 
 }

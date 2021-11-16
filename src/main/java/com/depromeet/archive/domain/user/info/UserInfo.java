@@ -9,7 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserInfo {
+
     private String mailAddress;
     private UserRole userRole;
     private long userId;
+
 }

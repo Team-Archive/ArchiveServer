@@ -1,4 +1,4 @@
-package com.depromeet.archive.controller.resolver;
+package com.depromeet.archive.api.resolver;
 
 import com.depromeet.archive.common.exception.BaseException;
 import com.depromeet.archive.common.exception.ForbiddenActionException;

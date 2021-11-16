@@ -18,7 +18,7 @@ public class KakaoPrincipalConverter implements UserPrincipalConverter {
 
     @Override
     public UserPrincipal convert(OAuth2User oAuth2User) {
-        Map<String, Object> attributes = ((Map) oAuth2User.getAttribute("kakao_account"));
+        Map<String, Object> attributes = oAuth2User.getAttribute("kakao_account");
         String email = (String) attributes.get("email");
         UserInfo info = UserInfo.builder()
                 .mailAddress(email)
@@ -30,4 +30,5 @@ public class KakaoPrincipalConverter implements UserPrincipalConverter {
                 .attributes(attributes)
                 .build();
     }
+
 }

@@ -12,7 +12,6 @@ public class UserRepository implements UserReader, UserStore {
 
     private final UserJpaRepository jpaRepository;
 
-
     @Override
     public User findUserByMail(String mailAddress) {
         return jpaRepository.findUserByMailAddress(mailAddress);
@@ -20,7 +19,7 @@ public class UserRepository implements UserReader, UserStore {
 
     @Override
     public User findUserById(long userId) {
-        return jpaRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("유저를 찾을 수 없습니다. 아이디:" + userId));
+        return jpaRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("유저를 찾을 수 없습니다. 아이디:" + userId));
     }
 
     @Override
@@ -32,4 +31,5 @@ public class UserRepository implements UserReader, UserStore {
     public void removeUser(User user) {
         jpaRepository.delete(user);
     }
+
 }

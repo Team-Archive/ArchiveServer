@@ -3,8 +3,8 @@ package com.depromeet.archive.security.oauth;
 import com.depromeet.archive.common.exception.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
-import com.depromeet.archive.security.exception.WrappingAuthenticationException;
 import com.depromeet.archive.security.common.UserPrincipal;
+import com.depromeet.archive.security.exception.WrappingAuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -48,4 +48,5 @@ public class OAuthUserService extends DefaultOAuth2UserService {
     public void addPrincipalConverter(UserPrincipalConverter converter) {
         factoryMap.put(converter.getProviderId(), converter);
     }
+
 }

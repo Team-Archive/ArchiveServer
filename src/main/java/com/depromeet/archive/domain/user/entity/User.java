@@ -1,23 +1,38 @@
 package com.depromeet.archive.domain.user.entity;
 
+import com.depromeet.archive.domain.common.BaseTimeEntity;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
 import com.depromeet.archive.domain.user.exception.LoginFailException;
 import com.depromeet.archive.domain.user.info.UserInfo;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @Entity
-@Table(name = "user_info")
+@Table(name = "user")
 @Access(AccessType.FIELD)
-public class User {
+public class User extends BaseTimeEntity {
 
     @Setter
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private long userId;
 
     @NonNull
@@ -51,4 +66,5 @@ public class User {
         return new User(credentialRegisterCommand.getMailAddress(), UserRole.GENERAL,
                 new UserCredential(credentialRegisterCommand.getCredential(), true));
     }
+
 }

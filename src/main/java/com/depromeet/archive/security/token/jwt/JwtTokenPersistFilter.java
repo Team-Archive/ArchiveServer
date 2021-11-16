@@ -31,4 +31,5 @@ public class JwtTokenPersistFilter extends HttpFilter {
             super.doFilter(request, response, chain);
         }
     }
+
 }

@@ -67,4 +67,5 @@ public class JwtAuthenticationToken implements Authentication {
     public String getName() {
         return principal.getName();
     }
+
 }
