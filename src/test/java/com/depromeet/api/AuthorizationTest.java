@@ -22,6 +22,7 @@ public class AuthorizationTest {
     private final static String BASE_URI = "/api/v1/archive";
     private final static String REGISTER_URI = "/register";
     private final static String LOGIN_URI = "/login";
+    private final static String UNREGISTER_URI = "/unregister";
     private final static String AUTH_HEADER_KEY = "Authorization";
 
     private static CredentialRegisterCommand testRegisterInfo;
@@ -47,6 +48,13 @@ public class AuthorizationTest {
         assertBearerToken(token);
     }
 
+    @Test
+    public void unregister() {
+        tryRegister();
+        String authToken = tryLoginAndGetToken();
+        Assertions.assertEquals(HttpStatus.OK.value(), tryUnregister(authToken));
+    }
+
     private int tryRegister() {
         return RestAssured
                 .given()
@@ -65,6 +73,14 @@ public class AuthorizationTest {
                 .getHeader(AUTH_HEADER_KEY);
     }
 
+    private int tryUnregister(String authToken) {
+        return RestAssured
+                .given()
+                .header(AUTH_HEADER_KEY, authToken)
+                .delete(getUnregisterUri())
+                .statusCode();
+    }
+
     private void assertBearerToken(String token) {
         String tokenType = token.split(" ")[0];
         Assertions.assertEquals("BEARER", tokenType);
@@ -77,4 +93,6 @@ public class AuthorizationTest {
     private String getLoginUrl() {
         return HOST + ":" + PORT + BASE_URI + LOGIN_URI;
     }
+
+    private String getUnregisterUri() {return HOST + ":" + PORT + BASE_URI + UNREGISTER_URI;}
 }

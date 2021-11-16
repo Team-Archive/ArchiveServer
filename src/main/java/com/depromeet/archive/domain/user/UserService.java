@@ -8,11 +8,13 @@ import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.entity.User;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class UserService {
 
@@ -58,6 +60,7 @@ public class UserService {
     public void deleteUser(long userId) {
         User user = userReader.findUserById(userId);
         userStore.removeUser(user);
+        log.info("유저 탈퇴: {}", user.getMailAddress());
     }
 
 }
