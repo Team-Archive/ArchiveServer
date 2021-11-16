@@ -1,15 +1,13 @@
 package com.depromeet.archive.domain.user.info;
 
 import com.depromeet.archive.domain.user.entity.UserRole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserInfo {
 
     private String mailAddress;

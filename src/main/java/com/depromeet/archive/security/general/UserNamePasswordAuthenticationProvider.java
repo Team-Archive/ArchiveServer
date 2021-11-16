@@ -47,9 +47,7 @@ public class UserNamePasswordAuthenticationProvider implements AuthenticationPro
         UserPrincipal principal = UserPrincipal
                 .builder()
                 .attributes(Collections.singletonMap("password", credential))
-                .userId(loginUser.getUserId())
-                .userRole(loginUser.getUserRole())
-                .mailAddress(loginUser.getMailAddress())
+                .userInfo(loginUser)
                 .build();
         return new UsernamePasswordAuthenticationToken(principal,
                 credential, principal.getAuthorities());

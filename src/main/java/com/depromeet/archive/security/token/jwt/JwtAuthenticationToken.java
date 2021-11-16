@@ -1,7 +1,7 @@
 package com.depromeet.archive.security.token.jwt;
 
+import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.security.common.UserPrincipal;
-import com.depromeet.archive.security.result.AuthToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,18 +15,22 @@ public class JwtAuthenticationToken implements Authentication {
 
     private final Collection<GrantedAuthority> authorities = new LinkedList<>();
     private final UserPrincipal principal;
+    private final UserInfo userInfo;
     private final UserDetails details;
     private boolean authenticated = true;
 
-    public JwtAuthenticationToken(AuthToken token) {
+    public JwtAuthenticationToken(UserInfo token) {
         authorities.add(new SimpleGrantedAuthority(token.getUserRole().toString()));
         principal = UserPrincipal
                 .builder()
-                .userId(token.getUserId())
-                .mailAddress(token.getMailAddress())
-                .userRole(token.getUserRole())
+                .userInfo(token)
                 .build();
         details = new User(token.getMailAddress(), "", authorities);
+        userInfo = token;
+    }
+
+    public UserInfo getUserInfo() {
+        return this.userInfo;
     }
 
     @Override
