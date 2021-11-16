@@ -1,11 +1,8 @@
 package com.depromeet.archive.security.token;
 
-import com.depromeet.archive.security.result.AuthToken;
+import com.depromeet.archive.domain.user.info.UserInfo;
 
 public interface TokenProvider {
-
-    String createToken(AuthToken token);
-
-    AuthToken parseUserInfoFromToken(String tokenStr);
-
+    public String createToken(UserInfo token);
+    public UserInfo parseUserInfoFromToken(String tokenStr);
 }

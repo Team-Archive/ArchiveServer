@@ -1,6 +1,7 @@
 package com.depromeet.archive.security.common;
 
 import com.depromeet.archive.domain.user.entity.UserRole;
+import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,23 +15,19 @@ import java.util.Map;
 @Getter
 public class UserPrincipal implements OAuth2User {
 
-    private final String mailAddress;
-    private long userId;
-    private final UserRole userRole;
+    private final UserInfo userInfo;
     private final Map<String, Object> attributes;
     private final Collection<GrantedAuthority> authorities = new LinkedList<>();
 
     @Builder
-    public UserPrincipal(String mailAddress, UserRole userRole, long userId, Map<String, Object> attributes) {
-        this.mailAddress = mailAddress;
-        this.userRole = userRole;
-        this.userId = userId;
+    public UserPrincipal(UserInfo userInfo, Map<String, Object> attributes) {
+        this.userInfo = userInfo;
         this.attributes = attributes;
-        authorities.add(new SimpleGrantedAuthority(userRole.toString()));
+        authorities.add(new SimpleGrantedAuthority(userInfo.getUserRole().toString()));
     }
 
     public void setUserId(long userId) {
-        this.userId = userId;
+        this.userInfo.setUserId(userId);
     }
 
     @Override
@@ -45,7 +42,7 @@ public class UserPrincipal implements OAuth2User {
 
     @Override
     public String getName() {
-        return mailAddress;
+        return userInfo.getMailAddress();
     }
 
 }

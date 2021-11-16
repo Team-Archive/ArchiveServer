@@ -16,12 +16,15 @@ public class JwtTokenSupport implements HttpAuthTokenSupport {
     @Override
     public String extractToken(HttpServletRequest target) {
         String tokenTypeAndStr = target.getHeader("Authorization");
-        log.debug("Parsing token in header: " + tokenTypeAndStr);
-        if (tokenTypeAndStr == null || tokenTypeAndStr.isEmpty())
+        log.debug("Parsing token in header: {}", tokenTypeAndStr);
+        if (isInvalidToken(tokenTypeAndStr))
             throw new TokenNotFoundException("Token header not found. Header name must be 'Authorization'");
         return tokenTypeAndStr.split(" ")[1];
     }
 
+    private boolean isInvalidToken(String tokenTypeAndStr) {
+        return tokenTypeAndStr == null || tokenTypeAndStr.isEmpty();
+    }
     @Override
     public void injectToken(HttpServletResponse dest, String token) {
         dest.addHeader(AUTH_HEADER, TOKEN_TYPE + " " + token);

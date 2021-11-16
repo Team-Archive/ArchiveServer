@@ -1,6 +1,7 @@
 package com.depromeet.archive.security.result;
 
 
+import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.security.common.UserPrincipal;
 import com.depromeet.archive.security.token.HttpAuthTokenSupport;
 import com.depromeet.archive.security.token.TokenProvider;
@@ -25,11 +26,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-        AuthToken authToken = AuthToken
-                .builder()
-                .mailAddress(principal.getMailAddress())
-                .userRole(principal.getUserRole())
-                .build();
+        UserInfo authToken = principal.getUserInfo();
         tokenSupport.injectToken(httpServletResponse, provider.createToken(authToken));
     }
 
