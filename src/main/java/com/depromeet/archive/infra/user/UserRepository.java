@@ -30,7 +30,7 @@ public class UserRepository implements UserReader, UserStore {
     @Override
     public void saveUser(User user) {
         try {
-            jpaRepository.save(user);
+            jpaRepository.saveAndFlush(user);
         } catch (DataIntegrityViolationException exception) {
             throw new DuplicateResourceException("이미 존재하는 이메일 주소입니다: " + user.getMailAddress());
         }
