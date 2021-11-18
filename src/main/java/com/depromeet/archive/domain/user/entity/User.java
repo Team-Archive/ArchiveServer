@@ -33,6 +33,7 @@ public class User extends BaseTimeEntity {
     @Setter
     @Id
     @GeneratedValue
+    @Column(name = "user_id")
     private long userId;
 
     @NonNull
