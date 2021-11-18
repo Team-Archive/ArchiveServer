@@ -37,7 +37,8 @@ spring:
 
 jwt:
   secret-key: testKey
-
+server:
+  port: 8080
 # s3 configuration
 cloud:
   aws:
@@ -54,6 +55,8 @@ cloud:
 # aws ec2 metadata disable error
 logging:
   level:
+    root: info
+    com.depromeet.archive: debug
     com:
       amazonaws:
         util:

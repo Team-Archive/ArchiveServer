@@ -8,11 +8,13 @@ import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.entity.User;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class UserService {
 
@@ -23,9 +25,9 @@ public class UserService {
     public boolean checkEmailDuplicate(String email) {
         try {
             userReader.findUserByMail(email);
-            return true;
-        } catch (ResourceNotFoundException e) {
             return false;
+        } catch (ResourceNotFoundException e) {
+            return true;
         }
     }
 
@@ -47,10 +49,7 @@ public class UserService {
         return user.getUserInfo();
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void registerUser(CredentialRegisterCommand command) {
-        if (checkEmailDuplicate(command.getMailAddress()))
-            throw new DuplicateResourceException("이미 가입된 메일입니다: " + command.getMailAddress());
         String unencryptedPassword = command.getCredential();
         String encrypted = encryptor.encrypt(unencryptedPassword);
         command.setCredential(encrypted);
@@ -61,6 +60,7 @@ public class UserService {
     public void deleteUser(long userId) {
         User user = userReader.findUserById(userId);
         userStore.removeUser(user);
+        log.info("유저 탈퇴: {}", user.getMailAddress());
     }
 
 }

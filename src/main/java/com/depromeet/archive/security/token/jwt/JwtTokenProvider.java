@@ -4,6 +4,7 @@ package com.depromeet.archive.security.token.jwt;
 import com.depromeet.archive.domain.user.entity.UserRole;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.security.token.TokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,9 +16,11 @@ import java.util.HashMap;
 public class JwtTokenProvider implements TokenProvider {
 
     private final String SECRET_KEY;
+    private final ObjectMapper mapper;
 
-    public JwtTokenProvider(String key) {
+    public JwtTokenProvider(String key, ObjectMapper mapper) {
         SECRET_KEY = Base64.getEncoder().encodeToString(key.getBytes());
+        this.mapper = mapper;
     }
 
     public String createToken(UserInfo info) {
@@ -40,13 +43,8 @@ public class JwtTokenProvider implements TokenProvider {
                 .setSigningKey(SECRET_KEY.getBytes())
                 .parseClaimsJws(token)
                 .getBody();
-        HashMap<String, String> map = (HashMap<String, String>) jwtClaims.get("id");
-        return UserInfo
-                .builder()
-                .userId(Long.parseLong(map.get("userId")))
-                .userRole(UserRole.fromRoleString(map.get("userRole")))
-                .mailAddress(map.get("mailAddress"))
-                .build();
+        HashMap<String, Object> map = (HashMap<String, Object>) jwtClaims.get("id");
+        return mapper.convertValue(map, UserInfo.class);
     }
 
 }

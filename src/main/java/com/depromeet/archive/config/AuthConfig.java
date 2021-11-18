@@ -4,15 +4,16 @@ import com.depromeet.archive.domain.user.StringEncryptor;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.infra.user.StringEncryptorMock;
 import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
-import com.depromeet.archive.security.oauth.OAuthUserService;
-import com.depromeet.archive.security.oauth.UserPrincipalConverter;
-import com.depromeet.archive.security.oauth.converter.KakaoPrincipalConverter;
+import com.depromeet.archive.security.result.LoginFailureHandler;
 import com.depromeet.archive.security.result.LoginSuccessHandler;
 import com.depromeet.archive.security.token.HttpAuthTokenSupport;
 import com.depromeet.archive.security.token.TokenProvider;
-import com.depromeet.archive.security.token.jwt.JwtTokenPersistFilter;
+import com.depromeet.archive.security.oauth.OAuthUserService;
+import com.depromeet.archive.security.oauth.UserPrincipalConverter;
+import com.depromeet.archive.security.oauth.converter.KakaoPrincipalConverter;
 import com.depromeet.archive.security.token.jwt.JwtTokenProvider;
 import com.depromeet.archive.security.token.jwt.JwtTokenSupport;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,8 +45,8 @@ public class AuthConfig {
     }
 
     @Bean
-    public TokenProvider tokenProvider() {
-        return new JwtTokenProvider(secretKey);
+    public TokenProvider tokenProvider(ObjectMapper mapper) {
+        return new JwtTokenProvider(secretKey, mapper);
     }
 
     @Bean
@@ -54,14 +55,12 @@ public class AuthConfig {
     }
 
     @Bean
-    public LoginSuccessHandler successHandler() {
-        return new LoginSuccessHandler(tokenProvider(), tokenSupport());
+    public LoginSuccessHandler successHandler(TokenProvider tokenProvider, HttpAuthTokenSupport authTokenSupport) {
+        return new LoginSuccessHandler(tokenProvider, authTokenSupport);
     }
 
     @Bean
-    public JwtTokenPersistFilter tokenPersistFilter() {
-        return new JwtTokenPersistFilter(tokenSupport(), tokenProvider());
-    }
+    public LoginFailureHandler failureHandler() {return new LoginFailureHandler(); }
 
     @Bean
     public StringEncryptor stringEncryptorMock() {
