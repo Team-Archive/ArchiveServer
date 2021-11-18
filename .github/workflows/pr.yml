@@ -7,9 +7,14 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    env:
+      DEV_DB_URL: ${{ secrets.DEV_DB_URL }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DEV_AWS_ACCESS_KEY: ${{ secrets.DEV_AWS_ACCESS_KEY }}
+      DEV_AWS_SECRET_KEY: ${{ secrets.DEV_AWS_SECRET_KEY }}
+      DEV_AWS_S3_BUCKET_NAME: ${{ secrets.DEV_AWS_S3_BUCKET_NAME }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -19,4 +24,4 @@ jobs:
           distribution: 'adopt'
           cache: maven
       - name: Build with Maven
-        run: mvn -B package --file pom.xml -P local # TODO: use prd profile after setting env variables
+        run: mvn -B package --file pom.xml -P dev
