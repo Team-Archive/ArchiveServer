@@ -37,8 +37,6 @@ spring:
 
 jwt:
   secret-key: testKey
-server:
-  port: 8080
 # s3 configuration
 cloud:
   aws:

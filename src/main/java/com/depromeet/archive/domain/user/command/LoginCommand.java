@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginCommand {
 
-    private String mailAddress;
+    private String email;
     private String password;
 
 }

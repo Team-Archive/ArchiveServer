@@ -17,11 +17,11 @@ public class CredentialRegisterCommand extends BasicRegisterCommand {
     @NotEmpty(message = "필수 입력 항목입니다.")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,20}$",
             message = "비밀번호는 영어, 숫자를 하나 이상 포함해 8~20자 범위로 입력해주세요")
-    private String credential;
+    private String password;
 
-    public CredentialRegisterCommand(String userMail, String credential) {
+    public CredentialRegisterCommand(String userMail, String password) {
         super(userMail);
-        this.credential = credential;
+        this.password = password;
     }
 
 }

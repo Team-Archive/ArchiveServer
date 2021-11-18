@@ -38,13 +38,13 @@ public class AuthorizationTest {
     @BeforeAll
     public static void initDTO() {
         testRegisterInfo = new CredentialRegisterCommand("testMail@naver.com", "abcABC123");
-        loginCommand = new LoginCommand(testRegisterInfo.getMailAddress(), testRegisterInfo.getCredential());
+        loginCommand = new LoginCommand(testRegisterInfo.getEmail(), testRegisterInfo.getPassword());
     }
 
     @BeforeEach
     public void removeUser() {
         try {
-            User user = repository.findUserByMail(testRegisterInfo.getMailAddress());
+            User user = repository.findUserByMail(testRegisterInfo.getEmail());
             repository.removeUser(user);
         } catch (ResourceNotFoundException ignored) { }
     }
