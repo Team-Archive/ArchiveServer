@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,11 @@ public class ArchiveController {
         return ResponseEntity.ok(archiveService.getOneArchiveById(id));
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        archiveService.delete(id);
+    }
+  
     @PostMapping(path = "/image/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE

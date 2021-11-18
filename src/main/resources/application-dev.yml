@@ -23,14 +23,14 @@ spring:
     password: ${DB_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
 
 jwt:
   secret-key: testKey
