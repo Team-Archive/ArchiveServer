@@ -2,6 +2,7 @@ package com.depromeet.archive.api.dto.archive;
 
 import com.depromeet.archive.domain.archive.entity.Archive;
 import com.depromeet.archive.domain.archive.entity.Emotion;
+import com.depromeet.archive.util.DateTimeUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AccessLevel;
@@ -31,7 +32,7 @@ public class ArchiveDto {
         return ArchiveDto.builder()
                 .archiveId(archive.getId())
                 .name(archive.getName())
-                .watchedOn(archive.getWatchedOn())
+                .watchedOn(DateTimeUtil.convertToString(archive.getWatchedOn()))
                 .emotion(archive.getEmotion())
                 .mainImage(archive.getMainImage())
                 .companions(archive.getCompanions())
@@ -43,7 +44,7 @@ public class ArchiveDto {
         return ArchiveDto.builder()
                 .archiveId(archive.getId())
                 .name(archive.getName())
-                .watchedOn(archive.getWatchedOn())
+                .watchedOn(DateTimeUtil.convertToString(archive.getWatchedOn()))
                 .emotion(archive.getEmotion())
                 .companions(archive.getCompanions())
                 .mainImage(archive.getMainImage())

@@ -4,6 +4,7 @@ import com.depromeet.archive.domain.common.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,12 +17,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "archive")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Where(clause = "is_deleted = false")
 public class Archive extends BaseTimeEntity {
 
     @Id
@@ -33,7 +36,7 @@ public class Archive extends BaseTimeEntity {
     private String name;
 
     @Column(name = "watched_on", columnDefinition = "TIMESTAMP")
-    private String watchedOn;
+    private LocalDate watchedOn;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "emotion")

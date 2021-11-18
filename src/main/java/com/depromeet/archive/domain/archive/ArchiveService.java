@@ -28,4 +28,8 @@ public class ArchiveService {
         return ArchiveDto.specificFrom(archive);
     }
 
+    public void delete(Long id) {
+        archiveRepository.deleteById(id);
+    }
+
 }
