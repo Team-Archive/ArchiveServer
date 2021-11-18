@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -33,7 +34,7 @@ public class Archive extends BaseTimeEntity {
     private String name;
 
     @Column(name = "watched_on", columnDefinition = "TIMESTAMP")
-    private String watchedOn;
+    private LocalDate watchedOn;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "emotion")
