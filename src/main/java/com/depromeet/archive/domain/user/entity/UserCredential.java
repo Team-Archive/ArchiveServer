@@ -3,13 +3,16 @@ package com.depromeet.archive.domain.user.entity;
 import com.depromeet.archive.domain.user.exception.LoginFailException;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @NoArgsConstructor
 @Embeddable
 public class UserCredential {
 
+    @Column(name = "password")
     private String password;
+    @Column(name = "use_credential")
     private boolean useCredential;
 
     public UserCredential(String password, boolean useCredential) {
