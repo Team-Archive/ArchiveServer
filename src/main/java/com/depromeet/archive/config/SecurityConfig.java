@@ -74,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public BodyCredentialAuthenticationFilter bodyCredentialAuthenticationFilter(AuthenticationManager manager, ObjectMapper mapper) {
-        BodyCredentialAuthenticationFilter filter = new BodyCredentialAuthenticationFilter("/api/v1/archive/login", manager, mapper);
+        BodyCredentialAuthenticationFilter filter = new BodyCredentialAuthenticationFilter("/api/v1/auth/login", manager, mapper);
         filter.setAuthenticationSuccessHandler(successHandler);
         filter.setAuthenticationFailureHandler(failureHandler);
         return filter;
