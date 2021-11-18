@@ -1,6 +1,5 @@
 package com.depromeet.archive.domain.user;
 
-import com.depromeet.archive.common.exception.DuplicateResourceException;
 import com.depromeet.archive.common.exception.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
@@ -10,8 +9,6 @@ import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -33,7 +30,7 @@ public class UserService {
 
     public long updateNonCredentialUser(BasicRegisterCommand registerInfo) {
         try {
-            User foundUser = userReader.findUserByMail(registerInfo.getMailAddress());
+            User foundUser = userReader.findUserByMail(registerInfo.getEmail());
             return foundUser.getUserId();
         } catch (ResourceNotFoundException exception) {
             User newUser = User.fromRegisterCommand(registerInfo);
@@ -43,16 +40,16 @@ public class UserService {
     }
 
     public UserInfo tryLoginAndReturnInfo(LoginCommand loginRequest) {
-        User user = userReader.findUserByMail(loginRequest.getMailAddress());
+        User user = userReader.findUserByMail(loginRequest.getEmail());
         String encryptedPassword = encryptor.encrypt(loginRequest.getPassword());
         user.tryLogin(encryptedPassword);
         return user.getUserInfo();
     }
 
     public void registerUser(CredentialRegisterCommand command) {
-        String unencryptedPassword = command.getCredential();
+        String unencryptedPassword = command.getPassword();
         String encrypted = encryptor.encrypt(unencryptedPassword);
-        command.setCredential(encrypted);
+        command.setPassword(encrypted);
         User user = User.fromCredentialRegisterCommand(command);
         userStore.saveUser(user);
     }

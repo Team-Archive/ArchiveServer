@@ -60,12 +60,12 @@ public class User extends BaseTimeEntity {
     }
 
     public static User fromRegisterCommand(BasicRegisterCommand request) {
-        return new User(request.getMailAddress(), UserRole.GENERAL, new UserCredential("", false));
+        return new User(request.getEmail(), UserRole.GENERAL, new UserCredential("", false));
     }
 
     public static User fromCredentialRegisterCommand(CredentialRegisterCommand credentialRegisterCommand) {
-        return new User(credentialRegisterCommand.getMailAddress(), UserRole.GENERAL,
-                new UserCredential(credentialRegisterCommand.getCredential(), true));
+        return new User(credentialRegisterCommand.getEmail(), UserRole.GENERAL,
+                new UserCredential(credentialRegisterCommand.getPassword(), true));
     }
 
 }
