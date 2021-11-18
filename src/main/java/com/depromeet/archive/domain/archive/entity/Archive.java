@@ -4,6 +4,7 @@ import com.depromeet.archive.domain.common.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,7 @@ import java.util.List;
 @Table(name = "archive")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Where(clause = "is_deleted = false")
 public class Archive extends BaseTimeEntity {
 
     @Id
