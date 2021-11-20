@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       DEV_DB_URL: ${{ secrets.DEV_DB_URL }}
       DB_USER: ${{ secrets.DB_USER }}

@@ -19,5 +19,6 @@ else
   sleep 5
 fi
 
+source /home/ec2-user/.bashrc
 echo "> $JAR_PATH deploy"
 nohup java -jar -Dspring.profiles.active=prd $JAR_PATH >~/log/archive.log 2>&1 &
