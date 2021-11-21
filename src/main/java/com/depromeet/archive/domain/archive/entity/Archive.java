@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.CascadeType;
@@ -22,10 +23,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "archive")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@SQLDelete(sql = "UPDATE archive SET is_deleted = true WHERE archive_id=?")
 @Where(clause = "is_deleted = false")
 public class Archive extends BaseTimeEntity {
 
