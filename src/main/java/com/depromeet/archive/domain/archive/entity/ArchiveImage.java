@@ -36,4 +36,10 @@ public class ArchiveImage extends BaseTimeEntity {
     @JoinColumn(name = "archive_id")
     private Archive archive;
 
+    public ArchiveImage(String image, String review, Archive archive) {
+        this.image = image;
+        this.review = review;
+        this.archive = archive;
+    }
+
 }
