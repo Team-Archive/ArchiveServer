@@ -1,16 +1,21 @@
 package com.depromeet.archive.api.dto.archive;
 
+import com.depromeet.archive.domain.archive.entity.Archive;
 import com.depromeet.archive.domain.archive.entity.ArchiveImage;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Builder
 public class ArchiveImageDto {
 
-    private final Long archiveImageId;
-    private final String image;
-    private final String review;
+    private Long archiveImageId;
+    private String image;
+    private String review;
 
     public static ArchiveImageDto from(ArchiveImage archiveImage) {
         return ArchiveImageDto.builder()
@@ -18,6 +23,10 @@ public class ArchiveImageDto {
                 .image(archiveImage.getImage())
                 .review(archiveImage.getReview())
                 .build();
+    }
+
+    public ArchiveImage toEntity(Archive archive) {
+        return new ArchiveImage(image, review, archive);
     }
 
 }
