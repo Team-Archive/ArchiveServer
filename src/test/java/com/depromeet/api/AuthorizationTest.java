@@ -1,15 +1,12 @@
 package com.depromeet.api;
 
 import com.depromeet.archive.ArchiveApplication;
-import com.depromeet.archive.common.exception.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
 import com.depromeet.archive.domain.user.command.LoginCommand;
-import com.depromeet.archive.domain.user.entity.User;
 import com.depromeet.archive.infra.user.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +14,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
-@SpringBootTest(classes = ArchiveApplication.class, webEnvironment =  SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class AuthorizationTest {
+import java.util.UUID;
+
+@SpringBootTest(classes = ArchiveApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+class AuthorizationTest {
 
     @Value("${server.port}")
     private int PORT;
@@ -35,27 +34,21 @@ public class AuthorizationTest {
     @Autowired
     private UserRepository repository;
 
-    @BeforeAll
-    public static void initDTO() {
-        testRegisterInfo = new CredentialRegisterCommand("testMail@naver.com", "abcABC123");
+    @BeforeEach
+    public void initDTO() {
+        var testEmail = UUID.randomUUID() + "@naver.com";
+        var testPassword = "abcABC123";
+        testRegisterInfo = new CredentialRegisterCommand(testEmail, testPassword);
         loginCommand = new LoginCommand(testRegisterInfo.getEmail(), testRegisterInfo.getPassword());
     }
 
-    @BeforeEach
-    public void removeUser() {
-        try {
-            User user = repository.findUserByMail(testRegisterInfo.getEmail());
-            repository.removeUser(user);
-        } catch (ResourceNotFoundException ignored) { }
+    @Test
+    void registerUser() {
+        Assertions.assertEquals(HttpStatus.OK.value(), tryRegister());
     }
 
     @Test
-    public void registerUser() {
-        Assertions.assertEquals(HttpStatus.OK.value(), tryRegister());
-    }
-    
-    @Test
-    public void registerAndLogin() {
+    void registerAndLogin() {
         Assertions.assertEquals(HttpStatus.OK.value(), tryRegister());
         String token = tryLoginAndGetToken();
         Assertions.assertNotNull(token);
@@ -63,7 +56,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    public void unregister() {
+    void unregister() {
         tryRegister();
         String authToken = tryLoginAndGetToken();
         Assertions.assertEquals(HttpStatus.OK.value(), tryUnregister(authToken));
@@ -108,5 +101,8 @@ public class AuthorizationTest {
         return HOST + ":" + PORT + BASE_URI + LOGIN_URI;
     }
 
-    private String getUnregisterUri() {return HOST + ":" + PORT + BASE_URI + UNREGISTER_URI;}
+    private String getUnregisterUri() {
+        return HOST + ":" + PORT + BASE_URI + UNREGISTER_URI;
+    }
+
 }

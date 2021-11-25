@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -19,6 +21,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 @Access(AccessType.FIELD)
+@SQLDelete(sql = "UPDATE user SET is_deleted = true WHERE user_id=?")
+@Where(clause = "is_deleted = false")
 public class User extends BaseTimeEntity {
 
     @Setter
