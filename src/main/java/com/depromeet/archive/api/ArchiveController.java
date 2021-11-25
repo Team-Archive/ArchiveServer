@@ -6,12 +6,14 @@ import com.depromeet.archive.api.dto.archive.ArchiveListDto;
 import com.depromeet.archive.domain.archive.ArchiveImageService;
 import com.depromeet.archive.domain.archive.ArchiveService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,7 +41,7 @@ public class ArchiveController {
     public void delete(@PathVariable Long id) {
         archiveService.delete(id);
     }
-  
+
     @PostMapping(path = "/image/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -48,6 +50,12 @@ public class ArchiveController {
         imageService.verifyImageFile(imageFile);
         var imageUrl = imageService.upload(imageFile);
         return ResponseEntity.ok(new ArchiveImageUrlResponseDto(imageUrl));
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> addArchive(@RequestBody ArchiveDto archiveDto) {
+        archiveService.save(archiveDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

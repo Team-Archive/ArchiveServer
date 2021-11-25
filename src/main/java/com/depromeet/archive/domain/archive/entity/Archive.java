@@ -2,6 +2,7 @@ package com.depromeet.archive.domain.archive.entity;
 
 import com.depromeet.archive.domain.common.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -18,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -50,6 +52,23 @@ public class Archive extends BaseTimeEntity {
     private List<String> companions;
 
     @OneToMany(mappedBy = "archive", cascade = CascadeType.ALL)
-    private List<ArchiveImage> archiveImages;
+    private List<ArchiveImage> archiveImages = new ArrayList<>();
+
+    @Builder
+    public Archive(String name,
+                   LocalDate watchedOn,
+                   Emotion emotion,
+                   String mainImage,
+                   List<String> companions) {
+        this.name = name;
+        this.watchedOn = watchedOn;
+        this.emotion = emotion;
+        this.mainImage = mainImage;
+        this.companions = companions;
+    }
+
+    public void addImage(ArchiveImage archiveImage) {
+        this.archiveImages.add(archiveImage);
+    }
 
 }

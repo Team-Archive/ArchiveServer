@@ -28,8 +28,17 @@ public class ArchiveService {
         return ArchiveDto.specificFrom(archive);
     }
 
+    @Transactional
     public void delete(Long id) {
         archiveRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void save(ArchiveDto archiveDto) {
+        var archive = archiveRepository.save(archiveDto.toEntity());
+        archiveDto.getImages().stream()
+                .map(archiveImageDto -> archiveImageDto.toEntity(archive))
+                .forEach(archive::addImage);
     }
 
 }
