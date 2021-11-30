@@ -1,8 +1,10 @@
 package com.depromeet.archive.config;
 
+import com.depromeet.archive.domain.archive.ArchiveRepository;
 import com.depromeet.archive.domain.user.StringEncryptor;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.infra.user.StringEncryptorMock;
+import com.depromeet.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
 import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
 import com.depromeet.archive.security.result.LoginFailureHandler;
 import com.depromeet.archive.security.result.LoginSuccessHandler;
@@ -65,6 +67,11 @@ public class AuthConfig {
     @Bean
     public StringEncryptor stringEncryptorMock() {
         return new StringEncryptorMock();
+    }
+
+    @Bean
+    public ArchiveAdminOrAuthorChecker checker(ArchiveRepository repository) {
+        return new ArchiveAdminOrAuthorChecker(repository);
     }
 
 }

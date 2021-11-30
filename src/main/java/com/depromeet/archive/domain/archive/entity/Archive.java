@@ -1,6 +1,9 @@
 package com.depromeet.archive.domain.archive.entity;
 
+import com.depromeet.archive.common.exception.ForbiddenActionException;
 import com.depromeet.archive.domain.common.BaseTimeEntity;
+import com.depromeet.archive.domain.user.entity.UserRole;
+import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,6 +39,9 @@ public class Archive extends BaseTimeEntity {
     @Column(name = "archive_id")
     private Long id;
 
+    @Column(name = "author_id", nullable = false)
+    private long authorId;
+
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
@@ -58,6 +64,7 @@ public class Archive extends BaseTimeEntity {
 
     @Builder
     public Archive(String name,
+                   long authorId,
                    LocalDate watchedOn,
                    Emotion emotion,
                    String mainImage,
@@ -67,10 +74,10 @@ public class Archive extends BaseTimeEntity {
         this.emotion = emotion;
         this.mainImage = mainImage;
         this.companions = companions;
+        this.authorId = authorId;
     }
 
     public void addImage(ArchiveImage archiveImage) {
         this.archiveImages.add(archiveImage);
     }
-
 }

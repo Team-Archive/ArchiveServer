@@ -31,7 +31,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
         UserInfo authToken = principal.getUserInfo();
         String successToken = provider.createToken(authToken);
-        log.debug("유저 로그인 성공, 이메일: {}, 토큰: {}", authToken.getMailAddress(), successToken);
+        log.debug("유저 로그인 성공, 아이디: {}, 이메일: {}, 토큰: {}", authToken.getUserId(), authToken.getMailAddress(), successToken);
         tokenSupport.injectToken(httpServletResponse, successToken);
         httpServletResponse.setStatus(HttpStatus.OK.value());
     }

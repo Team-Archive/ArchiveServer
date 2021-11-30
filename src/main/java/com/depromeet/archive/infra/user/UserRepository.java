@@ -40,5 +40,4 @@ public class UserRepository implements UserReader, UserStore {
     public void removeUser(User user) {
         jpaRepository.delete(user);
     }
-
 }

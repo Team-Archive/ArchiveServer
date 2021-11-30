@@ -51,6 +51,7 @@ public class UserService {
         String encrypted = encryptor.encrypt(unencryptedPassword);
         command.setPassword(encrypted);
         User user = User.fromCredentialRegisterCommand(command);
+        log.info("유저 회원가입 이메일: {}", user.getMailAddress());
         userStore.saveUser(user);
     }
 
