@@ -8,11 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 
+@Slf4j
 public class JwtTokenProvider implements TokenProvider {
 
     private final String SECRET_KEY;
@@ -29,7 +31,7 @@ public class JwtTokenProvider implements TokenProvider {
         return Jwts
                 .builder()
                 .setSubject("user")
-                .claim("id", info)
+                .claim("info", info)
                 .setHeaderParam("typ", "JWT")
                 .setHeaderParam("alg", "ES56")
                 .setHeaderParam("kid", "default")
@@ -43,8 +45,10 @@ public class JwtTokenProvider implements TokenProvider {
                 .setSigningKey(SECRET_KEY.getBytes())
                 .parseClaimsJws(token)
                 .getBody();
-        HashMap<String, Object> map = (HashMap<String, Object>) jwtClaims.get("id");
-        return mapper.convertValue(map, UserInfo.class);
+        HashMap<String, Object> map = (HashMap<String, Object>) jwtClaims.get("info");
+        UserInfo info = mapper.convertValue(map, UserInfo.class);
+        log.debug("토큰 파싱 결과; id: {}, email: {}, role: {}", info.getUserId(), info.getMailAddress(), info.getUserRole());
+        return info;
     }
 
 }

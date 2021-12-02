@@ -2,7 +2,11 @@ package com.depromeet.archive.domain.archive;
 
 import com.depromeet.archive.api.dto.archive.ArchiveDto;
 import com.depromeet.archive.api.dto.archive.ArchiveListDto;
+import com.depromeet.archive.common.exception.ForbiddenActionException;
+import com.depromeet.archive.common.exception.ResourceNotFoundException;
+import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,22 +19,26 @@ public class ArchiveService {
 
     private final ArchiveRepository archiveRepository;
 
-    public ArchiveListDto getAllArchive() {
-        var archiveDtos = archiveRepository.findAll().stream()
+    public ArchiveListDto getAllArchive(UserInfo info) {
+        var authorId = info.getUserId();
+        var archiveDtos = archiveRepository.findAllByAuthorId(authorId)
+                .stream()
                 .map(ArchiveDto::simpleFrom)
                 .collect(Collectors.toList());
         return ArchiveListDto.from(archiveDtos);
     }
 
-    public ArchiveDto getOneArchiveById(Long id) {
-        var archive = archiveRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 아카이브가 없습니다."));
+    public ArchiveDto getOneArchiveById(Long archiveId) {
+        var archive = archiveRepository.findById(archiveId)
+                .orElseThrow(() -> new ResourceNotFoundException("조회하려는 아카이브가 존재하지 않습니다"));
         return ArchiveDto.specificFrom(archive);
     }
 
     @Transactional
     public void delete(Long id) {
-        archiveRepository.deleteById(id);
+        var archive = archiveRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("삭제하려는 아카이브가 존재하지 않습니다"));
+        archiveRepository.delete(archive);
     }
 
     @Transactional

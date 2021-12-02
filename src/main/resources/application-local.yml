@@ -54,7 +54,7 @@ cloud:
 logging:
   level:
     root: info
-    com.depromeet.archive: debug
+    com.depromeet: debug
     com:
       amazonaws:
         util:

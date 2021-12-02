@@ -3,8 +3,12 @@ package com.depromeet.archive.api;
 import com.depromeet.archive.api.dto.archive.ArchiveDto;
 import com.depromeet.archive.api.dto.archive.ArchiveImageUrlResponseDto;
 import com.depromeet.archive.api.dto.archive.ArchiveListDto;
+import com.depromeet.archive.api.resolver.annotation.RequestUser;
 import com.depromeet.archive.domain.archive.ArchiveImageService;
 import com.depromeet.archive.domain.archive.ArchiveService;
+import com.depromeet.archive.domain.user.info.UserInfo;
+import com.depromeet.archive.security.authorization.annotation.RequirePermission;
+import com.depromeet.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,16 +34,18 @@ public class ArchiveController {
 
     @Operation(summary = "아카이브 리스트 조회", description = "홈 뷰 - 아카이브 리스트 조회")
     @GetMapping
-    public ResponseEntity<ArchiveListDto> archiveListView() {
-        return ResponseEntity.ok(archiveService.getAllArchive());
+    public ResponseEntity<ArchiveListDto> archiveListView(@RequestUser UserInfo user) {
+        return ResponseEntity.ok(archiveService.getAllArchive(user));
     }
 
+    @RequirePermission(handler= ArchiveAdminOrAuthorChecker.class, id= "id")
     @Operation(summary = "아카이브 상세 조회", description = "상세 뷰 - 아카이브 상세 조회")
     @GetMapping("/{id}")
     public ResponseEntity<ArchiveDto> archiveSpecificView(@PathVariable Long id) {
         return ResponseEntity.ok(archiveService.getOneArchiveById(id));
     }
 
+    @RequirePermission(handler = ArchiveAdminOrAuthorChecker.class, id = "id")
     @Operation(summary = "아카이브 삭제", description = "아카이브 제거 - 실제 제거 X")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
@@ -59,7 +65,8 @@ public class ArchiveController {
 
     @Operation(summary = "아키이브 추가")
     @PostMapping
-    public ResponseEntity<Object> addArchive(@RequestBody ArchiveDto archiveDto) {
+    public ResponseEntity<Object> addArchive(@RequestUser UserInfo user, @RequestBody ArchiveDto archiveDto) {
+        archiveDto.setAuthorId(user.getUserId());
         archiveService.save(archiveDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
