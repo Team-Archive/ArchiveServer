@@ -3,3 +3,15 @@ spring:
     active: local
 server:
   port: 8080
+  tomcat:
+    basedir: .
+    accesslog:
+      enabled: true
+      directory: logs
+      pattern: '%h %l %u %t "%r" %s %b %D'
+      prefix: access
+      suffix: .log
+      rename-on-rotate: true
+      rotate: true
+      file-date-format: .yyyy-MM-dd
+      max-days: 7
