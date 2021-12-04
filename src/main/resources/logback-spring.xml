@@ -53,6 +53,13 @@
         <root level="info">
             <appender-ref ref="CONSOLE"/>
         </root>
+
+        <logger name="com.amazonaws.util.EC2MetadataUtils" level="error" additivity="false">
+        </logger>
+
+        <logger name="com.depromeet" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
     </springProfile>
 
     <springProfile name="dev,prd">
