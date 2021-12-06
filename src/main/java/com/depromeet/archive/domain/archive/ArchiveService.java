@@ -2,11 +2,9 @@ package com.depromeet.archive.domain.archive;
 
 import com.depromeet.archive.api.dto.archive.ArchiveDto;
 import com.depromeet.archive.api.dto.archive.ArchiveListDto;
-import com.depromeet.archive.common.exception.ForbiddenActionException;
 import com.depromeet.archive.common.exception.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +45,11 @@ public class ArchiveService {
         archiveDto.getImages().stream()
                 .map(archiveImageDto -> archiveImageDto.toEntity(archive))
                 .forEach(archive::addImage);
+    }
+
+    public long countArchive(UserInfo info) {
+        var authorId = info.getUserId();
+        return archiveRepository.countByAuthorId(authorId);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.depromeet.archive.api;
 
+import com.depromeet.archive.api.dto.archive.ArchiveCountDto;
 import com.depromeet.archive.api.dto.archive.ArchiveDto;
 import com.depromeet.archive.api.dto.archive.ArchiveImageUrlResponseDto;
 import com.depromeet.archive.api.dto.archive.ArchiveListDto;
@@ -14,14 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -38,7 +32,7 @@ public class ArchiveController {
         return ResponseEntity.ok(archiveService.getAllArchive(user));
     }
 
-    @RequirePermission(handler= ArchiveAdminOrAuthorChecker.class, id= "id")
+    @RequirePermission(handler = ArchiveAdminOrAuthorChecker.class, id = "id")
     @Operation(summary = "아카이브 상세 조회", description = "상세 뷰 - 아카이브 상세 조회")
     @GetMapping("/{id}")
     public ResponseEntity<ArchiveDto> archiveSpecificView(@PathVariable Long id) {
@@ -69,6 +63,13 @@ public class ArchiveController {
         archiveDto.setAuthorId(user.getUserId());
         archiveService.save(archiveDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Operation(summary = "아카이브 개수 조회")
+    @GetMapping("/count")
+    public ResponseEntity<ArchiveCountDto> countArchive(@RequestUser UserInfo user) {
+        var archiveCountDto = new ArchiveCountDto(archiveService.countArchive(user));
+        return ResponseEntity.ok(archiveCountDto);
     }
 
 }
