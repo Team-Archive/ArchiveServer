@@ -49,7 +49,7 @@ public class ArchiveService {
 
     public long countArchive(UserInfo info) {
         var authorId = info.getUserId();
-        return archiveRepository.countByAuthorId(authorId);
+        return archiveRepository.countArchiveByAuthorId(authorId);
     }
 
 }
