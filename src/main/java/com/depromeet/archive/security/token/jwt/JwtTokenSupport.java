@@ -1,6 +1,6 @@
 package com.depromeet.archive.security.token.jwt;
 
-import com.depromeet.archive.security.exception.TokenNotFoundException;
+import com.depromeet.archive.exception.security.TokenNotFoundException;
 import com.depromeet.archive.security.token.HttpAuthTokenSupport;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ public class JwtTokenSupport implements HttpAuthTokenSupport {
         String tokenTypeAndStr = target.getHeader("Authorization");
         log.debug("Parsing token in header: {}", tokenTypeAndStr);
         if (isInvalidToken(tokenTypeAndStr))
-            throw new TokenNotFoundException("Token header not found. Header name must be 'Authorization'");
+            throw new TokenNotFoundException();
         return tokenTypeAndStr.split(" ")[1];
     }
 

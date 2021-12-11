@@ -2,7 +2,7 @@ package com.depromeet.archive.domain.archive;
 
 import com.depromeet.archive.api.dto.archive.ArchiveDto;
 import com.depromeet.archive.api.dto.archive.ArchiveListDto;
-import com.depromeet.archive.common.exception.ResourceNotFoundException;
+import com.depromeet.archive.exception.common.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,5 @@
 package com.depromeet.archive.security.authorization;
 
-import com.depromeet.archive.common.exception.ForbiddenActionException;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.security.authorization.annotation.RequirePermission;
 import com.depromeet.archive.util.SecurityUtils;
@@ -10,6 +9,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -28,12 +28,12 @@ public class ArchivePermissionAdvice {
 
         Object idParam = getParamObjByName(joinPoint.getArgs(), signature, annotation.id());
         if (idParam != null && !permissionHandler.checkParam(requester, idParam))
-            throw new ForbiddenActionException("리소스에 접근 권한이 없습니다");
+            throw new AccessDeniedException("리소스에 접근 권한이 없습니다");
 
         Object returnVal = joinPoint.proceed();
 
         if (!permissionHandler.checkReturn(requester, returnVal))
-            throw new ForbiddenActionException("리소스에 접근 권한이 없습니다.");
+            throw new AccessDeniedException("리소스에 접근 권한이 없습니다.");
 
         return returnVal;
     }

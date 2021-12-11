@@ -1,6 +1,6 @@
 package com.depromeet.archive.domain.user;
 
-import com.depromeet.archive.common.exception.ResourceNotFoundException;
+import com.depromeet.archive.exception.common.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
 import com.depromeet.archive.domain.user.command.LoginCommand;

@@ -1,9 +1,8 @@
-package com.depromeet.archive.security.exception;
+package com.depromeet.archive.exception.security;
 
-import com.depromeet.archive.common.exception.BaseException;
+import com.depromeet.archive.exception.BaseException;
 import lombok.Getter;
 import org.springframework.security.core.AuthenticationException;
-
 
 @Getter
 public class WrappingAuthenticationException extends AuthenticationException {
@@ -14,4 +13,5 @@ public class WrappingAuthenticationException extends AuthenticationException {
         super(cause.getMessage());
         this.cause = cause;
     }
+
 }
