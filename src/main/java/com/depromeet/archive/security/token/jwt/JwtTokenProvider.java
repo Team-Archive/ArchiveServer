@@ -27,7 +27,7 @@ public class JwtTokenProvider implements TokenProvider {
 
     public String createToken(UserInfo info) {
         Date date = new Date();
-        date.setTime(date.getTime() + 1000 * 60 * 60 * 2);
+        date.setTime(date.getTime() + 1000L * 60 * 60 * 24 * 30);
         return Jwts
                 .builder()
                 .setSubject("user")

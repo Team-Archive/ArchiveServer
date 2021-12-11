@@ -32,6 +32,11 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/info")
+    public ResponseEntity<UserInfo> getUserInfo(@RequestUser UserInfo user) {
+        return ResponseEntity.ok(user);
+    }
+
     @Operation(summary = "이메일 중복 검사")
     @GetMapping("/email/{email}")
     public ResponseEntity<EmailDuplicateResponseDto> checkDuplicatedEmail(@PathVariable String email) {
