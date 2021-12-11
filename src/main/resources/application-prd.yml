@@ -47,11 +47,3 @@ cloud:
       bucket-name: ${PRD_AWS_S3_BUCKET_NAME}
     stack:
       auto: false
-
-# aws ec2 metadata disable error
-logging:
-  level:
-    com:
-      amazonaws:
-        util:
-          EC2MetadataUtils: error

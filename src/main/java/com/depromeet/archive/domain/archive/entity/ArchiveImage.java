@@ -36,13 +36,17 @@ public class ArchiveImage extends BaseTimeEntity {
     @Column(name = "review")
     private String review;
 
+    @Column(name = "background_color")
+    private String backgroundColor;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "archive_id")
     private Archive archive;
 
-    public ArchiveImage(String image, String review, Archive archive) {
+    public ArchiveImage(String image, String review, String backgroundColor, Archive archive) {
         this.image = image;
         this.review = review;
+        this.backgroundColor = backgroundColor;
         this.archive = archive;
     }
 
