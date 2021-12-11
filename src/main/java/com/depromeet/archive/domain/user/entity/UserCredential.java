@@ -1,6 +1,6 @@
 package com.depromeet.archive.domain.user.entity;
 
-import com.depromeet.archive.domain.user.exception.LoginFailException;
+import com.depromeet.archive.exception.user.LoginFailException;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;

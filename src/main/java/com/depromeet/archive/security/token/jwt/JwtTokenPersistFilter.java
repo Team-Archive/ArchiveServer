@@ -1,7 +1,7 @@
 package com.depromeet.archive.security.token.jwt;
 
 import com.depromeet.archive.domain.user.info.UserInfo;
-import com.depromeet.archive.security.exception.TokenNotFoundException;
+import com.depromeet.archive.exception.security.TokenNotFoundException;
 import com.depromeet.archive.security.token.HttpAuthTokenSupport;
 import com.depromeet.archive.security.token.TokenProvider;
 import lombok.AllArgsConstructor;
