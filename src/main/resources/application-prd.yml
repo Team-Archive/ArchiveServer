@@ -47,3 +47,6 @@ cloud:
       bucket-name: ${PRD_AWS_S3_BUCKET_NAME}
     stack:
       auto: false
+
+sentry:
+  dsn: ${SENTRY_DSN}
