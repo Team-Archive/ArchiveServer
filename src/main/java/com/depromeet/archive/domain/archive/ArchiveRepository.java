@@ -14,4 +14,7 @@ public interface ArchiveRepository extends JpaRepository<Archive, Long> {
     void deleteById(Long id);
 
     List<Archive> findAllByAuthorId(Long authorId);
+
+    long countArchiveByAuthorId(Long authorId);
+
 }

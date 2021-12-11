@@ -14,7 +14,6 @@
     <name>archive</name>
     <description>Archive backend server app</description>
 
-
     <profiles>
         <profile>
             <id>local</id>
@@ -131,17 +130,9 @@
     </dependencies>
 
     <build>
-        <filters>
-            <filter>src/main/resources/application-${env}.yml</filter>
-        </filters>
-
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>*.yml</include>
-                </includes>
             </resource>
         </resources>
 

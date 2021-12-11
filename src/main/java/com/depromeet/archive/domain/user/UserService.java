@@ -19,12 +19,12 @@ public class UserService {
     private final UserStore userStore;
     private final StringEncryptor encryptor;
 
-    public boolean checkEmailDuplicate(String email) {
+    public boolean isDuplicatedEmail(String email) {
         try {
             userReader.findUserByMail(email);
-            return false;
-        } catch (ResourceNotFoundException e) {
             return true;
+        } catch (ResourceNotFoundException e) {
+            return false;
         }
     }
 
