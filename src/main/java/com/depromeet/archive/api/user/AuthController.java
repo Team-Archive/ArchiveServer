@@ -30,4 +30,9 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/info")
+    public ResponseEntity<UserInfo> getUserInfo(@RequestUser UserInfo user) {
+        return ResponseEntity.ok(user);
+    }
+
 }
