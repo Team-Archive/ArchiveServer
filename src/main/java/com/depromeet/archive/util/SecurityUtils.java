@@ -8,6 +8,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityUtils {
 
+    private SecurityUtils() {
+    }
+
     public static UserInfo getCurrentUserInfo() {
         try {
             JwtAuthenticationToken token = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
