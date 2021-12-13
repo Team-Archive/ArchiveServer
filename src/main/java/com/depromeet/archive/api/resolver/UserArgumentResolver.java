@@ -1,14 +1,10 @@
 package com.depromeet.archive.api.resolver;
 
 import com.depromeet.archive.api.resolver.annotation.RequestUser;
-import com.depromeet.archive.common.exception.BaseException;
-import com.depromeet.archive.common.exception.ForbiddenActionException;
 import com.depromeet.archive.domain.user.info.UserInfo;
-import com.depromeet.archive.security.token.jwt.JwtAuthenticationToken;
 import com.depromeet.archive.util.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

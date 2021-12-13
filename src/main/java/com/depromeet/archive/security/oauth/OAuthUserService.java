@@ -1,10 +1,10 @@
 package com.depromeet.archive.security.oauth;
 
-import com.depromeet.archive.common.exception.ResourceNotFoundException;
+import com.depromeet.archive.exception.common.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.security.common.UserPrincipal;
-import com.depromeet.archive.security.exception.WrappingAuthenticationException;
+import com.depromeet.archive.exception.security.WrappingAuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -35,7 +35,8 @@ public class OAuthUserService extends DefaultOAuth2UserService {
     private UserPrincipalConverter getConverter(OAuth2UserRequest userRequest) {
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         if (!factoryMap.containsKey(registrationId))
-            throw new WrappingAuthenticationException(new ResourceNotFoundException("No provider found on oauth: " + registrationId));
+            throw new WrappingAuthenticationException(
+                    new ResourceNotFoundException("알맞은 OAuth 프로바이더가 존재하지 않습니다", registrationId));
         return factoryMap.get(registrationId);
     }
 

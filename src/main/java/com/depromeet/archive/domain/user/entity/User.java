@@ -3,7 +3,7 @@ package com.depromeet.archive.domain.user.entity;
 import com.depromeet.archive.domain.common.BaseTimeEntity;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
-import com.depromeet.archive.domain.user.exception.LoginFailException;
+import com.depromeet.archive.exception.user.LoginFailException;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

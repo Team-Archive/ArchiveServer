@@ -5,9 +5,11 @@
                     converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
     <conversionRule conversionWord="wEx"
                     converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+    <springProperty name="SENTRY_DSN" source="sentry.dsn"/>
+
     <property name="LOG_PATTERN"
               value="${LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){blue} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-
     <property name="LOG_PATH" value="./logs"/>
     <property name="LOG_FILE_NAME" value="archive"/>
     <property name="LOG_FILE_PATH" value="${LOG_PATH}/${LOG_FILE_NAME}"/>
@@ -49,6 +51,13 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="SENTRY" class="io.sentry.logback.SentryAppender">
+        <options>
+            <dsn>${SENTRY_DSN}</dsn>
+        </options>
+        <minimumEventLevel>ERROR</minimumEventLevel>
+    </appender>
+
     <springProfile name="local">
         <root level="info">
             <appender-ref ref="CONSOLE"/>
@@ -62,7 +71,7 @@
         </logger>
     </springProfile>
 
-    <springProfile name="dev,prd">
+    <springProfile name="dev">
         <root level="info">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="LOG_FILE"/>
@@ -96,6 +105,49 @@
         <logger name="com.depromeet" level="debug" additivity="false">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="LOG_FILE"/>
+        </logger>
+    </springProfile>
+
+    <springProfile name="prd">
+        <root level="info">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOG_FILE"/>
+            <appender-ref ref="SENTRY"/>
+        </root>
+
+        <logger name="java.sql" level="warn" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOG_FILE"/>
+            <appender-ref ref="SENTRY"/>
+        </logger>
+
+        <logger name="jdbc" level="error" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOG_FILE"/>
+            <appender-ref ref="WARN_ERROR_LOG_FILE"/>
+            <appender-ref ref="SENTRY"/>
+        </logger>
+
+        <logger name="org.hibernate.SQL" level="info" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOG_FILE"/>
+            <appender-ref ref="WARN_ERROR_LOG_FILE"/>
+            <appender-ref ref="SENTRY"/>
+        </logger>
+
+        <logger name="com.zaxxer.hikari.pool.HikariPool" level="info" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOG_FILE"/>
+            <appender-ref ref="SENTRY"/>
+        </logger>
+
+        <logger name="com.amazonaws.util.EC2MetadataUtils" level="error" additivity="false">
+        </logger>
+
+        <logger name="com.depromeet" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOG_FILE"/>
+            <appender-ref ref="SENTRY"/>
         </logger>
     </springProfile>
 

@@ -1,8 +1,9 @@
 package com.depromeet.archive.security.token.jwt;
 
-import com.depromeet.archive.security.exception.TokenNotFoundException;
+import com.depromeet.archive.exception.security.TokenNotFoundException;
 import com.depromeet.archive.security.token.HttpAuthTokenSupport;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,15 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class JwtTokenSupport implements HttpAuthTokenSupport {
 
-    public static final String AUTH_HEADER = "Authorization";
     public static final String TOKEN_TYPE = "BEARER";
 
     @Override
     public String extractToken(HttpServletRequest target) {
-        String tokenTypeAndStr = target.getHeader("Authorization");
+        String tokenTypeAndStr = target.getHeader(HttpHeaders.AUTHORIZATION);
         log.debug("Parsing token in header: {}", tokenTypeAndStr);
         if (isInvalidToken(tokenTypeAndStr))
-            throw new TokenNotFoundException("Token header not found. Header name must be 'Authorization'");
+            throw new TokenNotFoundException();
         return tokenTypeAndStr.split(" ")[1];
     }
 
@@ -27,6 +27,6 @@ public class JwtTokenSupport implements HttpAuthTokenSupport {
     }
     @Override
     public void injectToken(HttpServletResponse dest, String token) {
-        dest.addHeader(AUTH_HEADER, TOKEN_TYPE + " " + token);
+        dest.addHeader(HttpHeaders.AUTHORIZATION, TOKEN_TYPE + " " + token);
     }
 }

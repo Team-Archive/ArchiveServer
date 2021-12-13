@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.depromeet.archive.config.cloud.aws.AwsS3Property;
 import com.depromeet.archive.domain.archive.ArchiveImageService;
+import com.depromeet.archive.exception.infra.FileInvalidException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +31,7 @@ public class S3Service implements ArchiveImageService {
             var inputStream = imageFile.getInputStream();
             amazonS3.putObject(bucket, fileName, inputStream, objectMetadata);
         } catch (IOException e) {
-            throw new FileInvalidException("Failed to stream of upload file");
+            throw new FileInvalidException();
         } catch (AmazonServiceException e) {
             throw new IllegalStateException("Failed to upload the file", e);
         }

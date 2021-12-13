@@ -1,15 +1,11 @@
 package com.depromeet.archive.integration;
 
 import com.depromeet.archive.ArchiveApplication;
-import com.depromeet.archive.common.exception.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
 import com.depromeet.archive.domain.user.command.LoginCommand;
-import com.depromeet.archive.domain.user.entity.User;
 import com.depromeet.archive.infra.user.UserRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +16,12 @@ import java.util.UUID;
 
 @Slf4j
 @SpringBootTest(classes = {ArchiveApplication.class, IntegrationContext.class},
-        webEnvironment =  SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class AuthorizationTest {
+        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+class AuthorizationTest {
 
     private CredentialRegisterCommand testRegisterInfo;
     private LoginCommand loginCommand;
 
-    @Autowired
-    private UserRepository repository;
     @Autowired
     private ApiHelper helper;
 
@@ -41,36 +35,36 @@ public class AuthorizationTest {
 
 
     @Test
-    public void registerWithValidPassword() {
+    void registerWithValidPassword() {
         Assertions.assertEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
-    public void registerWithNoSpecialCharacter() {
+    void registerWithNoSpecialCharacter() {
         testRegisterInfo.setPassword("abcABC123");
         Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
-    public void registerWithNoNumber() {
+    void registerWithNoNumber() {
         testRegisterInfo.setPassword("abcABC!@#");
         Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
-    public void registerWithNoAlphabet() {
+    void registerWithNoAlphabet() {
         testRegisterInfo.setPassword("123456!@#");
         Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
-    public void registerWithLongPassword() {
+    void registerWithLongPassword() {
         testRegisterInfo.setPassword("TooLongPassword!@#");
         Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
-    public void registerAndLogin() {
+    void registerAndLogin() {
         Assertions.assertEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
         String token = helper.tryLoginAndGetToken(loginCommand);
         log.debug("토큰 스트링 {}", token);
@@ -80,7 +74,7 @@ public class AuthorizationTest {
 
 
     @Test
-    public void unregister() {
+    void unregister() {
         helper.tryRegister(testRegisterInfo);
         String authToken = helper.tryLoginAndGetToken(loginCommand);
         log.debug("토큰 스트링 {}", authToken);
