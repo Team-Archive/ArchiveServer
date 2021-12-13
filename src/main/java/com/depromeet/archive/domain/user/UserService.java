@@ -1,64 +1,53 @@
 package com.depromeet.archive.domain.user;
 
-import com.depromeet.archive.exception.common.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
-import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
-import com.depromeet.archive.domain.user.command.LoginCommand;
-import com.depromeet.archive.domain.user.entity.User;
-import com.depromeet.archive.domain.user.info.UserInfo;
+import com.depromeet.archive.domain.user.entity.BaseUser;
+import com.depromeet.archive.exception.common.DuplicateResourceException;
+import com.depromeet.archive.infra.user.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserReader userReader;
-    private final UserStore userStore;
-    private final StringEncryptor encryptor;
+    private final UserRepository userRepository;
 
     public boolean isDuplicatedEmail(String email) {
-        try {
-            userReader.findUserByMail(email);
-            return true;
-        } catch (ResourceNotFoundException e) {
-            return false;
+        return userRepository.findUserByMailAddress(email).isPresent();
+    }
+
+    public long getOrRegisterUser(BasicRegisterCommand registerCommand) {
+        userRepository.save(registerCommand.toUserEntity());
+        BaseUser user = userRepository.findUserByMailAddress(registerCommand.getEmail()).orElse(null);
+        if (user == null) {
+            user = registerCommand.toUserEntity();
+            user = userRepository.save(user);
         }
+        return user.getUserId();
     }
 
-    public long updateNonCredentialUser(BasicRegisterCommand registerInfo) {
-        try {
-            User foundUser = userReader.findUserByMail(registerInfo.getEmail());
-            return foundUser.getUserId();
-        } catch (ResourceNotFoundException exception) {
-            User newUser = User.fromRegisterCommand(registerInfo);
-            userStore.saveUser(newUser);
-            return newUser.getUserId();
-        }
-    }
-
-    public UserInfo tryLoginAndReturnInfo(LoginCommand loginRequest) {
-        User user = userReader.findUserByMail(loginRequest.getEmail());
-        String encryptedPassword = encryptor.encrypt(loginRequest.getPassword());
-        user.tryLogin(encryptedPassword);
-        return user.getUserInfo();
-    }
-
-    public void registerUser(CredentialRegisterCommand command) {
-        String unencryptedPassword = command.getPassword();
-        String encrypted = encryptor.encrypt(unencryptedPassword);
-        command.setPassword(encrypted);
-        User user = User.fromCredentialRegisterCommand(command);
-        log.info("유저 회원가입 이메일: {}", user.getMailAddress());
-        userStore.saveUser(user);
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public long registerUser(BasicRegisterCommand command) {
+        Optional<BaseUser> user = userRepository.findUserByMailAddress(command.getEmail());
+        if (user.isPresent())
+            throw new DuplicateResourceException("이미 등록된 유저가 존재합니다");
+        BaseUser newUser = command.toUserEntity();
+        userRepository.save(newUser);
+        long registeredId = newUser.getUserId();
+        log.info("유저 회원가입, 아이디: {}, 이메일: {}", registeredId, newUser.getMailAddress());
+        return newUser.getUserId();
     }
 
     public void deleteUser(long userId) {
-        User user = userReader.findUserById(userId);
-        userStore.removeUser(user);
-        log.info("유저 탈퇴: {}", user.getMailAddress());
+        BaseUser user = userRepository.getById(userId);
+        userRepository.delete(user);
     }
 
 }

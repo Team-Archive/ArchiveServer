@@ -1,9 +1,8 @@
 package com.depromeet.archive.integration;
 
 import com.depromeet.archive.ArchiveApplication;
-import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
+import com.depromeet.archive.domain.user.command.PasswordRegisterCommand;
 import com.depromeet.archive.domain.user.command.LoginCommand;
-import com.depromeet.archive.infra.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +18,7 @@ import java.util.UUID;
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class AuthorizationTest {
 
-    private CredentialRegisterCommand testRegisterInfo;
+    private PasswordRegisterCommand testRegisterInfo;
     private LoginCommand loginCommand;
 
     @Autowired
@@ -29,7 +28,7 @@ class AuthorizationTest {
     public void initDTO() {
         var testEmail = UUID.randomUUID() + "@naver.com";
         var testPassword = "abcABC123!@#";
-        testRegisterInfo = new CredentialRegisterCommand(testEmail, testPassword);
+        testRegisterInfo = new PasswordRegisterCommand(testEmail, testPassword);
         loginCommand = new LoginCommand(testRegisterInfo.getEmail(), testRegisterInfo.getPassword());
     }
 
@@ -71,13 +70,19 @@ class AuthorizationTest {
 
     @Test
     void registerAndLogin() {
-        Assertions.assertEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+        helper.tryRegister(testRegisterInfo);
         String token = helper.tryLoginAndGetToken(loginCommand);
         log.debug("토큰 스트링 {}", token);
         Assertions.assertNotNull(token);
         assertBearerToken(token);
     }
 
+    @Test
+    void registerAndLoginWithWrongPassword() {
+        helper.tryRegister(testRegisterInfo);
+        loginCommand.setPassword("wrongPassword");
+        Assertions.assertNull(helper.tryLoginAndGetToken(loginCommand));
+    }
 
     @Test
     void unregister() {

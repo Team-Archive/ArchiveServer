@@ -5,6 +5,7 @@ import com.depromeet.archive.exception.security.TokenNotFoundException;
 import com.depromeet.archive.security.token.HttpAuthTokenSupport;
 import com.depromeet.archive.security.token.TokenProvider;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.FilterChain;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @AllArgsConstructor
+@Slf4j
 public class JwtTokenPersistFilter extends HttpFilter {
 
     private final HttpAuthTokenSupport httpTokenExtractor;
@@ -29,6 +31,9 @@ public class JwtTokenPersistFilter extends HttpFilter {
             super.doFilter(request, response, chain);
         } catch (TokenNotFoundException exception) {
             super.doFilter(request, response, chain);
+        } catch (Exception e) {
+            log.error("Failed to set SecurityContext", e);
+            super.doFilter(request,response, chain);
         }
     }
 
