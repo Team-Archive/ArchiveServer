@@ -64,6 +64,12 @@ class AuthorizationTest {
     }
 
     @Test
+    void registerWithShortPassword() {
+        testRegisterInfo.setPassword("ab12!@");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
+    @Test
     void registerAndLogin() {
         Assertions.assertEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
         String token = helper.tryLoginAndGetToken(loginCommand);
