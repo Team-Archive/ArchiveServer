@@ -1,5 +1,6 @@
 package com.depromeet.archive.security.general;
 
+import com.depromeet.archive.domain.user.UserLoginService;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.info.UserInfo;
@@ -15,9 +16,9 @@ import java.util.Collections;
 
 public class UserNamePasswordAuthenticationProvider implements AuthenticationProvider {
 
-    private final UserService userService;
+    private final UserLoginService userService;
 
-    public UserNamePasswordAuthenticationProvider(UserService service) {
+    public UserNamePasswordAuthenticationProvider(UserLoginService service) {
         this.userService = service;
     }
 

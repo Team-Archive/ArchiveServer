@@ -1,5 +1,6 @@
 package com.depromeet.archive.domain.user.command;
 
+import com.depromeet.archive.domain.user.entity.BaseUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +13,11 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BasicRegisterCommand {
+public abstract class BasicRegisterCommand {
 
     @NotEmpty(message = "필수 입력 항목입니다.")
     @Email(message = "올바른 이메일을 입력해 주세요.")
     private String email;
+
+    public abstract BaseUser toUserEntity();
 }

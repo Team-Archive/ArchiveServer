@@ -1,6 +1,6 @@
 package com.depromeet.archive.integration;
 
-import com.depromeet.archive.domain.user.command.CredentialRegisterCommand;
+import com.depromeet.archive.domain.user.command.PasswordRegisterCommand;
 import com.depromeet.archive.domain.user.command.LoginCommand;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -16,7 +16,7 @@ public class ApiHelper {
     private final static String LOGIN_URI = "/login";
     private final static String UNREGISTER_URI = "/unregister";
     private final static String AUTH_HEADER_KEY = "Authorization";
-    public int tryRegister(CredentialRegisterCommand command) {
+    public int tryRegister(PasswordRegisterCommand command) {
         return RestAssured
                 .given()
                 .contentType(ContentType.JSON)

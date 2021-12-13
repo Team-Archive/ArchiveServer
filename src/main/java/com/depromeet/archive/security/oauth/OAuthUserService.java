@@ -1,8 +1,9 @@
 package com.depromeet.archive.security.oauth;
 
+import com.depromeet.archive.domain.user.command.OAuthRegisterCommand;
+import com.depromeet.archive.domain.user.entity.OAuthProvider;
 import com.depromeet.archive.exception.common.ResourceNotFoundException;
 import com.depromeet.archive.domain.user.UserService;
-import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.security.common.UserPrincipal;
 import com.depromeet.archive.exception.security.WrappingAuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -15,7 +16,6 @@ import java.util.Map;
 
 public class OAuthUserService extends DefaultOAuth2UserService {
 
-    private final Map<String, UserPrincipalConverter> factoryMap = new HashMap<>();
     private final UserService userService;
 
     public OAuthUserService(UserService service) {
@@ -25,29 +25,21 @@ public class OAuthUserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User user = super.loadUser(oAuth2UserRequest);
-        UserPrincipalConverter converter = getConverter(oAuth2UserRequest);
-        UserPrincipal principal = converter.convert(user);
+        OAuthProvider provider = getProvider(oAuth2UserRequest);
+        UserPrincipal principal = provider.convert(user);
         assert principal != null;
-        registerOrUpdateUser(principal);
+        registerOrUpdateUser(principal, provider);
         return principal;
     }
 
-    private UserPrincipalConverter getConverter(OAuth2UserRequest userRequest) {
+    private OAuthProvider getProvider(OAuth2UserRequest userRequest) {
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        if (!factoryMap.containsKey(registrationId))
-            throw new WrappingAuthenticationException(
-                    new ResourceNotFoundException("알맞은 OAuth 프로바이더가 존재하지 않습니다", registrationId));
-        return factoryMap.get(registrationId);
+        return OAuthProvider.getByRegistrationId(registrationId);
     }
 
-    private void registerOrUpdateUser(UserPrincipal principal) {
-        BasicRegisterCommand registerCommand = new BasicRegisterCommand(principal.getName());
-        long userId = userService.updateNonCredentialUser(registerCommand);
+    private void registerOrUpdateUser(UserPrincipal principal, OAuthProvider provider) {
+        OAuthRegisterCommand command = new OAuthRegisterCommand(principal.getName(), provider);
+        long userId = userService.getOrRegisterUser(command);
         principal.setUserId(userId);
     }
-
-    public void addPrincipalConverter(UserPrincipalConverter converter) {
-        factoryMap.put(converter.getProviderId(), converter);
-    }
-
 }
