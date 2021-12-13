@@ -4,12 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @ControllerAdvice
 @Slf4j
@@ -18,8 +23,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("handleMethodArgumentNotValidException", e);
-        final var response = ExceptionResponse.of(ExceptionCode.NO_VALUE);
+        final var errMsg = makeErrorMessage(e);
+        final var response = errMsg
+                .map((err)->ExceptionResponse.of(ExceptionCode.NO_VALUE, err))
+                .orElse(ExceptionResponse.of(ExceptionCode.NO_VALUE));
         return new ResponseEntity<>(response, ExceptionCode.NO_VALUE.getStatus());
+    }
+
+    private Optional<String> makeErrorMessage(MethodArgumentNotValidException e) {
+        List<ObjectError> errors = e.getAllErrors();
+        if (errors.isEmpty())
+            return Optional.empty();
+        return Optional.ofNullable(errors.get(0).getDefaultMessage());
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
