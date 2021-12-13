@@ -19,8 +19,8 @@ public enum ExceptionCode {
     FAILED_FILE_UPLOAD(HttpStatus.INTERNAL_SERVER_ERROR, "Infra001", "(File IO) Failed to stream of upload file"),
 
     // Common
-    DUPLICATED_RESOURCE(HttpStatus.BAD_REQUEST, "Common001", "이미 존재하는 리소스 입니다"),
-    NOT_FOUND_RESOURCE(HttpStatus.BAD_REQUEST, "Common002", "존재 하지 않는 리소스 입니다"),
+    DUPLICATED_RESOURCE(HttpStatus.CONFLICT, "Common001", "이미 존재하는 리소스 입니다"),
+    NOT_FOUND_RESOURCE(HttpStatus.NOT_FOUND, "Common002", "존재 하지 않는 리소스 입니다"),
 
     // User
     LOGIN_FAIL(HttpStatus.BAD_REQUEST, "User001", "로그인에 실패했습니다"),
