@@ -42,7 +42,7 @@ class AuthorizationTest {
     @Test
     void registerWithNoSpecialCharacter() {
         testRegisterInfo.setPassword("abcABC123");
-        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+        Assertions.assertEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
@@ -59,7 +59,7 @@ class AuthorizationTest {
 
     @Test
     void registerWithLongPassword() {
-        testRegisterInfo.setPassword("TooLongPassword!@#");
+        testRegisterInfo.setPassword("TooLongPassword1234!@#");
         Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
     }
 
