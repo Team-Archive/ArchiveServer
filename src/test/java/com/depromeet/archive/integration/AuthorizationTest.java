@@ -23,21 +23,50 @@ class AuthorizationTest {
     private LoginCommand loginCommand;
 
     @Autowired
-    private UserRepository repository;
-    @Autowired
     private ApiHelper helper;
 
     @BeforeEach
     public void initDTO() {
         var testEmail = UUID.randomUUID() + "@naver.com";
-        var testPassword = "abcABC123";
+        var testPassword = "abcABC123!@#";
         testRegisterInfo = new CredentialRegisterCommand(testEmail, testPassword);
         loginCommand = new LoginCommand(testRegisterInfo.getEmail(), testRegisterInfo.getPassword());
     }
 
+
     @Test
-    void registerUser() {
+    void registerWithValidPassword() {
         Assertions.assertEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
+    @Test
+    void registerWithNoSpecialCharacter() {
+        testRegisterInfo.setPassword("abcABC123");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
+    @Test
+    void registerWithNoNumber() {
+        testRegisterInfo.setPassword("abcABC!@#");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
+    @Test
+    void registerWithNoAlphabet() {
+        testRegisterInfo.setPassword("123456!@#");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
+    @Test
+    void registerWithLongPassword() {
+        testRegisterInfo.setPassword("TooLongPassword!@#");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
+    @Test
+    void registerWithShortPassword() {
+        testRegisterInfo.setPassword("ab12!@");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
@@ -48,6 +77,7 @@ class AuthorizationTest {
         Assertions.assertNotNull(token);
         assertBearerToken(token);
     }
+
 
     @Test
     void unregister() {
