@@ -19,7 +19,8 @@ import org.springframework.http.HttpStatus;
 import java.util.UUID;
 
 @Slf4j
-@SpringBootTest(classes = {ArchiveApplication.class, IntegrationContext.class}, webEnvironment =  SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = {ArchiveApplication.class, IntegrationContext.class},
+        webEnvironment =  SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class AuthorizationTest {
 
     private CredentialRegisterCommand testRegisterInfo;
@@ -33,16 +34,41 @@ public class AuthorizationTest {
     @BeforeEach
     public void initDTO() {
         var testEmail = UUID.randomUUID() + "@naver.com";
-        var testPassword = "abcABC123";
+        var testPassword = "abcABC123!@#";
         testRegisterInfo = new CredentialRegisterCommand(testEmail, testPassword);
         loginCommand = new LoginCommand(testRegisterInfo.getEmail(), testRegisterInfo.getPassword());
     }
 
+
     @Test
-    public void registerUser() {
+    public void registerWithValidPassword() {
         Assertions.assertEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
     }
-    
+
+    @Test
+    public void registerWithNoSpecialCharacter() {
+        testRegisterInfo.setPassword("abcABC123");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
+    @Test
+    public void registerWithNoNumber() {
+        testRegisterInfo.setPassword("abcABC!@#");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
+    @Test
+    public void registerWithNoAlphabet() {
+        testRegisterInfo.setPassword("123456!@#");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
+    @Test
+    public void registerWithLongPassword() {
+        testRegisterInfo.setPassword("TooLongPassword!@#");
+        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+    }
+
     @Test
     public void registerAndLogin() {
         Assertions.assertEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
@@ -51,6 +77,7 @@ public class AuthorizationTest {
         Assertions.assertNotNull(token);
         assertBearerToken(token);
     }
+
 
     @Test
     public void unregister() {
