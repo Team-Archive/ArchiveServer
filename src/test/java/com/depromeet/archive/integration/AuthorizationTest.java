@@ -47,25 +47,25 @@ class AuthorizationTest {
     @Test
     void registerWithNoNumber() {
         testRegisterInfo.setPassword("abcABC!@#");
-        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
     void registerWithNoAlphabet() {
         testRegisterInfo.setPassword("123456!@#");
-        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
     void registerWithLongPassword() {
         testRegisterInfo.setPassword("TooLongPassword1234!@#");
-        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
     void registerWithShortPassword() {
         testRegisterInfo.setPassword("ab12!@");
-        Assertions.assertNotEquals(HttpStatus.OK.value(), helper.tryRegister(testRegisterInfo));
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test
@@ -81,7 +81,13 @@ class AuthorizationTest {
     void registerAndLoginWithWrongPassword() {
         helper.tryRegister(testRegisterInfo);
         loginCommand.setPassword("wrongPassword");
-        Assertions.assertNull(helper.tryLoginAndGetToken(loginCommand));
+        Assertions.assertEquals(HttpStatus.UNAUTHORIZED.value(), helper.tryLogin(loginCommand));
+    }
+
+    @Test
+    void registerDuplicate() {
+        helper.tryRegister(testRegisterInfo);
+        Assertions.assertEquals(HttpStatus.CONFLICT.value(), helper.tryRegister(testRegisterInfo));
     }
 
     @Test

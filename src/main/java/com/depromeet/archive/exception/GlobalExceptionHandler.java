@@ -1,5 +1,6 @@
 package com.depromeet.archive.exception;
 
+import com.depromeet.archive.exception.common.DuplicateResourceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,6 +20,17 @@ import java.util.Optional;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+
+    @ExceptionHandler(DuplicateResourceException.class)
+    protected ResponseEntity<ExceptionResponse> handleDuplicateResourceException(DuplicateResourceException e) {
+        log.warn("duplicateResourceException", e);
+        ExceptionCode errorCode = ExceptionCode.DUPLICATED_RESOURCE;
+        final var response = e.getAdditionalMessage()
+                .map(additionalMessage -> ExceptionResponse.of(errorCode, additionalMessage))
+                .orElse(ExceptionResponse.of(errorCode));
+        return new ResponseEntity<>(response, errorCode.getStatus());
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {

@@ -34,6 +34,15 @@ public class ApiHelper {
                 .getHeader(AUTH_HEADER_KEY);
     }
 
+    public int tryLogin(LoginCommand command) {
+        return RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(command)
+                .post(getLoginUrl())
+                .statusCode();
+    }
+
     public int tryUnregister(String authToken) {
         return RestAssured
                 .given()
