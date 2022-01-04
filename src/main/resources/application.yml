@@ -1,6 +1,12 @@
 spring:
   profiles:
     active: local
+  servlet:
+    multipart:
+      file-size-threshold: 1MB
+      location: /tmp
+      max-file-size: 5MB
+      max-request-size: 20MB
 server:
   port: 8080
   tomcat:
