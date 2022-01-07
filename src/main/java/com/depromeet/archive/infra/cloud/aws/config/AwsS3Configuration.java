@@ -1,4 +1,4 @@
-package com.depromeet.archive.config.cloud.aws;
+package com.depromeet.archive.infra.cloud.aws.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
