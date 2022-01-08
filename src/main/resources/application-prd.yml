@@ -50,3 +50,7 @@ cloud:
 
 sentry:
   dsn: ${SENTRY_DSN}
+
+slack:
+  token: ${SLACK_TOKEN}
+  channel: ${SLACK_CHANNEL}
