@@ -1,5 +1,6 @@
 package com.depromeet.archive.domain.user;
 
+import com.depromeet.archive.api.dto.user.BaseUserDto;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.domain.user.entity.BaseUser;
 import com.depromeet.archive.exception.common.DuplicateResourceException;
@@ -8,12 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 public class UserService {
@@ -34,13 +33,11 @@ public class UserService {
         return user.getUserId();
     }
 
-    public long registerUser(BasicRegisterCommand command) {
+    public BaseUserDto registerUser(BasicRegisterCommand command) {
         try {
             BaseUser newUser = command.toUserEntity();
             userRepository.saveAndFlush(newUser);
-            long registeredId = newUser.getUserId();
-            log.info("유저 회원가입, 아이디: {}, 이메일: {}", registeredId, newUser.getMailAddress());
-            return newUser.getUserId();
+            return BaseUserDto.from(newUser);
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateResourceException("이메일이 이미 존재합니다.");
         }
