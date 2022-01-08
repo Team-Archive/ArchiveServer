@@ -132,6 +132,11 @@
             <artifactId>sentry-logback</artifactId>
             <version>5.4.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.slack.api</groupId>
+            <artifactId>slack-api-client</artifactId>
+            <version>1.16.0</version>
+        </dependency>
     </dependencies>
 
     <build>

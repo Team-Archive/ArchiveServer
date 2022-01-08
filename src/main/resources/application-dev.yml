@@ -47,3 +47,7 @@ cloud:
       bucket-name: ${DEV_AWS_S3_BUCKET_NAME}
     stack:
       auto: false
+
+slack:
+  token: ${DEV_SLACK_TOKEN}
+  channel: ${DEV_SLACK_CHANNEL}

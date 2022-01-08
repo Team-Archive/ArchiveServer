@@ -1,5 +1,6 @@
 package com.depromeet.archive.api.user;
 
+import com.depromeet.archive.domain.common.MessagingService;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.PasswordRegisterCommand;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,14 @@ import javax.validation.Valid;
 public class RegisterController {
 
     private final UserService userService;
+    private final MessagingService messagingService;
     private final PasswordEncoder encoder;
 
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@RequestBody @Valid PasswordRegisterCommand command) {
         encryptPassword(command);
-        userService.registerUser(command);
+        var baseUserDto = userService.registerUser(command);
+        messagingService.sendUserRegisterMessage(baseUserDto);
         return ResponseEntity.ok().build();
     }
 
