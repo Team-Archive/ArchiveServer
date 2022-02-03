@@ -98,6 +98,12 @@ class AuthorizationTest {
         Assertions.assertEquals(HttpStatus.OK.value(), helper.tryUnregister(authToken));
     }
 
+
+    @Test
+    void unregisterWithInvalidToken() {
+         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), helper.tryUnregister("BEARER invalidToken"));
+    }
+
     private void assertBearerToken(String token) {
         String tokenType = token.split(" ")[0];
         Assertions.assertEquals("BEARER", tokenType);

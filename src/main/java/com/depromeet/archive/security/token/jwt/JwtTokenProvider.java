@@ -3,6 +3,7 @@ package com.depromeet.archive.security.token.jwt;
 
 import com.depromeet.archive.domain.user.entity.UserRole;
 import com.depromeet.archive.domain.user.info.UserInfo;
+import com.depromeet.archive.exception.security.TokenNotFoundException;
 import com.depromeet.archive.security.token.TokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -41,14 +42,19 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     public UserInfo parseUserInfoFromToken(String token) {
-        Claims jwtClaims = Jwts.parser()
-                .setSigningKey(SECRET_KEY.getBytes())
-                .parseClaimsJws(token)
-                .getBody();
-        HashMap<String, Object> map = (HashMap<String, Object>) jwtClaims.get("info");
-        UserInfo info = mapper.convertValue(map, UserInfo.class);
-        log.debug("토큰 파싱 결과; id: {}, email: {}, role: {}", info.getUserId(), info.getMailAddress(), info.getUserRole());
-        return info;
+        try {
+            Claims jwtClaims = Jwts.parser()
+                    .setSigningKey(SECRET_KEY.getBytes())
+                    .parseClaimsJws(token)
+                    .getBody();
+            HashMap<String, Object> map = (HashMap<String, Object>) jwtClaims.get("info");
+            UserInfo info = mapper.convertValue(map, UserInfo.class);
+            log.debug("토큰 파싱 결과; id: {}, email: {}, role: {}", info.getUserId(), info.getMailAddress(), info.getUserRole());
+            return info;
+        } catch (Exception e) {
+            log.warn("토큰 파싱 실패!", e);
+            throw new TokenNotFoundException();
+        }
     }
 
 }
