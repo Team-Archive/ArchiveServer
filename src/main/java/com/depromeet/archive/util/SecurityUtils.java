@@ -15,10 +15,8 @@ public class SecurityUtils {
         try {
             JwtAuthenticationToken token = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
             return token.getUserInfo();
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             throw new AccessDeniedException("유저 인증 정보가 존재하지 않습니다");
-        } catch (ClassCastException e) {
-            throw new InvalidTokenException();
         }
     }
 }
