@@ -33,7 +33,7 @@ public class JwtTokenPersistFilter extends HttpFilter {
             super.doFilter(request, response, chain);
         } catch (Exception e) {
             log.error("Failed to set SecurityContext", e);
-            super.doFilter(request,response, chain);
+            super.doFilter(request, response, chain);
         }
     }
 

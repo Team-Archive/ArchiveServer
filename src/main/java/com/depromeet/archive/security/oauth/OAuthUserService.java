@@ -1,18 +1,13 @@
 package com.depromeet.archive.security.oauth;
 
+import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.OAuthRegisterCommand;
 import com.depromeet.archive.domain.user.entity.OAuthProvider;
-import com.depromeet.archive.exception.common.ResourceNotFoundException;
-import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.security.common.UserPrincipal;
-import com.depromeet.archive.exception.security.WrappingAuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class OAuthUserService extends DefaultOAuth2UserService {
 

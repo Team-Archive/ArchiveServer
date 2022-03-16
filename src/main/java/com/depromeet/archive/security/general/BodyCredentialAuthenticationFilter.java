@@ -17,8 +17,8 @@ public class BodyCredentialAuthenticationFilter extends AbstractAuthenticationPr
     private final ObjectMapper objMapper;
 
     public BodyCredentialAuthenticationFilter(String defaultFilterProcessesUrl,
-                                                 AuthenticationManager authenticationManager,
-                                                 ObjectMapper mapper) {
+                                              AuthenticationManager authenticationManager,
+                                              ObjectMapper mapper) {
         super(defaultFilterProcessesUrl, authenticationManager);
         this.objMapper = mapper;
     }

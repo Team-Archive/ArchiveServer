@@ -1,12 +1,11 @@
 package com.depromeet.archive.security.general;
 
 import com.depromeet.archive.domain.user.UserLoginService;
-import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.exception.BaseException;
-import com.depromeet.archive.security.common.UserPrincipal;
 import com.depromeet.archive.exception.security.WrappingAuthenticationException;
+import com.depromeet.archive.security.common.UserPrincipal;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

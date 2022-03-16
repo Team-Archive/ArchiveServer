@@ -11,5 +11,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequirePermission {
     Class<? extends ArchivePermissionHandler> handler();
+
     String id() default "";
 }

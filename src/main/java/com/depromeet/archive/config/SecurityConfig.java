@@ -1,13 +1,13 @@
 package com.depromeet.archive.config;
 
 import com.depromeet.archive.security.general.BodyCredentialAuthenticationFilter;
+import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
+import com.depromeet.archive.security.oauth.OAuthUserService;
 import com.depromeet.archive.security.result.LoginFailureHandler;
+import com.depromeet.archive.security.result.LoginSuccessHandler;
 import com.depromeet.archive.security.token.HttpAuthTokenSupport;
 import com.depromeet.archive.security.token.TokenProvider;
 import com.depromeet.archive.security.token.jwt.JwtTokenPersistFilter;
-import com.depromeet.archive.security.result.LoginSuccessHandler;
-import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
-import com.depromeet.archive.security.oauth.OAuthUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +17,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity

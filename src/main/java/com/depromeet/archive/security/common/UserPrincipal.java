@@ -1,6 +1,5 @@
 package com.depromeet.archive.security.common;
 
-import com.depromeet.archive.domain.user.entity.UserRole;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import lombok.Builder;
 import lombok.Getter;

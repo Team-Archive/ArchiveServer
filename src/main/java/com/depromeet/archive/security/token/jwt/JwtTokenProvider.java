@@ -1,7 +1,6 @@
 package com.depromeet.archive.security.token.jwt;
 
 
-import com.depromeet.archive.domain.user.entity.UserRole;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.exception.security.TokenNotFoundException;
 import com.depromeet.archive.security.token.TokenProvider;
