@@ -20,16 +20,12 @@ public class UserService {
     private final UserRepository userRepository;
 
     public boolean isDuplicatedEmail(String email) {
-        return userRepository.findUserByMailAddress(email).isPresent();
+        return userRepository.findByMailAddress(email).isPresent();
     }
 
     public long getOrRegisterUser(BasicRegisterCommand registerCommand) {
-        userRepository.save(registerCommand.toUserEntity());
-        BaseUser user = userRepository.findUserByMailAddress(registerCommand.getEmail()).orElse(null);
-        if (user == null) {
-            user = registerCommand.toUserEntity();
-            user = userRepository.save(user);
-        }
+        var user = userRepository.findByMailAddress(registerCommand.getEmail())
+                .orElseGet(() -> userRepository.save(registerCommand.toUserEntity()));
         return user.getUserId();
     }
 

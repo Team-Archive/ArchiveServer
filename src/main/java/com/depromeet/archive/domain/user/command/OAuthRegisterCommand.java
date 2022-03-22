@@ -1,10 +1,9 @@
 package com.depromeet.archive.domain.user.command;
 
+import com.depromeet.archive.domain.user.entity.BaseUser;
 import com.depromeet.archive.domain.user.entity.OAuthProvider;
 import com.depromeet.archive.domain.user.entity.OAuthUser;
-import com.depromeet.archive.domain.user.entity.BaseUser;
 import com.depromeet.archive.domain.user.entity.UserRole;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

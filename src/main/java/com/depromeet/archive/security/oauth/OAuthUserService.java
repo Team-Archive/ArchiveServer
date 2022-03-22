@@ -19,22 +19,22 @@ public class OAuthUserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
-        OAuth2User user = super.loadUser(oAuth2UserRequest);
-        OAuthProvider provider = getProvider(oAuth2UserRequest);
-        UserPrincipal principal = provider.convert(user);
-        assert principal != null;
+        var oAuth2User = super.loadUser(oAuth2UserRequest);
+        var provider = getProvider(oAuth2UserRequest);
+        var principal = provider.convert(oAuth2User);
+        assert principal != null; // TODO: need refactoring
         registerOrUpdateUser(principal, provider);
         return principal;
     }
 
     private OAuthProvider getProvider(OAuth2UserRequest userRequest) {
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        var registrationId = userRequest.getClientRegistration().getRegistrationId();
         return OAuthProvider.getByRegistrationId(registrationId);
     }
 
     private void registerOrUpdateUser(UserPrincipal principal, OAuthProvider provider) {
-        OAuthRegisterCommand command = new OAuthRegisterCommand(principal.getName(), provider);
-        long userId = userService.getOrRegisterUser(command);
+        var command = new OAuthRegisterCommand(principal.getName(), provider);
+        var userId = userService.getOrRegisterUser(command);
         principal.setUserId(userId);
     }
 }
