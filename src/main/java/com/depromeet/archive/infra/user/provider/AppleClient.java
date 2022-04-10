@@ -1,8 +1,8 @@
 package com.depromeet.archive.infra.user.provider;
 
+import com.depromeet.archive.api.dto.user.OAuthRegisterDto;
 import com.depromeet.archive.domain.user.command.OAuthRegisterCommand;
 import com.depromeet.archive.domain.user.entity.OAuthProvider;
-import com.depromeet.archive.infra.user.provider.dto.OAuthRequirement;
 
 public class AppleClient implements OAuthProviderClient {
 
@@ -12,7 +12,7 @@ public class AppleClient implements OAuthProviderClient {
     }
 
     @Override
-    public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRequirement oAuthRequirement) {
+    public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRegisterDto oAuthRegisterDto) {
         return null;
     }
 
