@@ -60,4 +60,8 @@ public enum OAuthProvider {
 
     public abstract String getOAuth2UserInfoKey();
 
+    public String getRegistrationId() {
+        return registrationId;
+    }
+
 }
