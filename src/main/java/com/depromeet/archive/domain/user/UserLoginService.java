@@ -21,7 +21,7 @@ public class UserLoginService {
         String encryptedPassword = user.getPassword();
         if (!encoder.matches(command.getPassword(), encryptedPassword))
             throw new LoginFailException("로그인에 실패하였습니다. 비밀번호가 다릅니다.");
-        return user.getUserInfo();
+        return user.convertToUserInfo();
     }
 
 }

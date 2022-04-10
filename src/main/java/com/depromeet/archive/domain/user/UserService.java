@@ -33,7 +33,7 @@ public class UserService {
     public UserInfo getOrRegisterUserReturnInfo(BasicRegisterCommand registerCommand) {
         var user = userRepository.findByMailAddress(registerCommand.getEmail())
                 .orElseGet(() -> userRepository.save(registerCommand.toUserEntity()));
-        return new UserInfo(user.getMailAddress(), user.getRole(), user.getUserId());
+        return user.convertToUserInfo();
     }
 
     public BaseUserDto registerUser(BasicRegisterCommand command) {
