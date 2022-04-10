@@ -33,25 +33,28 @@ public class KakaoClient implements OAuthProviderClient {
 
     @Override
     public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRequirement oAuthRequirement) {
-        return null;
+        var userEmail = getUserEmail(oAuthRequirement.getOAuthAccessToken());
+        return new OAuthRegisterCommand(userEmail, OAuthProvider.KAKAO);
     }
 
     public String getUserEmail(String accessToken) {
-        var authHeader = new HttpHeaders();
-        authHeader.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
-
-        var entity = new HttpEntity<>(authHeader);
-
+        var entity = userInfoRequestEntity(accessToken);
         var response = restTemplate.exchange(userInfoUrl, HttpMethod.GET, entity, KakaoUserInfo.class);
         var kakaoUserInfo = response.getBody();
 
         if (response.getStatusCode() != HttpStatus.OK || kakaoUserInfo == null || kakaoUserInfo.getEmail() == null) {
-            log.error("Kakao register process - get user info error: status code {}, user info {}",
+            log.error("Kakao getUserEmail process - get user info error: status code {}, user info {}",
                     response.getStatusCodeValue(), userInfoUrl);
             throw new OAuthRegisterFailException(OAuthProvider.KAKAO, "UserInfoUrl Response error");
         }
 
         return kakaoUserInfo.getEmail();
+    }
+
+    private HttpEntity<Object> userInfoRequestEntity(String accessToken) {
+        var authHeader = new HttpHeaders();
+        authHeader.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+        return new HttpEntity<>(authHeader);
     }
 
 }
