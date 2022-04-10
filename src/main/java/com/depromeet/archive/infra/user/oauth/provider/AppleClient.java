@@ -1,4 +1,4 @@
-package com.depromeet.archive.infra.user.provider;
+package com.depromeet.archive.infra.user.oauth.provider;
 
 import com.depromeet.archive.api.dto.user.OAuthRegisterDto;
 import com.depromeet.archive.domain.user.command.OAuthRegisterCommand;

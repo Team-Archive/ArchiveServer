@@ -1,4 +1,4 @@
-package com.depromeet.archive.infra.user.provider.dto;
+package com.depromeet.archive.infra.user.oauth.provider.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

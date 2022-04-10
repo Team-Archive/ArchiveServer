@@ -1,7 +1,8 @@
-package com.depromeet.archive.infra.user.provider;
+package com.depromeet.archive.infra.user.oauth;
 
 import com.depromeet.archive.api.dto.user.OAuthRegisterDto;
 import com.depromeet.archive.domain.user.command.OAuthRegisterCommand;
+import com.depromeet.archive.infra.user.oauth.provider.OAuthProviderClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.ProviderNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class OAuthProviderService {
+public class OAuthUserService {
 
     private final List<OAuthProviderClient> oAuthProviderClients;
 
