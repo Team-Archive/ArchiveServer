@@ -1,7 +1,6 @@
 package com.depromeet.archive.api.user;
 
 import com.depromeet.archive.api.dto.user.OAuthRegisterDto;
-import com.depromeet.archive.domain.common.MessagingService;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.command.PasswordRegisterCommand;
 import com.depromeet.archive.domain.user.info.UserInfo;
@@ -28,7 +27,6 @@ public class RegisterController {
 
     private final UserService userService;
     private final OAuthUserService oAuthUserService;
-    private final MessagingService messagingService;
     private final PasswordEncoder encoder;
 
     // JWT token provider
@@ -38,8 +36,7 @@ public class RegisterController {
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@RequestBody @Valid PasswordRegisterCommand command) {
         encryptPassword(command);
-        var baseUserDto = userService.registerUser(command);
-        messagingService.sendUserRegisterMessage(baseUserDto);
+        userService.registerUser(command);
         return ResponseEntity.ok().build();
     }
 

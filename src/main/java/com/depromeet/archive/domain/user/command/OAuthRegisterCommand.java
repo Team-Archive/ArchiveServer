@@ -4,9 +4,11 @@ import com.depromeet.archive.domain.user.entity.BaseUser;
 import com.depromeet.archive.domain.user.entity.OAuthProvider;
 import com.depromeet.archive.domain.user.entity.OAuthUser;
 import com.depromeet.archive.domain.user.entity.UserRole;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@Getter
 public class OAuthRegisterCommand extends BasicRegisterCommand {
 
     private OAuthProvider provider;

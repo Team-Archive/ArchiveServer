@@ -1,9 +1,9 @@
 package com.depromeet.archive.domain.common;
 
-import com.depromeet.archive.api.dto.user.BaseUserDto;
+import com.depromeet.archive.domain.user.entity.BaseUser;
 
 public interface MessagingService {
 
-    void sendUserRegisterMessage(BaseUserDto baseUserDto);
+    void sendUserRegisterMessage(BaseUser baseUser, String registerType);
 
 }
