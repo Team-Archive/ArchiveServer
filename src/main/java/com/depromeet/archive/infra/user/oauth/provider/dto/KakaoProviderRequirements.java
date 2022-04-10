@@ -11,7 +11,7 @@ public class KakaoProviderRequirements {
     private final String kakaoAccessToken;
 
     public static KakaoProviderRequirements from(OAuthRegisterDto oAuthRegisterDto) {
-        return new KakaoProviderRequirements(oAuthRegisterDto.getOAuthAccessToken());
+        return new KakaoProviderRequirements(oAuthRegisterDto.getProviderAccessToken());
     }
 
 }

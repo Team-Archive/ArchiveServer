@@ -5,13 +5,13 @@ import lombok.Getter;
 @Getter
 public class OAuthRegisterDto {
 
-    private String oAuthAccessToken;
+    private String providerAccessToken;
 
     public OAuthRegisterDto() {
     }
 
-    public OAuthRegisterDto(String oAuthAccessToken) {
-        this.oAuthAccessToken = oAuthAccessToken;
+    public OAuthRegisterDto(String providerAccessToken) {
+        this.providerAccessToken = providerAccessToken;
     }
 
 }
