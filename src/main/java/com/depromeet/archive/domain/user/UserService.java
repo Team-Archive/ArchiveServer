@@ -3,6 +3,8 @@ package com.depromeet.archive.domain.user;
 import com.depromeet.archive.api.dto.user.BaseUserDto;
 import com.depromeet.archive.domain.user.command.BasicRegisterCommand;
 import com.depromeet.archive.domain.user.entity.BaseUser;
+import com.depromeet.archive.domain.user.entity.UserRole;
+import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.exception.common.DuplicateResourceException;
 import com.depromeet.archive.infra.user.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,12 @@ public class UserService {
         var user = userRepository.findByMailAddress(registerCommand.getEmail())
                 .orElseGet(() -> userRepository.save(registerCommand.toUserEntity()));
         return user.getUserId();
+    }
+
+    public UserInfo getOrRegisterUserReturnInfo(BasicRegisterCommand registerCommand) {
+        var user = userRepository.findByMailAddress(registerCommand.getEmail())
+                .orElseGet(() -> userRepository.save(registerCommand.toUserEntity()));
+        return new UserInfo(user.getMailAddress(), UserRole.GENERAL, user.getUserId());
     }
 
     public BaseUserDto registerUser(BasicRegisterCommand command) {
