@@ -1,10 +1,9 @@
 package com.depromeet.archive.infra.messaging;
 
+import com.depromeet.archive.api.dto.user.BaseUserDto;
 import com.depromeet.archive.domain.common.MessagingService;
-import com.depromeet.archive.domain.user.entity.BaseUser;
 import com.depromeet.archive.exception.infra.SlackException;
 import com.depromeet.archive.infra.messaging.config.SlackProperty;
-import com.depromeet.archive.util.DateTimeUtil;
 import com.slack.api.Slack;
 import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
@@ -33,7 +32,7 @@ public class SlackService implements MessagingService {
     }
 
     @Override
-    public void sendUserRegisterMessage(final BaseUser baseUser, final String registerType) {
+    public void sendUserRegisterMessage(final BaseUserDto baseUser, final String registerType) {
         try {
             slackClient.chatPostMessage(req -> req
                     .channel(slackProperty.getChannel())
@@ -46,7 +45,7 @@ public class SlackService implements MessagingService {
                             section(section -> section.text(markdownText(String.format(":sparkles: `회원가입 타입`: %s", registerType)))),
                             section(section -> section.text(markdownText(String.format(":man-raising-hand::skin-tone-2: `유저 인덱스`: %s", baseUser.getUserId())))),
                             section(section -> section.text(markdownText(String.format(":email: `이메일`: %s", baseUser.getMailAddress())))),
-                            section(section -> section.text(markdownText(String.format(":date: `가입시간`: %s", DateTimeUtil.DATE_TIME_FORMATTER.format(baseUser.getCreatedAt())))))
+                            section(section -> section.text(markdownText(String.format(":date: `가입시간`: %s", baseUser.getCreatedAt()))))
                     )));
         } catch (IOException | SlackApiException e) {
             throw new SlackException(e.getMessage());

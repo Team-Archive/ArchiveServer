@@ -29,20 +29,21 @@ public class UserService {
 
     public long getOrRegisterUser(BasicRegisterCommand registerCommand) {
         var user = userRepository.findByMailAddress(registerCommand.getEmail())
-                .orElseGet(() -> saveAndNotification(registerCommand));
+                .orElseGet(() -> registerUser(registerCommand));
         return user.getUserId();
     }
 
     public UserInfo getOrRegisterUserReturnInfo(BasicRegisterCommand registerCommand) {
         var user = userRepository.findByMailAddress(registerCommand.getEmail())
-                .orElseGet(() -> saveAndNotification(registerCommand));
+                .orElseGet(() -> registerUser(registerCommand));
         return user.convertToUserInfo();
     }
 
-    public BaseUserDto registerUser(BasicRegisterCommand registerCommand) {
+    public BaseUser registerUser(BasicRegisterCommand registerCommand) {
         try {
-            var user = saveAndNotification(registerCommand);
-            return BaseUserDto.from(user);
+            var user = userRepository.save(registerCommand.toUserEntity());
+            sendRegisterNotification(registerCommand, user);
+            return user;
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateResourceException("이메일이 이미 존재합니다.");
         }
@@ -53,19 +54,14 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    private BaseUser saveAndNotification(BasicRegisterCommand registerCommand) {
-        var user = registerCommand.toUserEntity();
-        userRepository.save(user);
-
+    private void sendRegisterNotification(BasicRegisterCommand registerCommand, BaseUser user) {
         if (registerCommand instanceof OAuthRegisterCommand) {
             var oAuthRegisterCommand = (OAuthRegisterCommand) registerCommand;
             var oauthProvider = oAuthRegisterCommand.getProvider().getRegistrationId();
-            messagingService.sendUserRegisterMessage(user, oauthProvider);
+            messagingService.sendUserRegisterMessage(BaseUserDto.from(user), oauthProvider);
         } else {
-            messagingService.sendUserRegisterMessage(user, "Id/Password");
+            messagingService.sendUserRegisterMessage(BaseUserDto.from(user), "Id/Password");
         }
-
-        return user;
     }
 
 }
