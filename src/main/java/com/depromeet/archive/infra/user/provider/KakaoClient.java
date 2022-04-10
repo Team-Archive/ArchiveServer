@@ -1,8 +1,10 @@
 package com.depromeet.archive.infra.user.provider;
 
+import com.depromeet.archive.domain.user.command.OAuthRegisterCommand;
 import com.depromeet.archive.domain.user.entity.OAuthProvider;
 import com.depromeet.archive.exception.user.OAuthRegisterFailException;
 import com.depromeet.archive.infra.user.provider.dto.KakaoUserInfo;
+import com.depromeet.archive.infra.user.provider.dto.OAuthRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +25,17 @@ public class KakaoClient implements OAuthProviderClient {
     @Value("${spring.security.oauth2.client.provider.kakao.user-info-uri}")
     private String userInfoUrl;
 
+
+    @Override
+    public String support() {
+        return OAuthProvider.KAKAO.getRegistrationId();
+    }
+
+    @Override
+    public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRequirement oAuthRequirement) {
+        return null;
+    }
+
     public String getUserEmail(String accessToken) {
         var authHeader = new HttpHeaders();
         authHeader.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
@@ -39,11 +52,6 @@ public class KakaoClient implements OAuthProviderClient {
         }
 
         return kakaoUserInfo.getEmail();
-    }
-
-    @Override
-    public String support() {
-        return OAuthProvider.KAKAO.getRegistrationId();
     }
 
 }
