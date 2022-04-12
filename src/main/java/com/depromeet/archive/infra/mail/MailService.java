@@ -50,7 +50,7 @@ public class MailService {
 
     @Getter
     public enum MailTemplate {
-        TEMPORARY_PASSWORD_MAIL("[Archive] 임시 비밀번호 발급 안내", "temporary-password-mail-template");
+        TEMPORARY_PASSWORD_MAIL("[Archive] 고객님께서 요청하신 Archive 앱의 임시 비밀번호입니다.", "temporary-password-mail-template");
 
         private final String subject;
         private final String templateName;
