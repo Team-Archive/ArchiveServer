@@ -25,7 +25,7 @@ public enum ExceptionCode {
     // User
     LOGIN_FAIL(HttpStatus.BAD_REQUEST, "User001", "로그인에 실패했습니다"),
     REGISTER_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "User002", "회원가입에 실패했습니다"),
-    OAUTH_USER_NOT_HAS_PASSWORD(HttpStatus.BAD_REQUEST, "User003", "소셜 로그인 회원은 비밀번호 찾기를 할 수 없습니다"),
+    OAUTH_USER_NOT_HAS_PASSWORD(HttpStatus.FORBIDDEN, "User003", "소셜 로그인 회원은 비밀번호 찾기를 할 수 없습니다"),
 
     // Security
     TOKEN_NOT_FOUND(HttpStatus.BAD_REQUEST, "Security001", "`Authorization` 헤더에 토큰이 존재하지 않습니다"),
