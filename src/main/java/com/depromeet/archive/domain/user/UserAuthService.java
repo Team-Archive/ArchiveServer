@@ -1,5 +1,6 @@
 package com.depromeet.archive.domain.user;
 
+import com.depromeet.archive.api.dto.user.UserPasswordResetDto;
 import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.entity.BaseUser;
 import com.depromeet.archive.domain.user.entity.PasswordUser;
@@ -30,21 +31,28 @@ public class UserAuthService {
         return user.convertToUserInfo();
     }
 
-    public PasswordUser verifyPasswordReturnUser(final String email, final String password) {
-        var user = passwordUserRepository.findPasswordUserByMailAddress(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Email"));
-        if (!encoder.matches(password, user.getPassword()))
-            throw new LoginFailException("비밀번호가 다릅니다");
-        return user;
-    }
-
     @Transactional
     public void updateTemporaryPassword(final String email, final String temporaryPassword) {
         var passwordUser = userRepository.findByMailAddress(email)
                 .map(this::convertPasswordUser)
                 .orElseThrow(() -> new ResourceNotFoundException("Email"));
-        passwordUser.setTemporaryPassword(encoder.encode(temporaryPassword));
+        passwordUser.updatePassword(encoder.encode(temporaryPassword));
         mailService.sendTemporaryPassword(email, temporaryPassword);
+    }
+
+    @Transactional
+    public void resetPassword(UserPasswordResetDto userPasswordResetDto) {
+        var passwordUser = verifyPasswordReturnUser(
+                userPasswordResetDto.getEmail(), userPasswordResetDto.getCurrentPassword());
+        passwordUser.updatePassword(encoder.encode(userPasswordResetDto.getNewPassword()));
+    }
+
+    private PasswordUser verifyPasswordReturnUser(final String email, final String password) {
+        var user = passwordUserRepository.findPasswordUserByMailAddress(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Email"));
+        if (!encoder.matches(password, user.getPassword()))
+            throw new LoginFailException("비밀번호가 다릅니다");
+        return user;
     }
 
     private PasswordUser convertPasswordUser(BaseUser user) {

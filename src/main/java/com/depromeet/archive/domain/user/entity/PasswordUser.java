@@ -23,8 +23,8 @@ public class PasswordUser extends BaseUser {
         this.password = password;
     }
 
-    public void setTemporaryPassword(final String temporaryPassword) {
-        this.password = temporaryPassword;
+    public void updatePassword(final String password) {
+        this.password = password;
     }
 
 }
