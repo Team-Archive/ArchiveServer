@@ -35,6 +35,18 @@ spring:
     properties:
       hibernate:
         format_sql: false
+  mail:
+    host: ${MAIL_HOST}
+    port: 587
+    username: ${MAIL_EMAIL}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
 jwt:
   secret-key: testKey
