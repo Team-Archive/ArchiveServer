@@ -3,6 +3,7 @@ package com.depromeet.archive.api.user;
 import com.depromeet.archive.api.dto.archive.EmailDuplicateResponseDto;
 import com.depromeet.archive.api.dto.user.UserEmailDto;
 import com.depromeet.archive.api.resolver.annotation.RequestUser;
+import com.depromeet.archive.domain.user.UserAuthService;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.util.SecurityUtils;
@@ -24,6 +25,7 @@ public class UserController {
 
     private static final int TEMP_PASSWORD_LENGTH = 10;
     private final UserService userService;
+    private final UserAuthService userAuthService;
 
     @DeleteMapping("/unregister")
     public ResponseEntity<Void> unregisterUser(@RequestUser UserInfo user) {
@@ -44,10 +46,10 @@ public class UserController {
     }
 
     @Operation(summary = "비밀번호 초기화 - 임시 비밀번호 발급")
-    @PostMapping("/password")
-    public ResponseEntity<Void> resetPassword(@RequestBody UserEmailDto userEmailDto) {
+    @PostMapping("/password/temporary")
+    public ResponseEntity<Void> issueTemporaryPassword(@RequestBody UserEmailDto userEmailDto) {
         var temporaryPassword = SecurityUtils.generateRandomString(TEMP_PASSWORD_LENGTH);
-        userService.updateTemporaryPassword(userEmailDto.getEmail(), temporaryPassword);
+        userAuthService.updateTemporaryPassword(userEmailDto.getEmail(), temporaryPassword);
         return ResponseEntity.ok().build();
     }
 
