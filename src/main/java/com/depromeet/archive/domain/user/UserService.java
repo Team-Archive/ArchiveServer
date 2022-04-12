@@ -23,7 +23,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final MessagingService messagingService;
 
-    public boolean isDuplicatedEmail(String email) {
+    public boolean existsEmail(String email) {
         return userRepository.findByMailAddress(email).isPresent();
     }
 

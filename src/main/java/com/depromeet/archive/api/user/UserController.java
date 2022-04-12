@@ -31,7 +31,7 @@ public class UserController {
     @Operation(summary = "이메일 중복 검사")
     @GetMapping("/email/{email}")
     public ResponseEntity<EmailDuplicateResponseDto> checkDuplicatedEmail(@PathVariable String email) {
-        var emailDuplicateResponseDto = new EmailDuplicateResponseDto(userService.isDuplicatedEmail(email));
+        var emailDuplicateResponseDto = new EmailDuplicateResponseDto(userService.existsEmail(email));
         return ResponseEntity.ok(emailDuplicateResponseDto);
     }
 
