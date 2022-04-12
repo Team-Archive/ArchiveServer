@@ -1,7 +1,7 @@
 package com.depromeet.archive.config;
 
 import com.depromeet.archive.domain.archive.ArchiveRepository;
-import com.depromeet.archive.domain.user.UserLoginService;
+import com.depromeet.archive.domain.user.UserAuthService;
 import com.depromeet.archive.domain.user.UserRegisterService;
 import com.depromeet.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
 import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
@@ -27,8 +27,8 @@ public class AuthConfig {
     private String secretKey;
 
     @Bean
-    public UserNamePasswordAuthenticationProvider directLoginProvider(UserLoginService userService) {
-        return new UserNamePasswordAuthenticationProvider(userService);
+    public UserNamePasswordAuthenticationProvider directLoginProvider(UserAuthService userAuthService) {
+        return new UserNamePasswordAuthenticationProvider(userAuthService);
     }
 
     @Bean
