@@ -50,6 +50,11 @@ spring:
           starttls:
             enable: true
             required: true
+    executor:
+      core_pool_size: 2
+      max_pool_size: 2
+      queue_capacity: 5
+      await_termination_seconds: 120
 
 jwt:
   secret-key: testKey

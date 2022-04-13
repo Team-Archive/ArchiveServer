@@ -43,6 +43,11 @@ spring:
           starttls:
             enable: true
             required: true
+    executor:
+      core_pool_size: 3
+      max_pool_size: 8
+      queue_capacity: 15
+      await_termination_seconds: 120
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
