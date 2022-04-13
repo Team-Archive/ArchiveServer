@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -26,6 +27,7 @@ public class MailService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
+    @Async("mailExecutor")
     public void sendTemporaryPassword(final String targetEmail, final String temporaryPassword) {
         var context = new Context(null, Map.of("password", temporaryPassword));
         var body = templateEngine.process(TEMPORARY_PASSWORD_MAIL.templateName, context);
