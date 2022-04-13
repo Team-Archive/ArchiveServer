@@ -11,6 +11,7 @@ import com.depromeet.archive.util.SecurityUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +49,7 @@ public class UserController {
 
     @Operation(summary = "비밀번호 초기화 - 임시 비밀번호 발급")
     @PostMapping("/password/temporary")
-    public ResponseEntity<Void> issueTemporaryPassword(@RequestBody UserEmailDto userEmailDto) {
+    public ResponseEntity<Void> issueTemporaryPassword(@Validated @RequestBody UserEmailDto userEmailDto) {
         var temporaryPassword = SecurityUtils.generateRandomString(TEMP_PASSWORD_LENGTH);
         userAuthService.updateTemporaryPassword(userEmailDto.getEmail(), temporaryPassword);
         return ResponseEntity.ok().build();
@@ -56,7 +57,7 @@ public class UserController {
 
     @Operation(summary = "비밀번호 초기화 - 새로운 비밀번호 설정")
     @PostMapping("/password/reset")
-    public ResponseEntity<Void> resetPassword(@RequestBody UserPasswordResetDto userPasswordResetDto) {
+    public ResponseEntity<Void> resetPassword(@Validated @RequestBody UserPasswordResetDto userPasswordResetDto) {
         userAuthService.resetPassword(userPasswordResetDto);
         return ResponseEntity.ok().build();
     }
