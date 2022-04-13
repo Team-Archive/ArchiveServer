@@ -15,6 +15,9 @@ jobs:
       DEV_AWS_ACCESS_KEY: ${{ secrets.DEV_AWS_ACCESS_KEY }}
       DEV_AWS_SECRET_KEY: ${{ secrets.DEV_AWS_SECRET_KEY }}
       DEV_AWS_S3_BUCKET_NAME: ${{ secrets.DEV_AWS_S3_BUCKET_NAME }}
+      MAIL_HOST: ${{ secrets.MAIL_HOST }}
+      MAIL_EMAIL: ${{ secrets.MAIL_EMAIL }}
+      MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
