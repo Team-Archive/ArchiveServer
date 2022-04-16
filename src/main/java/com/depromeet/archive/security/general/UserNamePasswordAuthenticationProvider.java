@@ -1,6 +1,6 @@
 package com.depromeet.archive.security.general;
 
-import com.depromeet.archive.domain.user.UserLoginService;
+import com.depromeet.archive.domain.user.UserAuthService;
 import com.depromeet.archive.domain.user.command.LoginCommand;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.exception.BaseException;
@@ -15,10 +15,10 @@ import java.util.Collections;
 
 public class UserNamePasswordAuthenticationProvider implements AuthenticationProvider {
 
-    private final UserLoginService userService;
+    private final UserAuthService userAuthService;
 
-    public UserNamePasswordAuthenticationProvider(UserLoginService service) {
-        this.userService = service;
+    public UserNamePasswordAuthenticationProvider(UserAuthService userAuthService) {
+        this.userAuthService = userAuthService;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class UserNamePasswordAuthenticationProvider implements AuthenticationPro
 
     private UserInfo tryLoginOrThrow(LoginCommand command) {
         try {
-            return userService.tryLoginAndReturnInfo(command);
+            return userAuthService.tryLoginAndReturnInfo(command);
         } catch (BaseException exception) {
             throw new WrappingAuthenticationException(exception);
         }

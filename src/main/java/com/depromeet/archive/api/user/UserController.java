@@ -2,13 +2,16 @@ package com.depromeet.archive.api.user;
 
 import com.depromeet.archive.api.dto.archive.EmailDuplicateResponseDto;
 import com.depromeet.archive.api.dto.user.UserEmailDto;
+import com.depromeet.archive.api.dto.user.UserPasswordResetDto;
 import com.depromeet.archive.api.resolver.annotation.RequestUser;
+import com.depromeet.archive.domain.user.UserAuthService;
 import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.util.SecurityUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +27,7 @@ public class UserController {
 
     private static final int TEMP_PASSWORD_LENGTH = 10;
     private final UserService userService;
+    private final UserAuthService userAuthService;
 
     @DeleteMapping("/unregister")
     public ResponseEntity<Void> unregisterUser(@RequestUser UserInfo user) {
@@ -44,10 +48,17 @@ public class UserController {
     }
 
     @Operation(summary = "비밀번호 초기화 - 임시 비밀번호 발급")
-    @PostMapping("/password")
-    public ResponseEntity<Void> resetPassword(@RequestBody UserEmailDto userEmailDto) {
+    @PostMapping("/password/temporary")
+    public ResponseEntity<Void> issueTemporaryPassword(@Validated @RequestBody UserEmailDto userEmailDto) {
         var temporaryPassword = SecurityUtils.generateRandomString(TEMP_PASSWORD_LENGTH);
-        userService.updateTemporaryPassword(userEmailDto.getEmail(), temporaryPassword);
+        userAuthService.updateTemporaryPassword(userEmailDto.getEmail(), temporaryPassword);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "비밀번호 초기화 - 새로운 비밀번호 설정")
+    @PostMapping("/password/reset")
+    public ResponseEntity<Void> resetPassword(@Validated @RequestBody UserPasswordResetDto userPasswordResetDto) {
+        userAuthService.resetPassword(userPasswordResetDto);
         return ResponseEntity.ok().build();
     }
 
