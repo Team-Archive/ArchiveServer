@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Getter
@@ -21,6 +20,7 @@ public class BaseUserDto {
     }
 
     public String getCreatedAt() {
-        return DateTimeUtil.DATE_TIME_FORMATTER.format(createdAt);
+        return DateTimeUtil.DATE_TIME_FORMATTER.format(this.createdAt);
     }
+
 }

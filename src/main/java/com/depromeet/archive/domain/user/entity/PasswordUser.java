@@ -22,4 +22,9 @@ public class PasswordUser extends BaseUser {
         super(mailAddress, role);
         this.password = password;
     }
+
+    public void setTemporaryPassword(final String temporaryPassword) {
+        this.password = temporaryPassword;
+    }
+
 }

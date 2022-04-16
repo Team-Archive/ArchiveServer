@@ -2,9 +2,9 @@ package com.depromeet.archive.infra.user.jpa;
 
 import com.depromeet.archive.domain.user.entity.PasswordUser;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+import java.util.Optional;
+
 public interface PasswordUserRepository extends JpaRepository<PasswordUser, Long> {
-    PasswordUser findPasswordUserByMailAddress(String mailAddress);
+    Optional<PasswordUser> findPasswordUserByMailAddress(String mailAddress);
 }

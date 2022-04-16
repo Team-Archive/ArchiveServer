@@ -1,8 +1,7 @@
 package com.depromeet.archive.api.user;
 
 import com.depromeet.archive.api.dto.user.OAuthRegisterDto;
-import com.depromeet.archive.domain.common.MessagingService;
-import com.depromeet.archive.domain.user.UserService;
+import com.depromeet.archive.domain.user.UserRegisterService;
 import com.depromeet.archive.domain.user.command.PasswordRegisterCommand;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.infra.user.oauth.OAuthUserService;
@@ -26,9 +25,8 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class RegisterController {
 
-    private final UserService userService;
+    private final UserRegisterService userRegisterService;
     private final OAuthUserService oAuthUserService;
-    private final MessagingService messagingService;
     private final PasswordEncoder encoder;
 
     // JWT token provider
@@ -38,8 +36,7 @@ public class RegisterController {
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@RequestBody @Valid PasswordRegisterCommand command) {
         encryptPassword(command);
-        var baseUserDto = userService.registerUser(command);
-        messagingService.sendUserRegisterMessage(baseUserDto);
+        userRegisterService.registerUser(command);
         return ResponseEntity.ok().build();
     }
 
@@ -48,7 +45,7 @@ public class RegisterController {
                                                           @RequestParam("provider") String provider,
                                                           @RequestBody(required = false) OAuthRegisterDto oAuthRegisterDto) {
         var oAuthRegisterInfo = oAuthUserService.getOAuthRegisterInfo(provider, oAuthRegisterDto);
-        var userInfo = userService.getOrRegisterUserReturnInfo(oAuthRegisterInfo);
+        var userInfo = userRegisterService.getOrRegisterUserReturnInfo(oAuthRegisterInfo);
         injectJwtToken(httpServletResponse, userInfo);
         return ResponseEntity.ok().build();
 

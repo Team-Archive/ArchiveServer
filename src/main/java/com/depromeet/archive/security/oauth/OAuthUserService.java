@@ -1,6 +1,6 @@
 package com.depromeet.archive.security.oauth;
 
-import com.depromeet.archive.domain.user.UserService;
+import com.depromeet.archive.domain.user.UserRegisterService;
 import com.depromeet.archive.domain.user.command.OAuthRegisterCommand;
 import com.depromeet.archive.domain.user.entity.OAuthProvider;
 import com.depromeet.archive.security.common.UserPrincipal;
@@ -11,10 +11,10 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 public class OAuthUserService extends DefaultOAuth2UserService {
 
-    private final UserService userService;
+    private final UserRegisterService userRegisterService;
 
-    public OAuthUserService(UserService service) {
-        this.userService = service;
+    public OAuthUserService(UserRegisterService userRegisterService) {
+        this.userRegisterService = userRegisterService;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class OAuthUserService extends DefaultOAuth2UserService {
 
     private void registerOrUpdateUser(UserPrincipal principal, OAuthProvider provider) {
         var command = new OAuthRegisterCommand(principal.getName(), provider);
-        var userId = userService.getOrRegisterUser(command);
+        var userId = userRegisterService.getOrRegisterUser(command);
         principal.setUserId(userId);
     }
 }
