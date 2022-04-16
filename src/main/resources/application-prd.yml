@@ -31,6 +31,23 @@ spring:
     properties:
       hibernate:
         format_sql: false
+  mail:
+    host: ${MAIL_HOST}
+    port: 587
+    username: ${MAIL_EMAIL}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    executor:
+      core_pool_size: 3
+      max_pool_size: 8
+      queue_capacity: 15
+      await_termination_seconds: 120
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
