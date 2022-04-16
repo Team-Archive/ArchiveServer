@@ -51,7 +51,7 @@ public abstract class BaseUser extends BaseTimeEntity {
         this.mailAddress = mailAddress;
     }
 
-    public UserInfo getUserInfo() {
+    public UserInfo convertToUserInfo() {
         return new UserInfo(mailAddress, role, userId);
     }
 
