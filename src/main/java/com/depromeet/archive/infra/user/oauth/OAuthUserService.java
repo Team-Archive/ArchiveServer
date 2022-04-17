@@ -15,7 +15,8 @@ public class OAuthUserService {
 
     private final List<OAuthProviderClient> oAuthProviderClients;
 
-    public OAuthRegisterCommand getOAuthRegisterInfo(String provider, OAuthRegisterDto oAuthRegisterDto) {
+    public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRegisterDto oAuthRegisterDto) {
+        var provider = oAuthRegisterDto.getProvider();
         var oAuthProviderClient = oAuthProviderClients.stream()
                 .filter(client -> client.support().equals(provider))
                 .findFirst()

@@ -11,10 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,9 +42,8 @@ public class RegisterController {
 
     @PostMapping("/social")
     public ResponseEntity<Void> registerOrLoginSocialUser(HttpServletResponse httpServletResponse,
-                                                          @RequestParam("provider") String provider,
-                                                          @RequestBody(required = false) OAuthRegisterDto oAuthRegisterDto) {
-        var oAuthRegisterInfo = oAuthUserService.getOAuthRegisterInfo(provider, oAuthRegisterDto);
+                                                          @Validated @RequestBody OAuthRegisterDto oAuthRegisterDto) {
+        var oAuthRegisterInfo = oAuthUserService.getOAuthRegisterInfo(oAuthRegisterDto);
         var userInfo = userRegisterService.getOrRegisterUserReturnInfo(oAuthRegisterInfo);
         injectJwtToken(httpServletResponse, userInfo);
         return ResponseEntity.ok().build();
