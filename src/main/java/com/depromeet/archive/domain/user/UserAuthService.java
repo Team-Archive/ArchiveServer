@@ -36,7 +36,7 @@ public class UserAuthService {
         var passwordUser = userRepository.findByMailAddress(email)
                 .map(this::convertPasswordUser)
                 .orElseThrow(() -> new ResourceNotFoundException("Email"));
-        passwordUser.updatePassword(encoder.encode(temporaryPassword));
+        passwordUser.updatePassword(encoder.encode(temporaryPassword), true);
         mailService.sendTemporaryPassword(email, temporaryPassword);
     }
 
@@ -44,7 +44,7 @@ public class UserAuthService {
     public void resetPassword(UserPasswordResetDto userPasswordResetDto) {
         var passwordUser = verifyPasswordReturnUser(
                 userPasswordResetDto.getEmail(), userPasswordResetDto.getCurrentPassword());
-        passwordUser.updatePassword(encoder.encode(userPasswordResetDto.getNewPassword()));
+        passwordUser.updatePassword(encoder.encode(userPasswordResetDto.getNewPassword()), false);
     }
 
     private PasswordUser verifyPasswordReturnUser(final String email, final String password) {
