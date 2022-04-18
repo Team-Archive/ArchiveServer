@@ -32,4 +32,8 @@ public class PasswordUser extends BaseUser {
         this.isTemporaryPassword = isTemporaryPassword;
     }
 
+    public boolean isCurrentTemporaryPassword() {
+        return this.isTemporaryPassword;
+    }
+
 }
