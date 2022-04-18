@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 public class UserService {
@@ -19,6 +19,7 @@ public class UserService {
         return userRepository.findByMailAddress(email).isPresent();
     }
 
+    @Transactional
     public void deleteUser(long userId) {
         BaseUser user = userRepository.getById(userId);
         userRepository.delete(user);
