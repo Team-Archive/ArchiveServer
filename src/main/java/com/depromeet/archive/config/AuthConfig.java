@@ -3,6 +3,7 @@ package com.depromeet.archive.config;
 import com.depromeet.archive.domain.archive.ArchiveRepository;
 import com.depromeet.archive.domain.user.UserAuthService;
 import com.depromeet.archive.domain.user.UserRegisterService;
+import com.depromeet.archive.domain.user.UserService;
 import com.depromeet.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
 import com.depromeet.archive.security.general.UserNamePasswordAuthenticationProvider;
 import com.depromeet.archive.security.oauth.OAuthUserService;
@@ -47,8 +48,10 @@ public class AuthConfig {
     }
 
     @Bean
-    public LoginSuccessHandler successHandler(TokenProvider tokenProvider, HttpAuthTokenSupport authTokenSupport) {
-        return new LoginSuccessHandler(tokenProvider, authTokenSupport);
+    public LoginSuccessHandler successHandler(TokenProvider tokenProvider,
+                                              HttpAuthTokenSupport authTokenSupport,
+                                              UserService userService) {
+        return new LoginSuccessHandler(tokenProvider, authTokenSupport, userService);
     }
 
     @Bean
