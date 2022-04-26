@@ -5,20 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class OAuthRegisterDto {
 
-    private static final String DEFAULT_PROVIDER = "apple";
-
-    private String provider = DEFAULT_PROVIDER;
+    @NotNull
+    private String provider;
 
     @JsonAlias({"providerAccessToken", "id_token"})
     private String token;
-
-    private String state;
-    private String code;
-    private String user;
 
 }
