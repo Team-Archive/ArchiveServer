@@ -8,12 +8,16 @@ spring:
             audience: ${APPLE_CLIENT_ID}
             public-key-uri: "https://appleid.apple.com/auth/keys"
           kakao:
+            clientId: ${KAKAO_CLIENT_ID}
+            clientSecret: ${KAKAO_CLIENT_SECRET}
             authorization-grant-type: authorization_code
-            client-id: e9758859c215b8f7439f0b821da7cdd6
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             client-name: kakao
-            scope: profile_nickname, account_email
-            cleint-authentication-method: POST
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+            client-authentication-method: POST
         provider:
           kakao:
             authorization-uri: https://kauth.kakao.com/oauth/authorize
