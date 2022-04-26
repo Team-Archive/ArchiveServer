@@ -2,8 +2,10 @@ package com.depromeet.archive.infra.user.oauth.provider.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class AppleTokenPayload {
 
     private String iss;
