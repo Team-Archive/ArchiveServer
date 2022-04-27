@@ -121,7 +121,7 @@ public class AppleClient implements OAuthProviderClient {
 
         }
 
-        private static List<Key> getPublicKeys(RestTemplate restTemplate, String applePublicKeyUri) {
+        private static List<ApplePublicKeysResponseDto.Key> getPublicKeys(RestTemplate restTemplate, String applePublicKeyUri) {
             var response = restTemplate.getForEntity(applePublicKeyUri, ApplePublicKeysResponseDto.class);
             if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
                 throw new OAuthRegisterFailException(OAuthProvider.APPLE, "Failed to get apple public key.");
