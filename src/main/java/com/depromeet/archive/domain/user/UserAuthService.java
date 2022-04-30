@@ -48,7 +48,9 @@ public class UserAuthService {
     private PasswordUser verifyPasswordReturnUser(final String email, final String password) {
         var user = passwordUserRepository.findPasswordUserByMailAddress(email)
                                          .orElseThrow(() -> new ResourceNotFoundException("Email"));
-        if (!encoder.matches(password, user.getPassword())) {throw new LoginFailException("비밀번호가 다릅니다");}
+        if (!encoder.matches(password, user.getPassword())) {
+            throw new LoginFailException("비밀번호가 다릅니다");
+        }
         return user;
     }
 
