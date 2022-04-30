@@ -37,7 +37,7 @@ public class KakaoClient implements OAuthProviderClient {
         return new OAuthRegisterCommand(userEmail, OAuthProvider.KAKAO);
     }
 
-    public String getUserEmail(KakaoProviderRequirements requirements) {
+    private String getUserEmail(KakaoProviderRequirements requirements) {
         var entity = userInfoRequestEntity(requirements.getKakaoAccessToken());
         var response = restTemplate.exchange(userInfoUrl, HttpMethod.GET, entity, KakaoUserInfo.class);
         var kakaoUserInfo = response.getBody();
