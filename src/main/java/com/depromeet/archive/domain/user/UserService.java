@@ -2,8 +2,6 @@ package com.depromeet.archive.domain.user;
 
 import com.depromeet.archive.domain.user.entity.BaseUser;
 import com.depromeet.archive.domain.user.entity.PasswordUser;
-import com.depromeet.archive.infra.user.jpa.PasswordUserRepository;
-import com.depromeet.archive.infra.user.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

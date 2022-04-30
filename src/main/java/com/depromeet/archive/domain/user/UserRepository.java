@@ -1,4 +1,4 @@
-package com.depromeet.archive.infra.user.jpa;
+package com.depromeet.archive.domain.user;
 
 import com.depromeet.archive.domain.user.entity.BaseUser;
 import org.springframework.data.jpa.repository.JpaRepository;
