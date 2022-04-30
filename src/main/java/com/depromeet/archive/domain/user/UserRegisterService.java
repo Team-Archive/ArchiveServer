@@ -25,13 +25,13 @@ public class UserRegisterService {
 
     public long getOrRegisterUser(BasicRegisterCommand registerCommand) {
         var user = userRepository.findByMailAddress(registerCommand.getEmail())
-                .orElseGet(() -> registerUser(registerCommand));
+                                 .orElseGet(() -> registerUser(registerCommand));
         return user.getUserId();
     }
 
     public UserInfo getOrRegisterUserReturnInfo(BasicRegisterCommand registerCommand) {
         var user = userRepository.findByMailAddress(registerCommand.getEmail())
-                .orElseGet(() -> registerUser(registerCommand));
+                                 .orElseGet(() -> registerUser(registerCommand));
         return user.convertToUserInfo();
     }
 

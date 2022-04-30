@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 public class BodyCredentialAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
@@ -24,7 +25,8 @@ public class BodyCredentialAuthenticationFilter extends AbstractAuthenticationPr
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException {
+    public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+        throws AuthenticationException, IOException {
         byte[] bodyBytes = httpServletRequest.getInputStream().readAllBytes();
         LoginCommand command = objMapper.readValue(bodyBytes, LoginCommand.class);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(command.getEmail(), command.getPassword());

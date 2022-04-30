@@ -45,12 +45,12 @@ public class UserNamePasswordAuthenticationProvider implements AuthenticationPro
 
     private UsernamePasswordAuthenticationToken getCompleteAuthToken(UserInfo loginUser, String credential) {
         UserPrincipal principal = UserPrincipal
-                .builder()
-                .attributes(Collections.singletonMap("password", credential))
-                .userInfo(loginUser)
-                .build();
+            .builder()
+            .attributes(Collections.singletonMap("password", credential))
+            .userInfo(loginUser)
+            .build();
         return new UsernamePasswordAuthenticationToken(principal,
-                credential, principal.getAuthorities());
+                                                       credential, principal.getAuthorities());
     }
 
     @Override

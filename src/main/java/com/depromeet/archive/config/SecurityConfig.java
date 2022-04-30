@@ -36,26 +36,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // TODO: for using local h2 db -> 추후 로컬/상용 환경 나눠 적용할
         http
-                .headers().frameOptions().sameOrigin()
-                .and().authorizeRequests().antMatchers("/h2-console/**").permitAll()
-                .and().csrf().disable();
+            .headers().frameOptions().sameOrigin()
+            .and().authorizeRequests().antMatchers("/h2-console/**").permitAll()
+            .and().csrf().disable();
 
         http
-                .formLogin()
-                .disable();
+            .formLogin()
+            .disable();
         http
-                .httpBasic()
-                .disable();
+            .httpBasic()
+            .disable();
         http
-                .oauth2Login()
-                .userInfoEndpoint()
-                .userService(userService).and()
-                .successHandler(successHandler)
-                .failureHandler(failureHandler);
+            .oauth2Login()
+            .userInfoEndpoint()
+            .userService(userService).and()
+            .successHandler(successHandler)
+            .failureHandler(failureHandler);
         http
-                .logout()
-                .disable();
-        BodyCredentialAuthenticationFilter bodyCredentialAuthenticationFilter = bodyCredentialAuthenticationFilter(authenticationManagerBean(), mapper);
+            .logout()
+            .disable();
+        BodyCredentialAuthenticationFilter bodyCredentialAuthenticationFilter =
+            bodyCredentialAuthenticationFilter(authenticationManagerBean(),
+                                                                                                                   mapper);
         JwtTokenPersistFilter tokenPersistFilter = tokenPersistFilter();
         http.addFilterBefore(tokenPersistFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(bodyCredentialAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

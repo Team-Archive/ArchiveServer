@@ -43,8 +43,8 @@ public class AsyncConfiguration implements AsyncConfigurer {
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return (exception, method, params) ->
-                log.error("Async Exception handler: '{}' threw unexpected exception ",
-                        method.toGenericString(), exception);
+                   log.error("Async Exception handler: '{}' threw unexpected exception ",
+                             method.toGenericString(), exception);
     }
 
     @ConfigurationProperties(prefix = "spring.mail.executor")

@@ -22,9 +22,9 @@ public class JwtAuthenticationToken implements Authentication {
     public JwtAuthenticationToken(UserInfo token) {
         authorities.add(new SimpleGrantedAuthority(token.getUserRole().toString()));
         principal = UserPrincipal
-                .builder()
-                .userInfo(token)
-                .build();
+            .builder()
+            .userInfo(token)
+            .build();
         details = new User(token.getMailAddress(), "", authorities);
         userInfo = token;
     }

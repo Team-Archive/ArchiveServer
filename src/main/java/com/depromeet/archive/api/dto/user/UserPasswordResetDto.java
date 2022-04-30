@@ -27,7 +27,7 @@ public class UserPasswordResetDto {
     @NotNull
     @NotEmpty
     @Pattern(regexp = "(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9$@$!%*#?&]{8,20}$",
-            message = "비밀번호는 영문/숫자 를 꼭 포함하여 8~20자리로 입력해 주세요.")
+             message = "비밀번호는 영문/숫자 를 꼭 포함하여 8~20자리로 입력해 주세요.")
     private String newPassword;
 
 }

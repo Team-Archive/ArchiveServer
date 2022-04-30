@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @ControllerAdvice
@@ -27,8 +26,8 @@ public class GlobalExceptionHandler {
         log.warn("duplicateResourceException", e);
         ExceptionCode errorCode = ExceptionCode.DUPLICATED_RESOURCE;
         final var response = e.getAdditionalMessage()
-                .map(additionalMessage -> ExceptionResponse.of(errorCode, additionalMessage))
-                .orElse(ExceptionResponse.of(errorCode));
+                              .map(additionalMessage -> ExceptionResponse.of(errorCode, additionalMessage))
+                              .orElse(ExceptionResponse.of(errorCode));
         return new ResponseEntity<>(response, errorCode.getStatus());
     }
 
@@ -37,15 +36,14 @@ public class GlobalExceptionHandler {
         log.error("handleMethodArgumentNotValidException", e);
         final var errMsg = makeErrorMessage(e);
         final var response = errMsg
-                .map((err)->ExceptionResponse.of(ExceptionCode.NO_VALUE, err))
-                .orElse(ExceptionResponse.of(ExceptionCode.NO_VALUE));
+            .map((err) -> ExceptionResponse.of(ExceptionCode.NO_VALUE, err))
+            .orElse(ExceptionResponse.of(ExceptionCode.NO_VALUE));
         return new ResponseEntity<>(response, ExceptionCode.NO_VALUE.getStatus());
     }
 
     private Optional<String> makeErrorMessage(MethodArgumentNotValidException e) {
         List<ObjectError> errors = e.getAllErrors();
-        if (errors.isEmpty())
-            return Optional.empty();
+        if (errors.isEmpty()) {return Optional.empty();}
         return Optional.ofNullable(errors.get(0).getDefaultMessage());
     }
 
@@ -89,8 +87,8 @@ public class GlobalExceptionHandler {
         log.error("BaseException ", e);
         final var errorCode = e.getErrorCode();
         final var response = e.getAdditionalMessage()
-                .map(additionalMessage -> ExceptionResponse.of(errorCode, additionalMessage))
-                .orElse(ExceptionResponse.of(errorCode));
+                              .map(additionalMessage -> ExceptionResponse.of(errorCode, additionalMessage))
+                              .orElse(ExceptionResponse.of(errorCode));
         return new ResponseEntity<>(response, errorCode.getStatus());
     }
 

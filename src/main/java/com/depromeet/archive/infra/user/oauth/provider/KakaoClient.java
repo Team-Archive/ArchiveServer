@@ -44,7 +44,7 @@ public class KakaoClient implements OAuthProviderClient {
 
         if (response.getStatusCode() != HttpStatus.OK || kakaoUserInfo == null || kakaoUserInfo.getEmail() == null) {
             log.error("Kakao getUserEmail process - get user info error: status code {}, user info {}",
-                    response.getStatusCodeValue(), userInfoUrl);
+                      response.getStatusCodeValue(), userInfoUrl);
             throw new OAuthRegisterFailException(OAuthProvider.KAKAO, "UserInfoUrl Response error");
         }
 

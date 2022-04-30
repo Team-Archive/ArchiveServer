@@ -12,7 +12,7 @@ public interface ArchiveImageService {
 
     default void verifyImageFile(final MultipartFile imageFile) {
         if (!Arrays.asList(IMAGE_PNG_VALUE, IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE)
-                .contains(imageFile.getContentType())) {
+                   .contains(imageFile.getContentType())) {
             throw new IllegalStateException("FIle uploaded is not an image");
         }
     }
