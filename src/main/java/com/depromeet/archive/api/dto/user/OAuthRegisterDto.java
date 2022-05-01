@@ -1,5 +1,6 @@
 package com.depromeet.archive.api.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class OAuthRegisterDto {
 
-    private String providerAccessToken;
-
     @NotNull
     private String provider;
+
+    @JsonProperty("providerAccessToken")
+    private String token;
 
 }

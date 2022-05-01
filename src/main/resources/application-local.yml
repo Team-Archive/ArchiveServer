@@ -3,6 +3,10 @@ spring:
     oauth2:
       client:
         registration:
+          apple:
+            issuer: "https://appleid.apple.com"
+            audience: ${APPLE_CLIENT_ID}
+            public-key-uri: "https://appleid.apple.com/auth/keys"
           kakao:
             clientId: ${KAKAO_CLIENT_ID}
             clientSecret: ${KAKAO_CLIENT_SECRET}
