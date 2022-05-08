@@ -18,10 +18,11 @@ public class OAuthUserService {
     public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRegisterDto oAuthRegisterDto) {
         var provider = oAuthRegisterDto.getProvider();
         var oAuthProviderClient = oAuthProviderClients.stream()
-                .filter(client -> client.support().equals(provider))
-                .findFirst()
-                .orElseThrow(() ->
-                        new ProviderNotFoundException("There is no suitable register provider client for " + provider));
+                                                      .filter(client -> client.support().equals(provider))
+                                                      .findFirst()
+                                                      .orElseThrow(() ->
+                                                                       new ProviderNotFoundException(
+                                                                           "There is no suitable register provider client for " + provider));
         return oAuthProviderClient.getOAuthRegisterInfo(oAuthRegisterDto);
     }
 

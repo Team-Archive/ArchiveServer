@@ -34,8 +34,8 @@ public class UserAuthService {
     @Transactional
     public void updateTemporaryPassword(final String email, final String temporaryPassword) {
         var passwordUser = userRepository.findByMailAddress(email)
-                .map(this::convertPasswordUser)
-                .orElseThrow(() -> new ResourceNotFoundException("Email"));
+                                         .map(this::convertPasswordUser)
+                                         .orElseThrow(() -> new ResourceNotFoundException("Email"));
         passwordUser.updatePassword(encoder.encode(temporaryPassword), true);
         mailService.sendTemporaryPassword(email, temporaryPassword);
     }
@@ -43,15 +43,14 @@ public class UserAuthService {
     @Transactional
     public void resetPassword(UserPasswordResetDto userPasswordResetDto) {
         var passwordUser = verifyPasswordReturnUser(
-                userPasswordResetDto.getEmail(), userPasswordResetDto.getCurrentPassword());
+            userPasswordResetDto.getEmail(), userPasswordResetDto.getCurrentPassword());
         passwordUser.updatePassword(encoder.encode(userPasswordResetDto.getNewPassword()), false);
     }
 
     private PasswordUser verifyPasswordReturnUser(final String email, final String password) {
         var user = passwordUserRepository.findPasswordUserByMailAddress(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Email"));
-        if (!encoder.matches(password, user.getPassword()))
-            throw new LoginFailException("비밀번호가 다릅니다");
+                                         .orElseThrow(() -> new ResourceNotFoundException("Email"));
+        if (!encoder.matches(password, user.getPassword())) {throw new LoginFailException("비밀번호가 다릅니다");}
         return user;
     }
 

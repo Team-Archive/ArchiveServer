@@ -30,8 +30,8 @@ public class UserService {
 
     public boolean isTemporaryPasswordLogin(long userId) {
         return passwordUserRepository.findById(userId)
-                .map(PasswordUser::isCurrentTemporaryPassword)
-                .orElse(false);
+                                     .map(PasswordUser::isCurrentTemporaryPassword)
+                                     .orElse(false);
     }
 
 }

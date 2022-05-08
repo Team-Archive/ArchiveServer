@@ -4,7 +4,6 @@ import com.depromeet.archive.domain.archive.ArchiveRepository;
 import com.depromeet.archive.domain.archive.entity.Archive;
 import com.depromeet.archive.domain.user.entity.UserRole;
 import com.depromeet.archive.domain.user.info.UserInfo;
-import com.depromeet.archive.security.authorization.ArchivePermissionHandler;
 import com.depromeet.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,14 +16,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class ArchiveAdminOrAuthorCheckerTest {
 
+    private final long POST_ID = 11;
     @InjectMocks
     private ArchiveAdminOrAuthorChecker handler;
     @Mock
     private ArchiveRepository repository;
     @Mock
     private Archive entityMock;
-
-    private final long POST_ID = 11;
 
     @Test
     public void checkByAuthor() {
@@ -58,13 +56,12 @@ public class ArchiveAdminOrAuthorCheckerTest {
     }
 
 
-
     private UserInfo createUserInfo(long id, UserRole userRole) {
         return UserInfo.builder()
-                .userRole(userRole)
-                .userId(id)
-                .mailAddress("testMail@naver.com")
-                .build();
+                       .userRole(userRole)
+                       .userId(id)
+                       .mailAddress("testMail@naver.com")
+                       .build();
     }
 
 }

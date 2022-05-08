@@ -8,7 +8,7 @@ public class OAuthRegisterFailException extends BaseException {
 
     public OAuthRegisterFailException(OAuthProvider oAuthProvider, String message) {
         super(String.format("%s : %s", oAuthProvider.getRegistrationId(), message),
-                ExceptionCode.REGISTER_FAIL);
+              ExceptionCode.REGISTER_FAIL);
     }
 
 }

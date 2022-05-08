@@ -8,7 +8,18 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +58,7 @@ public class Archive extends BaseTimeEntity {
     private List<String> companions;
 
     @OneToMany(mappedBy = "archive", cascade = CascadeType.ALL)
-    private List<ArchiveImage> archiveImages = new ArrayList<>();
+    private final List<ArchiveImage> archiveImages = new ArrayList<>();
 
     @Builder
     public Archive(String name,

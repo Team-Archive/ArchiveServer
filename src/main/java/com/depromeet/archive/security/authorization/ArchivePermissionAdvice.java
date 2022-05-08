@@ -27,13 +27,15 @@ public class ArchivePermissionAdvice {
         UserInfo requester = SecurityUtils.getCurrentUserInfo();
 
         Object idParam = getParamObjByName(joinPoint.getArgs(), signature, annotation.id());
-        if (idParam != null && !permissionHandler.checkParam(requester, idParam))
+        if (idParam != null && !permissionHandler.checkParam(requester, idParam)) {
             throw new AccessDeniedException("리소스에 접근 권한이 없습니다");
+        }
 
         Object returnVal = joinPoint.proceed();
 
-        if (!permissionHandler.checkReturn(requester, returnVal))
+        if (!permissionHandler.checkReturn(requester, returnVal)) {
             throw new AccessDeniedException("리소스에 접근 권한이 없습니다.");
+        }
 
         return returnVal;
     }
@@ -43,8 +45,7 @@ public class ArchivePermissionAdvice {
         String[] paramNames = signature.getParameterNames();
         for (int i = 0; i < paramNames.length; i++) {
             String nameToCheck = paramNames[i];
-            if (nameToCheck.equals(paramName))
-                return args[i];
+            if (nameToCheck.equals(paramName)) {return args[i];}
         }
         return null;
     }

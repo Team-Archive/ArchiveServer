@@ -85,7 +85,7 @@ public class AppleClient implements OAuthProviderClient {
             verifyAudience(appleOAuthProperty.getAudience(), payload.getAud());
             verifyIssuer(appleOAuthProperty.getIssuer(), payload.getIss());
             verifyJwtSignedKeyIsApplePublicKey(objectMapper, restTemplate,
-                    appleOAuthProperty.getPublicKeyUri(), jwtToken);
+                                               appleOAuthProperty.getPublicKeyUri(), jwtToken);
             log.debug("Success apple token verify: payload({})", payload);
         }
 
@@ -116,7 +116,7 @@ public class AppleClient implements OAuthProviderClient {
 
             if (!isJwtVerifiedByKeys(objectMapper, jwtToken, keys)) {
                 throw new OAuthRegisterFailException(OAuthProvider.APPLE,
-                        "This token isn't signed with the apple public key.");
+                                                     "This token isn't signed with the apple public key.");
             }
 
         }
@@ -142,7 +142,7 @@ public class AppleClient implements OAuthProviderClient {
                 }
             } catch (ParseException | JsonProcessingException | JOSEException e) {
                 throw new OAuthRegisterFailException(OAuthProvider.APPLE,
-                        "Error occurred during parse jwt verifier using apple public key. " + e.getMessage());
+                                                     "Error occurred during parse jwt verifier using apple public key. " + e.getMessage());
             }
 
             return false;

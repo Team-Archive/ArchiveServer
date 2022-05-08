@@ -11,7 +11,7 @@ public class ResourceNotFoundException extends BaseException {
 
     public ResourceNotFoundException(String notFoundMessage, String notFoundResource) {
         super(String.format("%s[%s]", notFoundMessage, notFoundResource),
-                ExceptionCode.NOT_FOUND_RESOURCE);
+              ExceptionCode.NOT_FOUND_RESOURCE);
     }
 
 }

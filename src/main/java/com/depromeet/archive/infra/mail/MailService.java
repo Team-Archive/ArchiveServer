@@ -13,6 +13,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
 import java.util.Map;
 
 import static com.depromeet.archive.infra.mail.MailService.MailTemplate.TEMPORARY_PASSWORD_MAIL;

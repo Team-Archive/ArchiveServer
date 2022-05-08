@@ -1,8 +1,8 @@
 package com.depromeet.archive.integration;
 
 import com.depromeet.archive.ArchiveApplication;
-import com.depromeet.archive.domain.user.command.PasswordRegisterCommand;
 import com.depromeet.archive.domain.user.command.LoginCommand;
+import com.depromeet.archive.domain.user.command.PasswordRegisterCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Slf4j
 @SpringBootTest(classes = {ArchiveApplication.class, IntegrationContext.class},
-        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+                webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class AuthorizationTest {
 
     private PasswordRegisterCommand testRegisterInfo;
@@ -101,7 +101,7 @@ class AuthorizationTest {
 
     @Test
     void unregisterWithInvalidToken() {
-         Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), helper.tryUnregister("BEARER invalidToken"));
+        Assertions.assertEquals(HttpStatus.FORBIDDEN.value(), helper.tryUnregister("BEARER invalidToken"));
     }
 
     private void assertBearerToken(String token) {

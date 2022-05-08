@@ -20,11 +20,11 @@ public class ArchiveImageDto {
 
     public static ArchiveImageDto from(ArchiveImage archiveImage) {
         return ArchiveImageDto.builder()
-                .archiveImageId(archiveImage.getId())
-                .image(archiveImage.getImage())
-                .review(archiveImage.getReview())
-                .backgroundColor(archiveImage.getBackgroundColor())
-                .build();
+                              .archiveImageId(archiveImage.getId())
+                              .image(archiveImage.getImage())
+                              .review(archiveImage.getReview())
+                              .backgroundColor(archiveImage.getBackgroundColor())
+                              .build();
     }
 
     public ArchiveImage toEntity(Archive archive) {
