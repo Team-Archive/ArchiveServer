@@ -7,7 +7,6 @@ import com.depromeet.archive.domain.user.command.OAuthRegisterCommand;
 import com.depromeet.archive.domain.user.entity.BaseUser;
 import com.depromeet.archive.domain.user.info.UserInfo;
 import com.depromeet.archive.exception.common.DuplicateResourceException;
-import com.depromeet.archive.infra.user.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;

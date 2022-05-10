@@ -4,15 +4,11 @@ import com.depromeet.archive.api.dto.user.OAuthRegisterDto;
 import com.depromeet.archive.domain.user.command.OAuthRegisterCommand;
 import com.depromeet.archive.domain.user.entity.OAuthProvider;
 import com.depromeet.archive.exception.user.OAuthRegisterFailException;
-import com.depromeet.archive.infra.user.oauth.provider.dto.ApplePublicKeysResponseDto;
-import com.depromeet.archive.infra.user.oauth.provider.dto.ApplePublicKeysResponseDto.Key;
+import com.depromeet.archive.infra.user.oauth.provider.dto.ApplePublicKeys;
 import com.depromeet.archive.infra.user.oauth.provider.dto.AppleTokenPayload;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -112,40 +108,37 @@ public class AppleClient implements OAuthProviderClient {
                                                                RestTemplate restTemplate,
                                                                String applePublicKeyUri,
                                                                SignedJWT jwtToken) {
-            var keys = getPublicKeys(restTemplate, applePublicKeyUri);
-
-            if (!isJwtVerifiedByKeys(objectMapper, jwtToken, keys)) {
+            var verifiers = getPublicKeyVerifiers(restTemplate, objectMapper, applePublicKeyUri);
+            if (!isJwtVerifiedByKeys(jwtToken, verifiers)) {
                 throw new OAuthRegisterFailException(OAuthProvider.APPLE,
                                                      "This token isn't signed with the apple public key.");
             }
 
         }
 
-        private static List<ApplePublicKeysResponseDto.Key> getPublicKeys(RestTemplate restTemplate, String applePublicKeyUri) {
-            var response = restTemplate.getForEntity(applePublicKeyUri, ApplePublicKeysResponseDto.class);
+        private static List<RSASSAVerifier> getPublicKeyVerifiers(RestTemplate restTemplate,
+                                                                  ObjectMapper objectMapper,
+                                                                  String applePublicKeyUri) {
+            var response = restTemplate.getForEntity(applePublicKeyUri, ApplePublicKeys.class);
             if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
                 throw new OAuthRegisterFailException(OAuthProvider.APPLE, "Failed to get apple public key.");
             }
-            return response.getBody().getKeys();
+            return response.getBody().toVerifier(objectMapper);
         }
 
-        private static boolean isJwtVerifiedByKeys(ObjectMapper objectMapper, SignedJWT jwtToken, List<Key> keys) {
-
-            try {
-                for (Key key : keys) {
-                    var rsaKey = (RSAKey) JWK.parse(objectMapper.writeValueAsString(key));
-                    var publicKey = rsaKey.toRSAPublicKey();
-                    var verifier = new RSASSAVerifier(publicKey);
-                    if (jwtToken.verify(verifier)) {
-                        return true;
-                    }
-                }
-            } catch (ParseException | JsonProcessingException | JOSEException e) {
-                throw new OAuthRegisterFailException(OAuthProvider.APPLE,
-                                                     "Error occurred during parse jwt verifier using apple public key. " + e.getMessage());
-            }
-
-            return false;
+        private static boolean isJwtVerifiedByKeys(SignedJWT jwtToken, List<RSASSAVerifier> verifiers) {
+            return verifiers.stream()
+                            .map(verifier -> {
+                                try {
+                                    return jwtToken.verify(verifier);
+                                } catch (JOSEException ex) {
+                                    throw new OAuthRegisterFailException(OAuthProvider.APPLE,
+                                                                         "Error occurred when create verifier using public key : " + ex.getMessage());
+                                }
+                            })
+                            .filter(result -> result)
+                            .findFirst()
+                            .orElse(false);
         }
 
     }

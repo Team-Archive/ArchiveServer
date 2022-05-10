@@ -9,8 +9,6 @@ import com.depromeet.archive.exception.common.ResourceNotFoundException;
 import com.depromeet.archive.exception.user.LoginFailException;
 import com.depromeet.archive.exception.user.OAuthUserHasNotPasswordException;
 import com.depromeet.archive.infra.mail.MailService;
-import com.depromeet.archive.infra.user.jpa.PasswordUserRepository;
-import com.depromeet.archive.infra.user.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -50,7 +48,9 @@ public class UserAuthService {
     private PasswordUser verifyPasswordReturnUser(final String email, final String password) {
         var user = passwordUserRepository.findPasswordUserByMailAddress(email)
                                          .orElseThrow(() -> new ResourceNotFoundException("Email"));
-        if (!encoder.matches(password, user.getPassword())) {throw new LoginFailException("비밀번호가 다릅니다");}
+        if (!encoder.matches(password, user.getPassword())) {
+            throw new LoginFailException("비밀번호가 다릅니다");
+        }
         return user;
     }
 
