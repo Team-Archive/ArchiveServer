@@ -1,7 +1,5 @@
 package site.archive.api.dto.archive;
 
-import site.archive.domain.archive.entity.Archive;
-import site.archive.domain.archive.entity.Emotion;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AllArgsConstructor;
@@ -9,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import site.archive.domain.archive.entity.Archive;
+import site.archive.domain.archive.entity.Emotion;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,14 +22,14 @@ import static site.archive.util.DateTimeUtil.YY_MM_DD_FORMATTER;
 @Builder
 @JsonInclude(Include.NON_NULL)
 public class ArchiveDto {
-
-    @Setter
-    private long authorId;
     private Long archiveId;
     private String name;
     private String watchedOn;
     private Emotion emotion;
     private String mainImage;
+
+    @Setter
+    private long authorId;
 
     private List<String> companions;
     private List<ArchiveImageDto> images;
@@ -58,6 +58,7 @@ public class ArchiveDto {
                          .emotion(archive.getEmotion())
                          .companions(archive.getCompanions())
                          .mainImage(archive.getMainImage())
+                         .authorId(archive.getAuthorId())
                          .build();
     }
 
