@@ -1,6 +1,5 @@
 package site.archive.exception;
 
-import site.archive.exception.common.DuplicateResourceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import site.archive.exception.common.DuplicateResourceException;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +36,8 @@ public class GlobalExceptionHandler {
         log.error("handleMethodArgumentNotValidException", e);
         final var errMsg = makeErrorMessage(e);
         final var response = errMsg
-            .map((err) -> ExceptionResponse.of(ExceptionCode.NO_VALUE, err))
-            .orElse(ExceptionResponse.of(ExceptionCode.NO_VALUE));
+                                 .map((err) -> ExceptionResponse.of(ExceptionCode.NO_VALUE, err))
+                                 .orElse(ExceptionResponse.of(ExceptionCode.NO_VALUE));
         return new ResponseEntity<>(response, ExceptionCode.NO_VALUE.getStatus());
     }
 

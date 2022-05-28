@@ -1,13 +1,13 @@
 package site.archive.domain.user.entity;
 
-import site.archive.domain.common.BaseTimeEntity;
-import site.archive.domain.user.info.UserInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import site.archive.domain.common.BaseTimeEntity;
+import site.archive.domain.user.info.UserInfo;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;

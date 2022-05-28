@@ -1,9 +1,9 @@
 package site.archive.domain.archive;
 
-import site.archive.domain.archive.entity.Archive;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import site.archive.domain.archive.entity.Archive;
 
 import java.util.List;
 

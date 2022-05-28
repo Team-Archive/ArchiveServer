@@ -1,15 +1,5 @@
 package site.archive.api;
 
-import site.archive.api.dto.archive.ArchiveCountDto;
-import site.archive.api.dto.archive.ArchiveDto;
-import site.archive.api.dto.archive.ArchiveImageUrlResponseDto;
-import site.archive.api.dto.archive.ArchiveListDto;
-import site.archive.api.resolver.annotation.RequestUser;
-import site.archive.domain.archive.ArchiveImageService;
-import site.archive.domain.archive.ArchiveService;
-import site.archive.domain.user.info.UserInfo;
-import site.archive.security.authorization.annotation.RequirePermission;
-import site.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import site.archive.api.dto.archive.ArchiveCountDto;
+import site.archive.api.dto.archive.ArchiveDto;
+import site.archive.api.dto.archive.ArchiveImageUrlResponseDto;
+import site.archive.api.dto.archive.ArchiveListDto;
+import site.archive.api.resolver.annotation.RequestUser;
+import site.archive.domain.archive.ArchiveImageService;
+import site.archive.domain.archive.ArchiveService;
+import site.archive.domain.user.info.UserInfo;
+import site.archive.security.authorization.annotation.RequirePermission;
+import site.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
 
 @RestController
 @RequestMapping("/api/v1/archive")

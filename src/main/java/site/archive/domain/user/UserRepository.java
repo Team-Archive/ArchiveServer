@@ -1,7 +1,7 @@
 package site.archive.domain.user;
 
-import site.archive.domain.user.entity.BaseUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import site.archive.domain.user.entity.BaseUser;
 
 import java.util.Optional;
 

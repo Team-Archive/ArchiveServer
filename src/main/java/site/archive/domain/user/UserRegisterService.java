@@ -1,5 +1,10 @@
 package site.archive.domain.user;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import site.archive.api.dto.user.BaseUserDto;
 import site.archive.domain.common.MessagingService;
 import site.archive.domain.user.command.BasicRegisterCommand;
@@ -7,11 +12,6 @@ import site.archive.domain.user.command.OAuthRegisterCommand;
 import site.archive.domain.user.entity.BaseUser;
 import site.archive.domain.user.info.UserInfo;
 import site.archive.exception.common.DuplicateResourceException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

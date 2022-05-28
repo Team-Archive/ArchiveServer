@@ -1,10 +1,5 @@
 package site.archive.infra.user.oauth.provider;
 
-import site.archive.exception.user.OAuthRegisterFailException;
-import site.archive.infra.user.oauth.provider.AppleClient.AppleOAuthProperty;
-import site.archive.infra.user.oauth.provider.AppleClient.AppleTokenVerifier;
-import site.archive.infra.user.oauth.provider.dto.ApplePublicKeys;
-import site.archive.infra.user.oauth.provider.dto.AppleTokenPayload;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.JOSEException;
@@ -18,6 +13,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import site.archive.exception.user.OAuthRegisterFailException;
+import site.archive.infra.user.oauth.provider.AppleClient.AppleOAuthProperty;
+import site.archive.infra.user.oauth.provider.AppleClient.AppleTokenVerifier;
+import site.archive.infra.user.oauth.provider.dto.ApplePublicKeys;
+import site.archive.infra.user.oauth.provider.dto.AppleTokenPayload;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,10 +36,6 @@ class AppleTokenVerifierTest {
     private static final String issuer = "Iss";
     private static final String audience = "Aud";
     private static final String publicKeyUri = "Public-Key-Uri";
-
-    private ObjectMapper objectMapper;
-    private AppleOAuthProperty appleOAuthProperty;
-
     @Mock
     SignedJWT jwtMock;
     @Mock
@@ -48,6 +44,8 @@ class AppleTokenVerifierTest {
     ApplePublicKeys applePublicKeys;
     @Mock
     RSASSAVerifier verifier;
+    private ObjectMapper objectMapper;
+    private AppleOAuthProperty appleOAuthProperty;
 
     @BeforeEach
     void setUp() {

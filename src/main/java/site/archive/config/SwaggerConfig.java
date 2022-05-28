@@ -15,19 +15,19 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)
-            .useDefaultResponseMessages(false)
-            .select()
-            .apis(RequestHandlerSelectors.basePackage("site.archive.api"))
-            .paths(PathSelectors.any())
-            .build()
-            .apiInfo(apiInfo());
+                   .useDefaultResponseMessages(false)
+                   .select()
+                   .apis(RequestHandlerSelectors.basePackage("site.archive.api"))
+                   .paths(PathSelectors.any())
+                   .build()
+                   .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Archive Swagger")
-            .version("1.0")
-            .build();
+                   .title("Archive Swagger")
+                   .version("1.0")
+                   .build();
     }
 
 }

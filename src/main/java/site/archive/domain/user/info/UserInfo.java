@@ -1,11 +1,11 @@
 package site.archive.domain.user.info;
 
-import site.archive.domain.user.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import site.archive.domain.user.entity.UserRole;
 
 @Getter
 @Setter

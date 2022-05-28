@@ -20,10 +20,9 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 class ArchiveServiceTest {
 
+    private static final long USER_ID = 1L;
     @Mock
     ArchiveRepository archiveRepository;
-
-    private static final long USER_ID = 1L;
     private ArchiveService archiveService;
 
     @BeforeEach

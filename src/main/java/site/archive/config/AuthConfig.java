@@ -1,5 +1,11 @@
 package site.archive.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import site.archive.domain.archive.ArchiveRepository;
 import site.archive.domain.user.UserAuthService;
 import site.archive.domain.user.UserRegisterService;
@@ -13,12 +19,6 @@ import site.archive.security.token.HttpAuthTokenSupport;
 import site.archive.security.token.TokenProvider;
 import site.archive.security.token.jwt.JwtTokenProvider;
 import site.archive.security.token.jwt.JwtTokenSupport;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration

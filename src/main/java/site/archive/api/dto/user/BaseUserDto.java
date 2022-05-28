@@ -1,9 +1,9 @@
 package site.archive.api.dto.user;
 
-import site.archive.domain.user.entity.BaseUser;
-import site.archive.util.DateTimeUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import site.archive.domain.user.entity.BaseUser;
+import site.archive.util.DateTimeUtil;
 
 import java.time.LocalDateTime;
 

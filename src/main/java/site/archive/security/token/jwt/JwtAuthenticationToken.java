@@ -1,12 +1,12 @@
 package site.archive.security.token.jwt;
 
-import site.archive.domain.user.info.UserInfo;
-import site.archive.security.common.UserPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import site.archive.domain.user.info.UserInfo;
+import site.archive.security.common.UserPrincipal;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -22,9 +22,9 @@ public class JwtAuthenticationToken implements Authentication {
     public JwtAuthenticationToken(UserInfo token) {
         authorities.add(new SimpleGrantedAuthority(token.getUserRole().toString()));
         principal = UserPrincipal
-            .builder()
-            .userInfo(token)
-            .build();
+                        .builder()
+                        .userInfo(token)
+                        .build();
         details = new User(token.getMailAddress(), "", authorities);
         userInfo = token;
     }

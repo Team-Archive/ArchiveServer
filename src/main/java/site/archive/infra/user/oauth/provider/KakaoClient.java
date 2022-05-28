@@ -1,11 +1,5 @@
 package site.archive.infra.user.oauth.provider;
 
-import site.archive.api.dto.user.OAuthRegisterDto;
-import site.archive.domain.user.command.OAuthRegisterCommand;
-import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.exception.user.OAuthRegisterFailException;
-import site.archive.infra.user.oauth.provider.dto.KakaoProviderRequirements;
-import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +9,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import site.archive.api.dto.user.OAuthRegisterDto;
+import site.archive.domain.user.command.OAuthRegisterCommand;
+import site.archive.domain.user.entity.OAuthProvider;
+import site.archive.exception.user.OAuthRegisterFailException;
+import site.archive.infra.user.oauth.provider.dto.KakaoProviderRequirements;
+import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
 
 @Component
 @RequiredArgsConstructor

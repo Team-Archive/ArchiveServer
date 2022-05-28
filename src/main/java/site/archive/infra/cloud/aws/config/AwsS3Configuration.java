@@ -16,10 +16,10 @@ public class AwsS3Configuration {
     public AmazonS3 s3(AwsCredentialsProperty credentialsProperty, AwsS3Property s3Property) {
         var awsCredentials = new BasicAWSCredentials(credentialsProperty.getAccessKey(), credentialsProperty.getSecretKey());
         return AmazonS3ClientBuilder
-            .standard()
-            .withRegion(s3Property.getRegion())
-            .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-            .build();
+                   .standard()
+                   .withRegion(s3Property.getRegion())
+                   .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                   .build();
     }
 
 }

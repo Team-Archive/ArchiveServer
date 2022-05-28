@@ -1,11 +1,11 @@
 package site.archive.api.dto.archive;
 
-import site.archive.domain.archive.entity.Archive;
-import site.archive.domain.archive.entity.ArchiveImage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import site.archive.domain.archive.entity.Archive;
+import site.archive.domain.archive.entity.ArchiveImage;
 
 @NoArgsConstructor
 @AllArgsConstructor

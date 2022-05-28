@@ -1,7 +1,5 @@
 package site.archive.infra.user.oauth.provider.dto;
 
-import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.exception.user.OAuthRegisterFailException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.JOSEException;
@@ -9,6 +7,8 @@ import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.RSAKey;
 import lombok.Getter;
+import site.archive.domain.user.entity.OAuthProvider;
+import site.archive.exception.user.OAuthRegisterFailException;
 
 import java.text.ParseException;
 import java.util.List;
@@ -18,6 +18,12 @@ import java.util.stream.Collectors;
 public class ApplePublicKeys {
 
     private List<Key> keys;
+
+    public List<RSASSAVerifier> toVerifier(ObjectMapper objectMapper) {
+        return keys.stream()
+                   .map(key -> key.toRSAVerifier(objectMapper))
+                   .collect(Collectors.toList());
+    }
 
     @Getter
     public static class Key {
@@ -38,12 +44,6 @@ public class ApplePublicKeys {
                                                      "Error occurred when create verifier using public key : " + ex.getMessage());
             }
         }
-    }
-
-    public List<RSASSAVerifier> toVerifier(ObjectMapper objectMapper) {
-        return keys.stream()
-            .map(key -> key.toRSAVerifier(objectMapper))
-            .collect(Collectors.toList());
     }
 
 }

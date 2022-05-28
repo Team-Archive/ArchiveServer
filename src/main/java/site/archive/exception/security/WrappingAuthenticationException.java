@@ -1,8 +1,8 @@
 package site.archive.exception.security;
 
-import site.archive.exception.BaseException;
 import lombok.Getter;
 import org.springframework.security.core.AuthenticationException;
+import site.archive.exception.BaseException;
 
 @Getter
 public class WrappingAuthenticationException extends AuthenticationException {

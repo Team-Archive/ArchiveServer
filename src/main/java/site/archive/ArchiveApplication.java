@@ -10,8 +10,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableJpaAuditing
 public class ArchiveApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ArchiveApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ArchiveApplication.class, args);
+    }
 
 }

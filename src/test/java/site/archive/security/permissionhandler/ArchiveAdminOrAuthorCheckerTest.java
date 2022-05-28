@@ -1,10 +1,5 @@
 package site.archive.security.permissionhandler;
 
-import site.archive.domain.archive.ArchiveRepository;
-import site.archive.domain.archive.entity.Archive;
-import site.archive.domain.user.entity.UserRole;
-import site.archive.domain.user.info.UserInfo;
-import site.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import site.archive.domain.archive.ArchiveRepository;
+import site.archive.domain.archive.entity.Archive;
+import site.archive.domain.user.entity.UserRole;
+import site.archive.domain.user.info.UserInfo;
+import site.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
 
 @ExtendWith(MockitoExtension.class)
 public class ArchiveAdminOrAuthorCheckerTest {

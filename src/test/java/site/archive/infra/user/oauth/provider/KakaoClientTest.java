@@ -1,9 +1,5 @@
 package site.archive.infra.user.oauth.provider;
 
-import site.archive.api.dto.user.OAuthRegisterDto;
-import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.exception.user.OAuthRegisterFailException;
-import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -11,6 +7,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import site.archive.api.dto.user.OAuthRegisterDto;
+import site.archive.domain.user.entity.OAuthProvider;
+import site.archive.exception.user.OAuthRegisterFailException;
+import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
 
 import java.util.Collections;
 
@@ -66,5 +66,5 @@ class KakaoClientTest {
         assertThat(exception.getMessage()).contains(OAuthProvider.KAKAO.getRegistrationId(),
                                                     "UserInfoUrl Response error");
     }
-    
+
 }

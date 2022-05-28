@@ -1,13 +1,5 @@
 package site.archive.api.user;
 
-import site.archive.api.dto.archive.EmailDuplicateResponseDto;
-import site.archive.api.dto.user.UserEmailDto;
-import site.archive.api.dto.user.UserPasswordResetDto;
-import site.archive.api.resolver.annotation.RequestUser;
-import site.archive.domain.user.UserAuthService;
-import site.archive.domain.user.UserService;
-import site.archive.domain.user.info.UserInfo;
-import site.archive.util.SecurityUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import site.archive.api.dto.archive.EmailDuplicateResponseDto;
+import site.archive.api.dto.user.UserEmailDto;
+import site.archive.api.dto.user.UserPasswordResetDto;
+import site.archive.api.resolver.annotation.RequestUser;
+import site.archive.domain.user.UserAuthService;
+import site.archive.domain.user.UserService;
+import site.archive.domain.user.info.UserInfo;
+import site.archive.util.SecurityUtils;
 
 @RestController
 @RequestMapping("/api/v1/auth")

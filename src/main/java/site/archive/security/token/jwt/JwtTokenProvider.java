@@ -1,14 +1,14 @@
 package site.archive.security.token.jwt;
 
 
-import site.archive.domain.user.info.UserInfo;
-import site.archive.exception.security.TokenNotFoundException;
-import site.archive.security.token.TokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import site.archive.domain.user.info.UserInfo;
+import site.archive.exception.security.TokenNotFoundException;
+import site.archive.security.token.TokenProvider;
 
 import java.util.Base64;
 import java.util.Date;
@@ -29,15 +29,15 @@ public class JwtTokenProvider implements TokenProvider {
         Date date = new Date();
         date.setTime(date.getTime() + 1000L * 60 * 60 * 24 * 30);
         return Jwts
-            .builder()
-            .setSubject("user")
-            .claim("info", info)
-            .setHeaderParam("typ", "JWT")
-            .setHeaderParam("alg", "ES56")
-            .setHeaderParam("kid", "default")
-            .setExpiration(date)
-            .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
-            .compact();
+                   .builder()
+                   .setSubject("user")
+                   .claim("info", info)
+                   .setHeaderParam("typ", "JWT")
+                   .setHeaderParam("alg", "ES56")
+                   .setHeaderParam("kid", "default")
+                   .setExpiration(date)
+                   .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
+                   .compact();
     }
 
     public UserInfo parseUserInfoFromToken(String token) {

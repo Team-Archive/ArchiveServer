@@ -1,11 +1,11 @@
 package site.archive.security.authorization.permissionhandler;
 
+import lombok.RequiredArgsConstructor;
 import site.archive.domain.archive.ArchiveRepository;
 import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.user.entity.UserRole;
 import site.archive.domain.user.info.UserInfo;
 import site.archive.security.authorization.ArchivePermissionHandler;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ArchiveAdminOrAuthorChecker implements ArchivePermissionHandler {

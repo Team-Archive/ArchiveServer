@@ -1,12 +1,5 @@
 package site.archive.api.user;
 
-import site.archive.api.dto.user.OAuthRegisterDto;
-import site.archive.domain.user.UserRegisterService;
-import site.archive.domain.user.command.PasswordRegisterCommand;
-import site.archive.domain.user.info.UserInfo;
-import site.archive.infra.user.oauth.OAuthUserService;
-import site.archive.security.token.HttpAuthTokenSupport;
-import site.archive.security.token.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import site.archive.api.dto.user.OAuthRegisterDto;
+import site.archive.domain.user.UserRegisterService;
+import site.archive.domain.user.command.PasswordRegisterCommand;
+import site.archive.domain.user.info.UserInfo;
+import site.archive.infra.user.oauth.OAuthUserService;
+import site.archive.security.token.HttpAuthTokenSupport;
+import site.archive.security.token.TokenProvider;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;

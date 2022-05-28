@@ -1,11 +1,11 @@
 package site.archive.domain.archive.entity;
 
-import site.archive.domain.common.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import site.archive.domain.common.BaseTimeEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -11,6 +11,9 @@ ij_smart_tabs = false
 ij_visual_guides = 140
 ij_wrap_on_typing = false
 
+[{*.yml, *.yaml}]
+indent_size = 2
+
 [*.java]
 ij_continuation_indent_size = 4
 ij_java_align_consecutive_assignments = false

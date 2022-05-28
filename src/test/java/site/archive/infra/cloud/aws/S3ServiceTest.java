@@ -1,13 +1,13 @@
 package site.archive.infra.cloud.aws;
 
 import com.amazonaws.services.s3.AmazonS3;
-import site.archive.infra.cloud.aws.config.AwsS3Property;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.mock.web.MockMultipartFile;
+import site.archive.infra.cloud.aws.config.AwsS3Property;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -16,10 +16,9 @@ import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 
 class S3ServiceTest {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Mock
     AmazonS3 amazonS3;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private S3Service s3Service;
 
     @BeforeEach

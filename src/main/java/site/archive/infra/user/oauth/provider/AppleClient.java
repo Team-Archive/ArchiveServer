@@ -1,11 +1,5 @@
 package site.archive.infra.user.oauth.provider;
 
-import site.archive.api.dto.user.OAuthRegisterDto;
-import site.archive.domain.user.command.OAuthRegisterCommand;
-import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.exception.user.OAuthRegisterFailException;
-import site.archive.infra.user.oauth.provider.dto.ApplePublicKeys;
-import site.archive.infra.user.oauth.provider.dto.AppleTokenPayload;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
@@ -19,6 +13,12 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import site.archive.api.dto.user.OAuthRegisterDto;
+import site.archive.domain.user.command.OAuthRegisterCommand;
+import site.archive.domain.user.entity.OAuthProvider;
+import site.archive.exception.user.OAuthRegisterFailException;
+import site.archive.infra.user.oauth.provider.dto.ApplePublicKeys;
+import site.archive.infra.user.oauth.provider.dto.AppleTokenPayload;
 
 import java.text.ParseException;
 import java.time.Instant;

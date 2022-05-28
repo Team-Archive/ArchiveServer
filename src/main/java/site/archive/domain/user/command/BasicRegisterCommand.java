@@ -1,10 +1,10 @@
 package site.archive.domain.user.command;
 
-import site.archive.domain.user.entity.BaseUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import site.archive.domain.user.entity.BaseUser;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

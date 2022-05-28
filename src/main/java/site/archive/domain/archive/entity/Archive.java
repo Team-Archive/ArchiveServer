@@ -1,12 +1,12 @@
 package site.archive.domain.archive.entity;
 
-import site.archive.domain.common.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import site.archive.domain.common.BaseTimeEntity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,33 +32,26 @@ import java.util.List;
 @Where(clause = "is_deleted = false")
 public class Archive extends BaseTimeEntity {
 
+    @OneToMany(mappedBy = "archive", cascade = CascadeType.ALL)
+    private final List<ArchiveImage> archiveImages = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "archive_id")
     private Long id;
-
     @Column(name = "author_id", nullable = false)
     private long authorId;
-
     @Column(name = "name", nullable = false, length = 100)
     private String name;
-
     @Column(name = "watched_on", columnDefinition = "TIMESTAMP")
     private LocalDate watchedOn;
-
     @Enumerated(value = EnumType.STRING)
     @Column(name = "emotion")
     private Emotion emotion;
-
     @Column(name = "main_image")
     private String mainImage;
-
     @Convert(converter = CompanionsConverter.class)
     @Column(name = "companions")
     private List<String> companions;
-
-    @OneToMany(mappedBy = "archive", cascade = CascadeType.ALL)
-    private final List<ArchiveImage> archiveImages = new ArrayList<>();
 
     @Builder
     public Archive(String name,

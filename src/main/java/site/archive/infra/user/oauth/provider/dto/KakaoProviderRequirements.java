@@ -1,8 +1,8 @@
 package site.archive.infra.user.oauth.provider.dto;
 
-import site.archive.api.dto.user.OAuthRegisterDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import site.archive.api.dto.user.OAuthRegisterDto;
 
 @RequiredArgsConstructor
 @Getter
