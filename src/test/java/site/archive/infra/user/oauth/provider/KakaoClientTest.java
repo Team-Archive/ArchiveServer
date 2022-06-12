@@ -7,7 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import site.archive.api.dto.user.OAuthRegisterDto;
+import site.archive.api.dto.user.OAuthRegisterRequestDto;
 import site.archive.domain.user.entity.OAuthProvider;
 import site.archive.exception.user.OAuthRegisterFailException;
 import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
@@ -35,7 +35,7 @@ class KakaoClientTest {
         var kakaoUserInfoResponse = new ResponseEntity<>(kakaoUserInfo, HttpStatus.OK);
 
         var kakaoClient = new KakaoClient(restTemplate);
-        var oAuthRegisterDto = new OAuthRegisterDto(kakaoClient.support(), "token");
+        var oAuthRegisterDto = new OAuthRegisterRequestDto(kakaoClient.support(), "token");
 
         given(restTemplate.exchange(any(), any(), any(), eq(KakaoUserInfo.class), any(Object.class)))
             .willReturn(kakaoUserInfoResponse);
@@ -55,7 +55,7 @@ class KakaoClientTest {
         var kakaoUserInfoUnauthorizedResponse = new ResponseEntity<>(kakaoUserInfo, HttpStatus.UNAUTHORIZED);
 
         var kakaoClient = new KakaoClient(restTemplate);
-        var oAuthRegisterDto = new OAuthRegisterDto(kakaoClient.support(), "token");
+        var oAuthRegisterDto = new OAuthRegisterRequestDto(kakaoClient.support(), "token");
 
         given(restTemplate.exchange(any(), any(), any(), eq(KakaoUserInfo.class), any(Object.class)))
             .willReturn(kakaoUserInfoUnauthorizedResponse);

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import site.archive.api.dto.user.OAuthRegisterDto;
+import site.archive.api.dto.user.OAuthRegisterRequestDto;
 import site.archive.domain.user.UserRegisterService;
 import site.archive.domain.user.command.PasswordRegisterCommand;
 import site.archive.domain.user.info.UserInfo;
@@ -42,8 +42,8 @@ public class RegisterController {
 
     @PostMapping("/social")
     public ResponseEntity<Void> registerOrLoginSocialUser(HttpServletResponse httpServletResponse,
-                                                          @Validated @RequestBody OAuthRegisterDto oAuthRegisterDto) {
-        var oAuthRegisterInfo = oAuthUserService.getOAuthRegisterInfo(oAuthRegisterDto);
+                                                          @Validated @RequestBody OAuthRegisterRequestDto oAuthRegisterRequestDto) {
+        var oAuthRegisterInfo = oAuthUserService.getOAuthRegisterInfo(oAuthRegisterRequestDto);
         var userInfo = userRegisterService.getOrRegisterUserReturnInfo(oAuthRegisterInfo);
         injectJwtToken(httpServletResponse, userInfo);
         return ResponseEntity.ok().build();

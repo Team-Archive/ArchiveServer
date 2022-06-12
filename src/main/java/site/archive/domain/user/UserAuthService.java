@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import site.archive.api.dto.user.UserPasswordResetDto;
+import site.archive.api.dto.user.UserPasswordResetRequestDto;
 import site.archive.domain.user.command.LoginCommand;
 import site.archive.domain.user.entity.BaseUser;
 import site.archive.domain.user.entity.PasswordUser;
@@ -39,10 +39,10 @@ public class UserAuthService {
     }
 
     @Transactional
-    public void resetPassword(UserPasswordResetDto userPasswordResetDto) {
+    public void resetPassword(UserPasswordResetRequestDto userPasswordResetRequestDto) {
         var passwordUser = verifyPasswordReturnUser(
-            userPasswordResetDto.getEmail(), userPasswordResetDto.getCurrentPassword());
-        passwordUser.updatePassword(encoder.encode(userPasswordResetDto.getNewPassword()), false);
+            userPasswordResetRequestDto.getEmail(), userPasswordResetRequestDto.getCurrentPassword());
+        passwordUser.updatePassword(encoder.encode(userPasswordResetRequestDto.getNewPassword()), false);
     }
 
     private PasswordUser verifyPasswordReturnUser(final String email, final String password) {

@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import site.archive.api.dto.archive.ArchiveCountDto;
+import site.archive.api.dto.archive.ArchiveCountResponseDto;
 import site.archive.api.dto.archive.ArchiveDto;
 import site.archive.api.dto.archive.ArchiveImageUrlResponseDto;
-import site.archive.api.dto.archive.ArchiveListDto;
+import site.archive.api.dto.archive.ArchiveListResponseDto;
 import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.domain.archive.ArchiveImageService;
 import site.archive.domain.archive.ArchiveService;
@@ -35,7 +35,7 @@ public class ArchiveV1Controller {
 
     @Operation(summary = "아카이브 리스트 조회", description = "홈 뷰 - 아카이브 리스트 조회")
     @GetMapping
-    public ResponseEntity<ArchiveListDto> archiveListView(@RequestUser UserInfo user) {
+    public ResponseEntity<ArchiveListResponseDto> archiveListView(@RequestUser UserInfo user) {
         return ResponseEntity.ok(archiveService.getAllArchive(user));
     }
 
@@ -54,10 +54,7 @@ public class ArchiveV1Controller {
     }
 
     @Operation(summary = "이미지 업로드")
-    @PostMapping(path = "/image/upload",
-                 consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-                 produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @PostMapping(path = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArchiveImageUrlResponseDto> uploadImage(@RequestParam("image") MultipartFile imageFile) {
         imageService.verifyImageFile(imageFile);
         var imageUrl = imageService.upload(imageFile);
@@ -74,8 +71,8 @@ public class ArchiveV1Controller {
 
     @Operation(summary = "아카이브 개수 조회")
     @GetMapping("/count")
-    public ResponseEntity<ArchiveCountDto> countArchive(@RequestUser UserInfo user) {
-        var archiveCountDto = new ArchiveCountDto(archiveService.countArchive(user));
+    public ResponseEntity<ArchiveCountResponseDto> countArchive(@RequestUser UserInfo user) {
+        var archiveCountDto = new ArchiveCountResponseDto(archiveService.countArchive(user));
         return ResponseEntity.ok(archiveCountDto);
     }
 

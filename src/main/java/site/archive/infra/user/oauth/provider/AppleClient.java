@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import site.archive.api.dto.user.OAuthRegisterDto;
+import site.archive.api.dto.user.OAuthRegisterRequestDto;
 import site.archive.domain.user.command.OAuthRegisterCommand;
 import site.archive.domain.user.entity.OAuthProvider;
 import site.archive.exception.user.OAuthRegisterFailException;
@@ -43,8 +43,8 @@ public class AppleClient implements OAuthProviderClient {
     }
 
     @Override
-    public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRegisterDto oAuthRegisterDto) {
-        var jwtToken = getSignedJWT(oAuthRegisterDto.getToken());
+    public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRegisterRequestDto oAuthRegisterRequestDto) {
+        var jwtToken = getSignedJWT(oAuthRegisterRequestDto.getToken());
         var payload = getAppleTokenPayload(jwtToken);
         AppleTokenVerifier.verify(objectMapper, restTemplate, appleOAuthProperty, jwtToken, payload);
         return new OAuthRegisterCommand(payload.getEmail(), OAuthProvider.APPLE);

@@ -2,7 +2,7 @@ package site.archive.infra.user.oauth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.ProviderNotFoundException;
-import site.archive.api.dto.user.OAuthRegisterDto;
+import site.archive.api.dto.user.OAuthRegisterRequestDto;
 import site.archive.infra.user.oauth.provider.AppleClient;
 import site.archive.infra.user.oauth.provider.KakaoClient;
 
@@ -24,7 +24,7 @@ class OAuthUserServiceTest {
                                       new AppleClient(null, null, null));
         var oAuthUserService = new OAuthUserService(providerClients);
 
-        var oAuthRegisterDto = new OAuthRegisterDto("naver", "token");
+        var oAuthRegisterDto = new OAuthRegisterRequestDto("naver", "token");
         assertThatThrownBy(() -> oAuthUserService.getOAuthRegisterInfo(oAuthRegisterDto))
             .isInstanceOf(ProviderNotFoundException.class);
     }
@@ -41,7 +41,7 @@ class OAuthUserServiceTest {
         when(appleClient.getOAuthRegisterInfo(any())).thenReturn(null);
 
         // when & then
-        var oAuthRegisterDto = new OAuthRegisterDto("apple", "token");
+        var oAuthRegisterDto = new OAuthRegisterRequestDto("apple", "token");
         assertDoesNotThrow(() -> oAuthUserService.getOAuthRegisterInfo(oAuthRegisterDto));
         verify(appleClient).getOAuthRegisterInfo(any());
     }

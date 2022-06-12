@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ArchiveCountDto {
+public class ArchiveCountResponseDto {
 
     private final long count;
 

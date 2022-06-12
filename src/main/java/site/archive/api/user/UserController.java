@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.archive.api.dto.archive.EmailDuplicateResponseDto;
-import site.archive.api.dto.user.UserEmailDto;
-import site.archive.api.dto.user.UserPasswordResetDto;
+import site.archive.api.dto.user.UserEmailRequestDto;
+import site.archive.api.dto.user.UserPasswordResetRequestDto;
 import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.domain.user.UserAuthService;
 import site.archive.domain.user.UserService;
@@ -49,16 +49,16 @@ public class UserController {
 
     @Operation(summary = "비밀번호 초기화 - 임시 비밀번호 발급")
     @PostMapping("/password/temporary")
-    public ResponseEntity<Void> issueTemporaryPassword(@Validated @RequestBody UserEmailDto userEmailDto) {
+    public ResponseEntity<Void> issueTemporaryPassword(@Validated @RequestBody UserEmailRequestDto userEmailRequestDto) {
         var temporaryPassword = SecurityUtils.generateRandomString(TEMP_PASSWORD_LENGTH);
-        userAuthService.updateTemporaryPassword(userEmailDto.getEmail(), temporaryPassword);
+        userAuthService.updateTemporaryPassword(userEmailRequestDto.getEmail(), temporaryPassword);
         return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "비밀번호 초기화 - 새로운 비밀번호 설정")
     @PostMapping("/password/reset")
-    public ResponseEntity<Void> resetPassword(@Validated @RequestBody UserPasswordResetDto userPasswordResetDto) {
-        userAuthService.resetPassword(userPasswordResetDto);
+    public ResponseEntity<Void> resetPassword(@Validated @RequestBody UserPasswordResetRequestDto userPasswordResetRequestDto) {
+        userAuthService.resetPassword(userPasswordResetRequestDto);
         return ResponseEntity.ok().build();
     }
 

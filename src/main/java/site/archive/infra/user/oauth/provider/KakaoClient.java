@@ -9,7 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import site.archive.api.dto.user.OAuthRegisterDto;
+import site.archive.api.dto.user.OAuthRegisterRequestDto;
 import site.archive.domain.user.command.OAuthRegisterCommand;
 import site.archive.domain.user.entity.OAuthProvider;
 import site.archive.exception.user.OAuthRegisterFailException;
@@ -32,8 +32,8 @@ public class KakaoClient implements OAuthProviderClient {
     }
 
     @Override
-    public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRegisterDto oAuthRegisterDto) {
-        var userEmail = getUserEmail(KakaoProviderRequirements.from(oAuthRegisterDto));
+    public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRegisterRequestDto oAuthRegisterRequestDto) {
+        var userEmail = getUserEmail(KakaoProviderRequirements.from(oAuthRegisterRequestDto));
         return new OAuthRegisterCommand(userEmail, OAuthProvider.KAKAO);
     }
 

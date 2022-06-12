@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.archive.api.dto.archive.ArchiveDto;
-import site.archive.api.dto.archive.ArchiveListDto;
+import site.archive.api.dto.archive.ArchiveListResponseDto;
 import site.archive.domain.user.info.UserInfo;
 import site.archive.exception.common.ResourceNotFoundException;
-
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -17,13 +15,13 @@ public class ArchiveService {
 
     private final ArchiveRepository archiveRepository;
 
-    public ArchiveListDto getAllArchive(UserInfo info) {
+    public ArchiveListResponseDto getAllArchive(UserInfo info) {
         var authorId = info.getUserId();
         var archiveDtos = archiveRepository.findAllByAuthorId(authorId)
                                            .stream()
                                            .map(ArchiveDto::simpleFrom)
-                                           .collect(Collectors.toList());
-        return ArchiveListDto.from(archiveDtos);
+                                           .toList();
+        return ArchiveListResponseDto.from(archiveDtos);
     }
 
     public ArchiveDto getOneArchiveById(Long archiveId) {

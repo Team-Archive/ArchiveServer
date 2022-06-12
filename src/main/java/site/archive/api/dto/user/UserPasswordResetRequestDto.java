@@ -13,7 +13,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPasswordResetDto {
+public class UserPasswordResetRequestDto {
 
     @Email
     @NotNull
