@@ -28,7 +28,7 @@ import site.archive.security.authorization.permissionhandler.ArchiveAdminOrAutho
 @RestController
 @RequestMapping("/api/v1/archive")
 @RequiredArgsConstructor
-public class ArchiveController {
+public class ArchiveV1Controller {
 
     private final ArchiveService archiveService;
     private final ArchiveImageService imageService;
