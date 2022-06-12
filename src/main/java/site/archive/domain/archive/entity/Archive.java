@@ -58,13 +58,15 @@ public class Archive extends BaseTimeEntity {
     private List<String> companions;
 
     @Builder
-    public Archive(String name,
+    public Archive(Long id,
+                   String name,
                    long authorId,
                    LocalDate watchedOn,
                    Emotion emotion,
                    String mainImage,
                    Boolean isPublic,
                    List<String> companions) {
+        this.id = id;
         this.name = name;
         this.watchedOn = watchedOn;
         this.emotion = emotion;

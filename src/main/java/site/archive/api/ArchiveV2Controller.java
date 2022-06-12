@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import site.archive.api.dto.archive.ArchiveDto;
 import site.archive.api.dto.archive.ArchiveListResponseDto;
 import site.archive.api.dto.archive.ArchiveUserIdRequestDto;
 import site.archive.api.resolver.annotation.RequestUser;
@@ -27,5 +29,13 @@ public class ArchiveV2Controller {
                                                                   @Validated @RequestBody ArchiveUserIdRequestDto archiveUserIdRequestDto) {
         return ResponseEntity.ok(archiveService.getAllArchive(user, archiveUserIdRequestDto.getAuthorId()));
     }
+
+    @Operation(summary = "아카이브 상세 조회")
+    @GetMapping("/{archiveId}")
+    public ResponseEntity<ArchiveDto> archiveSpecificView(@RequestUser UserInfo user,
+                                                          @PathVariable Long archiveId) {
+        return ResponseEntity.ok(archiveService.getOneArchiveById(user, archiveId));
+    }
+
 
 }

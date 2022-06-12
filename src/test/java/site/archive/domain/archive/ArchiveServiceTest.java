@@ -10,12 +10,15 @@ import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.archive.entity.Emotion;
 import site.archive.domain.user.entity.UserRole;
 import site.archive.domain.user.info.UserInfo;
+import site.archive.exception.common.UnauthorizedResourceException;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -105,6 +108,43 @@ class ArchiveServiceTest {
                    });
     }
 
+    @DisplayName("타인 아카이브인 경우, public 아카이브는 상세 조회가 가능하다")
+    @Test
+    void canViewPublicSpecificArchiveWhenOtherArchive() {
+        // given
+        var myUserID = 99L;
+        var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, myUserID);
+
+        // public archive setting
+        var publicArchiveId = 25L;
+        var dummyPublicArchive = dummyArchive(publicArchiveId, USER_ID, true);
+        given(archiveRepository.findById(publicArchiveId)).willReturn(Optional.of(dummyPublicArchive));
+
+        // when
+        var archive = archiveService.getOneArchiveById(userInfo, publicArchiveId);
+
+        // then
+        assertThat(archive.getArchiveId()).isEqualTo(publicArchiveId);
+        assertThat(archive.getAuthorId()).isEqualTo(USER_ID);
+    }
+
+    @DisplayName("타인 아카이브인 경우, private 아카이브는 상세 조회가 불가능하다")
+    @Test
+    void cannotViewPrivateSpecificArchiveWhenOtherArchive() {
+        // given
+        var myUserID = 99L;
+        var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, myUserID);
+
+        // private archive setting
+        var privateArchiveId = 25L;
+        var dummyPrivateArchive = dummyArchive(privateArchiveId, USER_ID, false);
+        given(archiveRepository.findById(privateArchiveId)).willReturn(Optional.of(dummyPrivateArchive));
+
+        // when & then
+        assertThatThrownBy(() -> archiveService.getOneArchiveById(userInfo, privateArchiveId))
+            .isInstanceOf(UnauthorizedResourceException.class);
+    }
+
     private List<Archive> dummyArchives(long authorId) {
         return List.of(
             Archive.builder()
@@ -126,7 +166,19 @@ class ArchiveServiceTest {
                    .isPublic(false)
                    .build()
         );
+    }
 
+    private Archive dummyArchive(long archiveId, long authorId, boolean isPublic) {
+        return Archive.builder()
+                      .id(archiveId)
+                      .name("archive_1")
+                      .authorId(authorId)
+                      .watchedOn(LocalDate.now())
+                      .emotion(Emotion.PLEASANT)
+                      .mainImage("main_image_1")
+                      .companions(Collections.emptyList())
+                      .isPublic(isPublic)
+                      .build();
     }
 
 }

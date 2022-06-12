@@ -8,6 +8,7 @@ import site.archive.api.dto.archive.ArchiveListResponseDto;
 import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.user.info.UserInfo;
 import site.archive.exception.common.ResourceNotFoundException;
+import site.archive.exception.common.UnauthorizedResourceException;
 
 import java.util.function.Predicate;
 
@@ -19,6 +20,7 @@ public class ArchiveService {
     private final ArchiveRepository archiveRepository;
 
     /**
+     * v1 controller에서 사용
      * 유저의 모든 Archive 조회
      * public/private 권한을 계산하지 않음
      *
@@ -34,6 +36,7 @@ public class ArchiveService {
     }
 
     /**
+     * v2 controller에서 사용
      * 자신의 Archive의 경우, 모든 archive 조회
      * 타인의 Archive의 경우, public archive 만 조회
      *
@@ -43,15 +46,40 @@ public class ArchiveService {
      */
     public ArchiveListResponseDto getAllArchive(UserInfo info, Long authorId) {
         var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
-                                           .filter(hasViewAuthority(info))
+                                           .filter(hasViewAuthority(info.getUserId()))
                                            .map(ArchiveDto::simpleFrom)
                                            .toList();
         return ArchiveListResponseDto.from(archiveDtos);
     }
 
+    /**
+     * v1 controller에서 사용
+     * archive 상세 조회
+     * 유저의 정보 및 public/private 여부 계산하지 않음
+     *
+     * @param archiveId 상세 조회하려는 Archive id
+     * @return Archive
+     */
     public ArchiveDto getOneArchiveById(Long archiveId) {
         var archive = archiveRepository.findById(archiveId)
                                        .orElseThrow(() -> new ResourceNotFoundException("조회하려는 아카이브가 존재하지 않습니다"));
+        return ArchiveDto.specificFrom(archive);
+    }
+
+    /**
+     * v2 controller에서 사용
+     * archive 상세 조회
+     * 자신의 Archive의 경우, 모든 archive 조회
+     * 타인의 Archive의 경우, public archive 만 조회
+     *
+     * @param info      현재 유저의 정보
+     * @param archiveId 상세 조회하려는 Archive id
+     * @return Archive
+     */
+    public ArchiveDto getOneArchiveById(UserInfo info, Long archiveId) {
+        var archive = archiveRepository.findById(archiveId)
+                                       .filter(hasViewAuthority(info.getUserId()))
+                                       .orElseThrow(() -> new UnauthorizedResourceException("존재하지 않거나 권한이 없는 아카이브"));
         return ArchiveDto.specificFrom(archive);
     }
 
@@ -75,8 +103,8 @@ public class ArchiveService {
         return archiveRepository.countArchiveByAuthorId(authorId);
     }
 
-    private Predicate<Archive> hasViewAuthority(UserInfo info) {
-        return archive -> archive.getAuthorId() == info.getUserId() || archive.getIsPublic();
+    private Predicate<Archive> hasViewAuthority(Long currentUserId) {
+        return archive -> archive.getAuthorId() == currentUserId || archive.getIsPublic();
     }
 
 }
