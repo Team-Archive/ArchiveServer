@@ -6,6 +6,9 @@ public enum Emotion {
     PLEASANT,
     BEAUTIFUL,
     AMAZING,
-    IMPRESSIVE
+    IMPRESSIVE,
+    FRESH,
+    INTERESTING2,
+    TOUCHING
 
 }
