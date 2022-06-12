@@ -47,7 +47,7 @@ class ArchiveServiceTest {
     }
 
     @Test
-    void 특정_USER의_모든_Archive를_가져온다2() {
+    void 작성한_게시물이_없는_경우_빈_리스트가_반환된다() {
         // given
         var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, USER_ID);
         given(archiveRepository.findAllByAuthorId(USER_ID)).willReturn(Collections.emptyList());
@@ -57,8 +57,6 @@ class ArchiveServiceTest {
 
         // then
         assertThat(allArchives.getArchiveCount()).isZero();
-        allArchives.getArchives()
-                   .forEach(archiveDto -> assertThat(archiveDto.getAuthorId()).isEqualTo(USER_ID));
     }
 
 
@@ -71,6 +69,7 @@ class ArchiveServiceTest {
                    .emotion(Emotion.PLEASANT)
                    .mainImage("main_image_1")
                    .companions(Collections.emptyList())
+                   .isPublic(true)
                    .build(),
             Archive.builder()
                    .name("archive_2")
@@ -79,6 +78,7 @@ class ArchiveServiceTest {
                    .emotion(Emotion.AMAZING)
                    .mainImage("main_image_2")
                    .companions(Collections.emptyList())
+                   .isPublic(false)
                    .build()
         );
 
