@@ -1,4 +1,4 @@
-package site.archive.api.user;
+package site.archive.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package site.archive.api.user;
+package site.archive.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
