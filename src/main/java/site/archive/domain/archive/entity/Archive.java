@@ -49,6 +49,10 @@ public class Archive extends BaseTimeEntity {
     private Emotion emotion;
     @Column(name = "main_image")
     private String mainImage;
+
+    @Column(name = "is_public")
+    private Boolean isPublic;
+
     @Convert(converter = CompanionsConverter.class)
     @Column(name = "companions")
     private List<String> companions;
@@ -59,6 +63,7 @@ public class Archive extends BaseTimeEntity {
                    LocalDate watchedOn,
                    Emotion emotion,
                    String mainImage,
+                   Boolean isPublic,
                    List<String> companions) {
         this.name = name;
         this.watchedOn = watchedOn;
@@ -66,6 +71,7 @@ public class Archive extends BaseTimeEntity {
         this.mainImage = mainImage;
         this.companions = companions;
         this.authorId = authorId;
+        this.isPublic = isPublic;
     }
 
     public void addImage(ArchiveImage archiveImage) {

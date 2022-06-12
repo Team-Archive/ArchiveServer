@@ -12,7 +12,6 @@ import site.archive.domain.archive.entity.Emotion;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static site.archive.util.DateTimeUtil.YY_MM_DD_FORMATTER;
 
@@ -27,6 +26,7 @@ public class ArchiveDto {
     private String watchedOn;
     private Emotion emotion;
     private String mainImage;
+    private Boolean isPublic = false;       // Default value is false
 
     @Setter
     private long authorId;
@@ -37,7 +37,7 @@ public class ArchiveDto {
     public static ArchiveDto specificFrom(Archive archive) {
         var archiveImages = archive.getArchiveImages().stream()
                                    .map(ArchiveImageDto::from)
-                                   .collect(Collectors.toList());
+                                   .toList();
         return ArchiveDto.builder()
                          .archiveId(archive.getId())
                          .name(archive.getName())
@@ -47,6 +47,7 @@ public class ArchiveDto {
                          .companions(archive.getCompanions())
                          .images(archiveImages)
                          .authorId(archive.getAuthorId())
+                         .isPublic(archive.getIsPublic())
                          .build();
     }
 
@@ -59,6 +60,7 @@ public class ArchiveDto {
                          .companions(archive.getCompanions())
                          .mainImage(archive.getMainImage())
                          .authorId(archive.getAuthorId())
+                         .isPublic(archive.getIsPublic())
                          .build();
     }
 
@@ -70,6 +72,7 @@ public class ArchiveDto {
                       .mainImage(mainImage)
                       .companions(companions)
                       .authorId(authorId)
+                      .isPublic(isPublic)
                       .build();
     }
 
