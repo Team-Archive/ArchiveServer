@@ -31,14 +31,14 @@ spring:
     password: ${DB_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        format_sql: false
+        format_sql: true
   mail:
     host: ${MAIL_HOST}
     port: 587
