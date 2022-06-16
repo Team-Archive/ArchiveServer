@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.archive.entity.Emotion;
+import site.archive.domain.user.entity.BaseUser;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,7 +28,6 @@ public class ArchiveDto {
     private String mainImage;
     private Boolean isPublic = false;       // Default value is false
 
-    @Setter
     private long authorId;
 
     private List<String> companions;
@@ -46,7 +45,7 @@ public class ArchiveDto {
                          .mainImage(archive.getMainImage())
                          .companions(archive.getCompanions())
                          .images(archiveImages)
-                         .authorId(archive.getAuthorId())
+                         .authorId(archive.getAuthor().getUserId())
                          .isPublic(archive.getIsPublic())
                          .build();
     }
@@ -59,19 +58,19 @@ public class ArchiveDto {
                          .emotion(archive.getEmotion())
                          .companions(archive.getCompanions())
                          .mainImage(archive.getMainImage())
-                         .authorId(archive.getAuthorId())
+                         .authorId(archive.getAuthor().getUserId())
                          .isPublic(archive.getIsPublic())
                          .build();
     }
 
-    public Archive toEntity() {
+    public Archive toEntity(BaseUser user) {
         return Archive.builder()
                       .name(name)
                       .watchedOn(LocalDate.parse(watchedOn, YY_MM_DD_FORMATTER))
                       .emotion(emotion)
                       .mainImage(mainImage)
                       .companions(companions)
-                      .authorId(authorId)
+                      .author(user)
                       .isPublic(isPublic)
                       .build();
     }

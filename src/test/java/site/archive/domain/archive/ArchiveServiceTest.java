@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.archive.entity.Emotion;
+import site.archive.domain.user.UserRepository;
+import site.archive.domain.user.entity.BaseUser;
 import site.archive.domain.user.entity.UserRole;
 import site.archive.domain.user.info.UserInfo;
 import site.archive.exception.common.UnauthorizedResourceException;
@@ -25,13 +27,19 @@ import static org.mockito.BDDMockito.given;
 class ArchiveServiceTest {
 
     private static final long USER_ID = 1L;
+    private static final BaseUser USER = new BaseUser(USER_ID, "mail", UserRole.GENERAL);
+
     @Mock
     ArchiveRepository archiveRepository;
+
+    @Mock
+    UserRepository userRepository;
+
     private ArchiveService archiveService;
 
     @BeforeEach
     void setUp() {
-        archiveService = new ArchiveService(archiveRepository);
+        archiveService = new ArchiveService(archiveRepository, userRepository);
     }
 
     @DisplayName("특정 USER의 모든 Archive를 가져온다")
@@ -39,8 +47,8 @@ class ArchiveServiceTest {
     void returnAllArchives() {
         // given
         var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, USER_ID);
-        var archives = dummyArchives(USER_ID);
-        given(archiveRepository.findAllByAuthorId(USER_ID)).willReturn(archives);
+        var archives = dummyArchives(USER);
+        given(archiveRepository.findAllByAuthorUserId(USER_ID)).willReturn(archives);
 
         // when
         var allArchives = archiveService.getAllArchive(userInfo);
@@ -56,7 +64,7 @@ class ArchiveServiceTest {
     void returnEmptyArchiveListWhenNotExistArchive() {
         // given
         var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, USER_ID);
-        given(archiveRepository.findAllByAuthorId(USER_ID)).willReturn(Collections.emptyList());
+        given(archiveRepository.findAllByAuthorUserId(USER_ID)).willReturn(Collections.emptyList());
 
         // when
         var allArchives = archiveService.getAllArchive(userInfo);
@@ -70,8 +78,8 @@ class ArchiveServiceTest {
     void canViewAllArchiveWhenMyArchive() {
         // given
         var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, USER_ID);
-        var archives = dummyArchives(USER_ID);
-        given(archiveRepository.findAllByAuthorId(USER_ID)).willReturn(archives);
+        var archives = dummyArchives(USER);
+        given(archiveRepository.findAllByAuthorUserId(USER_ID)).willReturn(archives);
 
         // when
         var allArchives = archiveService.getAllArchive(userInfo, USER_ID);
@@ -88,12 +96,13 @@ class ArchiveServiceTest {
         // given
         var myUserID = 99L;
         var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, myUserID);
-        var archives = dummyArchives(USER_ID);
-        given(archiveRepository.findAllByAuthorId(USER_ID)).willReturn(archives);
+        var archives = dummyArchives(USER);
+        given(archiveRepository.findAllByAuthorUserId(USER_ID)).willReturn(archives);
 
         // and public archive count
         var archivePublicCount = archives.stream()
-                                         .filter(archive -> archive.getAuthorId() == userInfo.getUserId() || archive.getIsPublic())
+                                         .filter(archive -> archive.getAuthor()
+                                                                   .getUserId() == userInfo.getUserId() || archive.getIsPublic())
                                          .count();
 
         // when
@@ -117,7 +126,7 @@ class ArchiveServiceTest {
 
         // public archive setting
         var publicArchiveId = 25L;
-        var dummyPublicArchive = dummyArchive(publicArchiveId, USER_ID, true);
+        var dummyPublicArchive = dummyArchive(publicArchiveId, USER, true);
         given(archiveRepository.findById(publicArchiveId)).willReturn(Optional.of(dummyPublicArchive));
 
         // when
@@ -137,7 +146,7 @@ class ArchiveServiceTest {
 
         // private archive setting
         var privateArchiveId = 25L;
-        var dummyPrivateArchive = dummyArchive(privateArchiveId, USER_ID, false);
+        var dummyPrivateArchive = dummyArchive(privateArchiveId, USER, false);
         given(archiveRepository.findById(privateArchiveId)).willReturn(Optional.of(dummyPrivateArchive));
 
         // when & then
@@ -145,11 +154,11 @@ class ArchiveServiceTest {
             .isInstanceOf(UnauthorizedResourceException.class);
     }
 
-    private List<Archive> dummyArchives(long authorId) {
+    private List<Archive> dummyArchives(BaseUser user) {
         return List.of(
             Archive.builder()
                    .name("archive_1")
-                   .authorId(authorId)
+                   .author(user)
                    .watchedOn(LocalDate.now())
                    .emotion(Emotion.PLEASANT)
                    .mainImage("main_image_1")
@@ -158,7 +167,7 @@ class ArchiveServiceTest {
                    .build(),
             Archive.builder()
                    .name("archive_2")
-                   .authorId(authorId)
+                   .author(user)
                    .watchedOn(LocalDate.now())
                    .emotion(Emotion.AMAZING)
                    .mainImage("main_image_2")
@@ -168,11 +177,11 @@ class ArchiveServiceTest {
         );
     }
 
-    private Archive dummyArchive(long archiveId, long authorId, boolean isPublic) {
+    private Archive dummyArchive(long archiveId, BaseUser user, boolean isPublic) {
         return Archive.builder()
                       .id(archiveId)
                       .name("archive_1")
-                      .authorId(authorId)
+                      .author(user)
                       .watchedOn(LocalDate.now())
                       .emotion(Emotion.PLEASANT)
                       .mainImage("main_image_1")

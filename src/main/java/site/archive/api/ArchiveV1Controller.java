@@ -64,8 +64,7 @@ public class ArchiveV1Controller {
     @Operation(summary = "아키이브 추가")
     @PostMapping
     public ResponseEntity<Object> addArchive(@RequestUser UserInfo user, @RequestBody ArchiveDto archiveDto) {
-        archiveDto.setAuthorId(user.getUserId());
-        archiveService.save(archiveDto);
+        archiveService.save(archiveDto, user.getUserId());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

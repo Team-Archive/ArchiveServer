@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import site.archive.api.dto.archive.ArchiveDto;
 import site.archive.api.dto.archive.ArchiveListResponseDto;
 import site.archive.domain.archive.entity.Archive;
+import site.archive.domain.user.UserRepository;
 import site.archive.domain.user.info.UserInfo;
 import site.archive.exception.common.ResourceNotFoundException;
 import site.archive.exception.common.UnauthorizedResourceException;
@@ -18,6 +19,7 @@ import java.util.function.Predicate;
 public class ArchiveService {
 
     private final ArchiveRepository archiveRepository;
+    private final UserRepository userRepository;
 
     /**
      * v1 controller에서 사용
@@ -29,7 +31,7 @@ public class ArchiveService {
      */
     public ArchiveListResponseDto getAllArchive(UserInfo info) {
         var authorId = info.getUserId();
-        var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
+        var archiveDtos = archiveRepository.findAllByAuthorUserId(authorId).stream()
                                            .map(ArchiveDto::simpleFrom)
                                            .toList();
         return ArchiveListResponseDto.from(archiveDtos);
@@ -45,7 +47,7 @@ public class ArchiveService {
      * @return archive list
      */
     public ArchiveListResponseDto getAllArchive(UserInfo info, Long authorId) {
-        var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
+        var archiveDtos = archiveRepository.findAllByAuthorUserId(authorId).stream()
                                            .filter(hasViewAuthority(info.getUserId()))
                                            .map(ArchiveDto::simpleFrom)
                                            .toList();
@@ -91,8 +93,10 @@ public class ArchiveService {
     }
 
     @Transactional
-    public void save(ArchiveDto archiveDto) {
-        var archive = archiveRepository.save(archiveDto.toEntity());
+    public void save(ArchiveDto archiveDto, Long authorId) {
+        var user = userRepository.findById(authorId)
+                                 .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
+        var archive = archiveRepository.save(archiveDto.toEntity(user));
         archiveDto.getImages().stream()
                   .map(archiveImageDto -> archiveImageDto.toEntity(archive))
                   .forEach(archive::addImage);
@@ -100,11 +104,12 @@ public class ArchiveService {
 
     public long countArchive(UserInfo info) {
         var authorId = info.getUserId();
-        return archiveRepository.countArchiveByAuthorId(authorId);
+        return archiveRepository.countArchiveByAuthorUserId(authorId);
     }
 
     private Predicate<Archive> hasViewAuthority(Long currentUserId) {
-        return archive -> archive.getAuthorId() == currentUserId || archive.getIsPublic();
+        return archive -> archive.getAuthor().getUserId().equals(currentUserId)
+                          || archive.getIsPublic();
     }
 
 }
