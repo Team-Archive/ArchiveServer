@@ -1,4 +1,4 @@
-package site.archive.api;
+package site.archive.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import site.archive.util.SecurityUtils;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class UserController {
+public class UserControllerV1 {
 
     private static final int TEMP_PASSWORD_LENGTH = 10;
     private final UserService userService;

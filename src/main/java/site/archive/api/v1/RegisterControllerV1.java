@@ -1,4 +1,4 @@
-package site.archive.api;
+package site.archive.api.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class RegisterController {
+public class RegisterControllerV1 {
 
     private final UserRegisterService userRegisterService;
     private final OAuthUserService oAuthUserService;

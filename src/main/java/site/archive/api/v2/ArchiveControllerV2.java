@@ -1,4 +1,4 @@
-package site.archive.api;
+package site.archive.api.v2;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import site.archive.domain.user.info.UserInfo;
 @RestController
 @RequestMapping("/api/v2/archive")
 @RequiredArgsConstructor
-public class ArchiveV2Controller {
+public class ArchiveControllerV2 {
 
     private final ArchiveService archiveService;
 

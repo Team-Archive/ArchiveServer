@@ -1,4 +1,4 @@
-package site.archive.api;
+package site.archive.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ import site.archive.security.authorization.permissionhandler.ArchiveAdminOrAutho
 @RestController
 @RequestMapping("/api/v1/archive")
 @RequiredArgsConstructor
-public class ArchiveV1Controller {
+public class ArchiveControllerV1 {
 
     private final ArchiveService archiveService;
     private final ArchiveImageService imageService;
