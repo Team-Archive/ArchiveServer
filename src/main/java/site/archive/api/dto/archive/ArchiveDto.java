@@ -45,7 +45,7 @@ public class ArchiveDto {
                          .mainImage(archive.getMainImage())
                          .companions(archive.getCompanions())
                          .images(archiveImages)
-                         .authorId(archive.getAuthor().getUserId())
+                         .authorId(archive.getAuthor().getId())
                          .isPublic(archive.getIsPublic())
                          .build();
     }
@@ -58,7 +58,7 @@ public class ArchiveDto {
                          .emotion(archive.getEmotion())
                          .companions(archive.getCompanions())
                          .mainImage(archive.getMainImage())
-                         .authorId(archive.getAuthor().getUserId())
+                         .authorId(archive.getAuthor().getId())
                          .isPublic(archive.getIsPublic())
                          .build();
     }

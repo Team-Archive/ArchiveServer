@@ -48,7 +48,7 @@ class ArchiveServiceTest {
         // given
         var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, USER_ID);
         var archives = dummyArchives(USER);
-        given(archiveRepository.findAllByAuthorUserId(USER_ID)).willReturn(archives);
+        given(archiveRepository.findAllByAuthorId(USER_ID)).willReturn(archives);
 
         // when
         var allArchives = archiveService.getAllArchive(userInfo);
@@ -64,7 +64,7 @@ class ArchiveServiceTest {
     void returnEmptyArchiveListWhenNotExistArchive() {
         // given
         var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, USER_ID);
-        given(archiveRepository.findAllByAuthorUserId(USER_ID)).willReturn(Collections.emptyList());
+        given(archiveRepository.findAllByAuthorId(USER_ID)).willReturn(Collections.emptyList());
 
         // when
         var allArchives = archiveService.getAllArchive(userInfo);
@@ -79,7 +79,7 @@ class ArchiveServiceTest {
         // given
         var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, USER_ID);
         var archives = dummyArchives(USER);
-        given(archiveRepository.findAllByAuthorUserId(USER_ID)).willReturn(archives);
+        given(archiveRepository.findAllByAuthorId(USER_ID)).willReturn(archives);
 
         // when
         var allArchives = archiveService.getAllArchive(userInfo, USER_ID);
@@ -97,12 +97,12 @@ class ArchiveServiceTest {
         var myUserID = 99L;
         var userInfo = new UserInfo("dummy@test.com", UserRole.GENERAL, myUserID);
         var archives = dummyArchives(USER);
-        given(archiveRepository.findAllByAuthorUserId(USER_ID)).willReturn(archives);
+        given(archiveRepository.findAllByAuthorId(USER_ID)).willReturn(archives);
 
         // and public archive count
         var archivePublicCount = archives.stream()
                                          .filter(archive -> archive.getAuthor()
-                                                                   .getUserId() == userInfo.getUserId() || archive.getIsPublic())
+                                                                   .getId() == userInfo.getUserId() || archive.getIsPublic())
                                          .count();
 
         // when

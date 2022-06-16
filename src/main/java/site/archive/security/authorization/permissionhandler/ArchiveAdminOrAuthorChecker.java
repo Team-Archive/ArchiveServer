@@ -18,7 +18,7 @@ public class ArchiveAdminOrAuthorChecker implements ArchivePermissionHandler {
         long rawId = (Long) id;
         if (requester.getUserRole() == UserRole.ADMIN) {return true;}
         Archive archiveToCheck = repository.getById(rawId);
-        return archiveToCheck.getAuthor().getUserId() == requester.getUserId();
+        return archiveToCheck.getAuthor().getId() == requester.getUserId();
     }
 
     @Override

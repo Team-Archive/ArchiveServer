@@ -31,7 +31,7 @@ public class ArchiveService {
      */
     public ArchiveListResponseDto getAllArchive(UserInfo info) {
         var authorId = info.getUserId();
-        var archiveDtos = archiveRepository.findAllByAuthorUserId(authorId).stream()
+        var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
                                            .map(ArchiveDto::simpleFrom)
                                            .toList();
         return ArchiveListResponseDto.from(archiveDtos);
@@ -47,7 +47,7 @@ public class ArchiveService {
      * @return archive list
      */
     public ArchiveListResponseDto getAllArchive(UserInfo info, Long authorId) {
-        var archiveDtos = archiveRepository.findAllByAuthorUserId(authorId).stream()
+        var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
                                            .filter(hasViewAuthority(info.getUserId()))
                                            .map(ArchiveDto::simpleFrom)
                                            .toList();
@@ -104,11 +104,11 @@ public class ArchiveService {
 
     public long countArchive(UserInfo info) {
         var authorId = info.getUserId();
-        return archiveRepository.countArchiveByAuthorUserId(authorId);
+        return archiveRepository.countArchiveByAuthorId(authorId);
     }
 
     private Predicate<Archive> hasViewAuthority(Long currentUserId) {
-        return archive -> archive.getAuthor().getUserId().equals(currentUserId)
+        return archive -> archive.getAuthor().getId().equals(currentUserId)
                           || archive.getIsPublic();
     }
 

@@ -16,7 +16,7 @@ public class BaseUserDto {
     private final LocalDateTime createdAt;
 
     public static BaseUserDto from(BaseUser baseUser) {
-        return new BaseUserDto(baseUser.getUserId(), baseUser.getMailAddress(), baseUser.getCreatedAt());
+        return new BaseUserDto(baseUser.getId(), baseUser.getMailAddress(), baseUser.getCreatedAt());
     }
 
     public String getCreatedAt() {

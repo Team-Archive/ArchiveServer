@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ArchiveRepository extends JpaRepository<Archive, Long> {
 
-    List<Archive> findAllByAuthorUserId(Long authorId);
+    List<Archive> findAllByAuthorId(Long authorId);
 
-    long countArchiveByAuthorUserId(Long authorId);
+    long countArchiveByAuthorId(Long authorId);
 
 }

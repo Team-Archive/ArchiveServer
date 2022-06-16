@@ -1,5 +1,6 @@
 package site.archive.domain.user.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -21,21 +22,22 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-@NoArgsConstructor
-@Getter
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "user_type")
 @SQLDelete(sql = "UPDATE user SET is_deleted = true WHERE user_id=?")
 @Where(clause = "is_deleted = false")
-public abstract class BaseUser extends BaseTimeEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+public class BaseUser extends BaseTimeEntity {
 
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId = null;
+    @Setter
+    private Long id;
 
     @NonNull
     @Column(name = "mail_address", unique = true)
@@ -52,7 +54,7 @@ public abstract class BaseUser extends BaseTimeEntity {
     }
 
     public UserInfo convertToUserInfo() {
-        return new UserInfo(mailAddress, role, userId);
+        return new UserInfo(mailAddress, role, id);
     }
 
 }
