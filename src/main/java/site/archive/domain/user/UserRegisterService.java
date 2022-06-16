@@ -45,8 +45,7 @@ public class UserRegisterService {
     }
 
     private void sendRegisterNotification(BasicRegisterCommand registerCommand, BaseUser user) {
-        if (registerCommand instanceof OAuthRegisterCommand) {
-            var oAuthRegisterCommand = (OAuthRegisterCommand) registerCommand;
+        if (registerCommand instanceof OAuthRegisterCommand oAuthRegisterCommand) {
             var oauthProvider = oAuthRegisterCommand.getProvider().getRegistrationId();
             messagingService.sendUserRegisterMessage(BaseUserDto.from(user), oauthProvider);
         } else {
