@@ -40,12 +40,14 @@ public class UserControllerV1 {
          */
     }
 
+    @Operation(summary = "회원 탈퇴")
     @DeleteMapping("/unregister")
     public ResponseEntity<Void> unregisterUser(@RequestUser UserInfo user) {
         userService.deleteUser(user.getUserId());
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "자기 정보 조회")
     @GetMapping("/info")
     public ResponseEntity<UserInfo> getUserInfo(@RequestUser UserInfo user) {
         return ResponseEntity.ok(user);
