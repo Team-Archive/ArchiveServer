@@ -79,3 +79,7 @@ sentry:
 slack:
   token: ${SLACK_TOKEN}
   channel: ${SLACK_CHANNEL}
+
+archive:
+  server:
+    url: ${PRD_SERVER_URL}

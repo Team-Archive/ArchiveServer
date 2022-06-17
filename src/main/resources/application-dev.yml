@@ -76,3 +76,7 @@ cloud:
 slack:
   token: ${DEV_SLACK_TOKEN}
   channel: ${DEV_SLACK_CHANNEL}
+
+archive:
+  server:
+    url: ${DEV_SERVER_URL}
