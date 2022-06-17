@@ -2,6 +2,7 @@ package site.archive.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import site.archive.domain.user.info.UserInfo;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -30,7 +31,8 @@ public class SwaggerConfig {
                    .build()
                    .apiInfo(apiInfo())
                    .securityContexts(List.of(securityContext()))
-                   .securitySchemes(List.of(apiKey()));
+                   .securitySchemes(List.of(apiKey()))
+                   .ignoredParameterTypes(UserInfo.class);
     }
 
     private ApiInfo apiInfo() {
