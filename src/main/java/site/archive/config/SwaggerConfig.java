@@ -6,11 +6,19 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+
+import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
+
+    private static final String AUTHORIZATION_HEADER = "Authorization";
 
     @Bean
     public Docket api() {
@@ -20,14 +28,33 @@ public class SwaggerConfig {
                    .apis(RequestHandlerSelectors.basePackage("site.archive.api"))
                    .paths(PathSelectors.any())
                    .build()
-                   .apiInfo(apiInfo());
+                   .apiInfo(apiInfo())
+                   .securityContexts(List.of(securityContext()))
+                   .securitySchemes(List.of(apiKey()));
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                    .title("Archive Swagger")
-                   .version("1.0")
+                   .version("2.0")
                    .build();
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey(AUTHORIZATION_HEADER, AUTHORIZATION_HEADER, "header");
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                              .securityReferences(defaultAuth())
+                              .build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        var authorizationScope = new AuthorizationScope("global", "accessEverything");
+        var authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return List.of(new SecurityReference(AUTHORIZATION_HEADER, authorizationScopes));
     }
 
 }
