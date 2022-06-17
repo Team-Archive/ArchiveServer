@@ -39,7 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .headers().frameOptions().sameOrigin()
             .and().authorizeRequests().antMatchers("/h2-console/**").permitAll()
             .and().csrf().disable();
-
         http
             .formLogin()
             .disable();
@@ -55,29 +54,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .logout()
             .disable();
-        BodyCredentialAuthenticationFilter bodyCredentialAuthenticationFilter =
-            bodyCredentialAuthenticationFilter(authenticationManagerBean(),
-                                               mapper);
-        JwtTokenPersistFilter tokenPersistFilter = tokenPersistFilter();
-        http.addFilterBefore(tokenPersistFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(bodyCredentialAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-    }
 
+        var bodyCredentialAuthenticationFilter = bodyCredentialAuthenticationFilter(authenticationManagerBean(), mapper);
+        http.addFilterBefore(bodyCredentialAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        var tokenPersistFilter = tokenPersistFilter();
+        http.addFilterBefore(tokenPersistFilter, UsernamePasswordAuthenticationFilter.class);
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(provider);
     }
 
-    public JwtTokenPersistFilter tokenPersistFilter() {
-        return new JwtTokenPersistFilter(tokenSupport, tokenProvider);
-    }
-
     public BodyCredentialAuthenticationFilter bodyCredentialAuthenticationFilter(AuthenticationManager manager, ObjectMapper mapper) {
-        BodyCredentialAuthenticationFilter filter = new BodyCredentialAuthenticationFilter("/api/v1/auth/login", manager, mapper);
+        var filter = new BodyCredentialAuthenticationFilter("/api/v1/auth/login", manager, mapper);
         filter.setAuthenticationSuccessHandler(successHandler);
         filter.setAuthenticationFailureHandler(failureHandler);
         return filter;
+    }
+
+    public JwtTokenPersistFilter tokenPersistFilter() {
+        return new JwtTokenPersistFilter(tokenSupport, tokenProvider);
     }
 
 }
