@@ -1,4 +1,4 @@
-package site.archive.domain.user.command;
+package site.archive.api.command;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

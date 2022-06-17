@@ -3,8 +3,8 @@ package site.archive.infra.user.oauth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.ProviderNotFoundException;
 import org.springframework.stereotype.Service;
+import site.archive.api.command.OAuthRegisterCommand;
 import site.archive.api.dto.user.OAuthRegisterRequestDto;
-import site.archive.domain.user.command.OAuthRegisterCommand;
 import site.archive.infra.user.oauth.provider.OAuthProviderClient;
 
 import java.util.List;

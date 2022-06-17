@@ -4,8 +4,8 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import site.archive.api.command.OAuthRegisterCommand;
 import site.archive.domain.user.UserRegisterService;
-import site.archive.domain.user.command.OAuthRegisterCommand;
 import site.archive.domain.user.entity.OAuthProvider;
 import site.archive.security.common.UserPrincipal;
 
