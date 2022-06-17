@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import site.archive.domain.user.entity.BaseUser;
 import site.archive.domain.user.entity.PasswordUser;
 
 @Service
@@ -22,8 +21,7 @@ public class UserService {
 
     @Transactional
     public void deleteUser(long userId) {
-        BaseUser user = userRepository.getById(userId);
-        userRepository.delete(user);
+        userRepository.deleteById(userId);
     }
 
     public boolean isTemporaryPasswordLogin(long userId) {

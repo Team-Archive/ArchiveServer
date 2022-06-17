@@ -11,9 +11,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
+@Table(name = "oauth_user")
 @DiscriminatorValue("oauth")
 @NoArgsConstructor
-@Table(name = "oauth_user")
 public class OAuthUser extends BaseUser {
 
     @Getter

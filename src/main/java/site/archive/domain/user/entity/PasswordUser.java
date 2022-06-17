@@ -9,11 +9,11 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@NoArgsConstructor
 @Entity
+@Table(name = "password_user")
 @DiscriminatorValue("password")
 @DynamicInsert
-@Table(name = "password_user")
+@NoArgsConstructor
 public class PasswordUser extends BaseUser {
 
     @Getter
@@ -22,7 +22,6 @@ public class PasswordUser extends BaseUser {
 
     @Column(name = "is_temporary_password", columnDefinition = "boolean default false")
     private Boolean isTemporaryPassword;
-
 
     public PasswordUser(String mailAddress, UserRole role, String password) {
         super(mailAddress, role);
