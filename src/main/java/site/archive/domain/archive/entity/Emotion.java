@@ -9,6 +9,7 @@ public enum Emotion {
     IMPRESSIVE,
     FRESH,
     INTERESTING2,
-    TOUCHING
+    TOUCHING,
+    SHAME,
 
 }
