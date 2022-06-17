@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.archive.api.dto.user.OAuthRegisterRequestDto;
 import site.archive.domain.user.UserRegisterService;
-import site.archive.domain.user.command.PasswordRegisterCommand;
 import site.archive.domain.user.info.UserInfo;
 import site.archive.infra.user.oauth.OAuthUserService;
 import site.archive.security.token.HttpAuthTokenSupport;
@@ -23,7 +22,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class RegisterControllerV1 {
+public class AuthControllerV1 {
 
     private final UserRegisterService userRegisterService;
     private final OAuthUserService oAuthUserService;
