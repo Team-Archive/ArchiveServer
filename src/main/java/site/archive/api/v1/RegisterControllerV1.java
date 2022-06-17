@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import site.archive.api.command.LoginCommand;
 import site.archive.api.command.PasswordRegisterCommand;
 import site.archive.api.dto.user.OAuthRegisterRequestDto;
 import site.archive.domain.user.UserRegisterService;
@@ -25,7 +24,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class AuthControllerV1 {
+public class RegisterControllerV1 {
 
     private final UserRegisterService userRegisterService;
     private final OAuthUserService oAuthUserService;
@@ -34,16 +33,6 @@ public class AuthControllerV1 {
     // JWT token provider
     private final TokenProvider tokenProvider;
     private final HttpAuthTokenSupport tokenSupport;
-
-    @SuppressWarnings(value = "all")
-    @Operation(summary = "패스워드 유저 로그인")
-    @PostMapping("/login")
-    public void loginUser(@RequestBody LoginCommand loginCommand) {
-        /*
-        Execute password user login process by BodyCredentialAuthenticationFilter.
-        This is just a class to print endpoint at swagger.
-         */
-    }
 
     @Operation(summary = "패스워드 유저 회원가입")
     @PostMapping("/register")
