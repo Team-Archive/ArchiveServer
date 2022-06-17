@@ -34,7 +34,7 @@ public class RegisterControllerV1 {
     private final TokenProvider tokenProvider;
     private final HttpAuthTokenSupport tokenSupport;
 
-    @Operation(summary = "패스워드 유저 회원가입")
+    @Operation(summary = "[NoAuth] 패스워드 유저 회원가입")
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@RequestBody @Valid PasswordRegisterCommand command) {
         encryptPassword(command);
@@ -42,7 +42,7 @@ public class RegisterControllerV1 {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "소셜 로그인 유저 회원가입 및 로그인")
+    @Operation(summary = "[NoAuth] 소셜 로그인 유저 회원가입 및 로그인")
     @PostMapping("/social")
     public ResponseEntity<Void> registerOrLoginSocialUser(HttpServletResponse httpServletResponse,
                                                           @Validated @RequestBody OAuthRegisterRequestDto oAuthRegisterRequestDto) {
