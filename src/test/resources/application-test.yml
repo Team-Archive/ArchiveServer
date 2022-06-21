@@ -1,78 +1,10 @@
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          apple:
-            issuer: "https://appleid.apple.com"
-            audience: APPLE_CLIENT_ID
-            public-key-uri: "https://appleid.apple.com/auth/keys"
-          kakao:
-            clientId: KAKAO_CLIENT_ID
-            clientSecret: KAKAO_CLIENT_SECRET
-            authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl/login/oauth2/code/{registrationId"
-            client-name: kakao
-            scope:
-              - profile_nickname
-              - profile_image
-              - account_email
-            client-authentication-method: POST
-        provider:
-          kakao:
-            authorization-uri: https://kauth.kakao.com/oauth/authorize
-            token-uri: https://kauth.kakao.com/oauth/token
-            user-info-uri: https://kapi.kakao.com/v2/user/me
-            user-name-attribute: id
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: DEV_DB_URL
-    username: DB_USER
-    password: DB_PASSWORD
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    show-sql: false
+    show-sql: true
     hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: create-drop
     properties:
       hibernate:
-        format_sql: false
-  mail:
-    host: MAIL_HOST
-    port: 587
-    username: MAIL_EMAIL
-    password: MAIL_PASSWORD
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
-    executor:
-      core_pool_size: 2
-      max_pool_size: 2
-      queue_capacity: 5
-      await_termination_seconds: 120
-
-jwt:
-  secret-key: testKey
-
-# s3 configuration
-cloud:
-  aws:
-    credentials:
-      access-key: DEV_AWS_ACCESS_KEY
-      secret-key: DEV_AWS_SECRET_KEY
-    region:
-      static: ap-northeast-2
-    s3:
-      bucket-name: DEV_AWS_S3_BUCKET_NAME
-    stack:
-      auto: false
-
-slack:
-  token: DEV_SLACK_TOKEN
-  channel: DEV_SLACK_CHANNEL
+        format_sql: true
+    open-in-view: false
