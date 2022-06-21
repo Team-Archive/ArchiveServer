@@ -5,7 +5,7 @@ import site.archive.domain.archive.entity.Archive;
 
 import java.util.List;
 
-public interface ArchiveRepository extends JpaRepository<Archive, Long> {
+public interface ArchiveRepository extends JpaRepository<Archive, Long>, ArchiveCustomRepository {
 
     List<Archive> findAllByAuthorId(Long authorId);
 
