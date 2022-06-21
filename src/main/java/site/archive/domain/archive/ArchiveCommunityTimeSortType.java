@@ -14,7 +14,7 @@ import java.util.Map;
 @Getter
 public enum ArchiveCommunityTimeSortType {
 
-    CREATE_AT("createdAt") {
+    CREATED_AT("createdAt") {
         @Override
         public BooleanExpression getLtWhereCondition(QArchive archive, final long milli) {
             var lastCreatedAtOfPage = DateTimeUtil.fromMilli(milli).toLocalDateTime();
