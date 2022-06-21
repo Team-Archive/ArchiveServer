@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArchiveCommunityService {
 
-    private static final int ARCHIVE_COMMUNITY_PAGE_ELEMENT_SIZE = 4;
+    private static final int ARCHIVE_COMMUNITY_PAGE_ELEMENT_SIZE = 15;
 
     private final ArchiveRepository archiveRepository;
 
