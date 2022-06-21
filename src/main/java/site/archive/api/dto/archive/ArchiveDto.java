@@ -26,7 +26,7 @@ public class ArchiveDto {
     private String watchedOn;
     private Emotion emotion;
     private String mainImage;
-    private Boolean isPublic = false;       // Default value is false
+    private Boolean isPublic;       // Default value is false
 
     private long authorId;
 
@@ -64,6 +64,7 @@ public class ArchiveDto {
     }
 
     public Archive toEntity(BaseUser user) {
+        var defaultIsPublic = this.isPublic != null && this.isPublic;
         return Archive.builder()
                       .name(name)
                       .watchedOn(LocalDate.parse(watchedOn, YY_MM_DD_FORMATTER))
@@ -71,7 +72,7 @@ public class ArchiveDto {
                       .mainImage(mainImage)
                       .companions(companions)
                       .author(user)
-                      .isPublic(isPublic)
+                      .isPublic(defaultIsPublic)
                       .build();
     }
 
