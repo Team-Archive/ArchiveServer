@@ -48,6 +48,10 @@ public class BaseUser extends BaseTimeEntity {
     @Column(name = "user_role")
     private UserRole role;
 
+    public BaseUser(Long id) {
+        this.id = id;
+    }
+
     protected BaseUser(String mailAddress, UserRole role) {
         this.role = role;
         this.mailAddress = mailAddress;

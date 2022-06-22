@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import site.archive.domain.common.BaseTimeEntity;
+import site.archive.domain.like.entity.Like;
 import site.archive.domain.user.entity.BaseUser;
 
 import javax.persistence.CascadeType;
@@ -62,11 +63,18 @@ public class Archive extends BaseTimeEntity {
     private BaseUser author;
 
     @OneToMany(mappedBy = "archive", cascade = CascadeType.ALL)
+    private final List<Like> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "archive", cascade = CascadeType.ALL)
     private final List<ArchiveImage> archiveImages = new ArrayList<>();
 
     @Convert(converter = CompanionsConverter.class)
     @Column(name = "companions")
     private List<String> companions;
+
+    public Archive(Long id) {
+        this.id = id;
+    }
 
     @Builder
     public Archive(Long id,
