@@ -27,4 +27,12 @@ public class BaseTimeEntity {
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
 
+    public void softDelete() {
+        this.isDeleted = true;
+    }
+
+    public void softDeleteCancel() {
+        this.isDeleted = false;
+    }
+
 }
