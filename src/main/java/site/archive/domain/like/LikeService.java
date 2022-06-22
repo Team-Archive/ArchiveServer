@@ -17,7 +17,7 @@ public class LikeService {
     @Transactional
     public void save(Long userId, Long archiveId) {
         likeRepository.findByUserIdAndArchiveId(userId, archiveId)
-                      .ifPresentOrElse(BaseTimeEntity::deleteCancel,
+                      .ifPresentOrElse(BaseTimeEntity::softDeleteCancel,
                                        () -> likeRepository.save(Like.of(userId, archiveId)));
     }
 
