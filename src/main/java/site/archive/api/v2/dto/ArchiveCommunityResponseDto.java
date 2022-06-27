@@ -1,4 +1,4 @@
-package site.archive.api.dto.archive;
+package site.archive.api.v2.dto;
 
 import lombok.Builder;
 import lombok.Getter;

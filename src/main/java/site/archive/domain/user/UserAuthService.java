@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.archive.api.command.LoginCommand;
-import site.archive.api.dto.user.UserPasswordResetRequestDto;
+import site.archive.api.v1.dto.user.UserPasswordResetRequestDto;
 import site.archive.domain.user.entity.BaseUser;
 import site.archive.domain.user.entity.PasswordUser;
 import site.archive.domain.user.info.UserInfo;

@@ -2,7 +2,7 @@ package site.archive.domain.archive;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import site.archive.api.dto.archive.ArchiveCommunityResponseDto;
+import site.archive.api.v2.dto.ArchiveCommunityResponseDto;
 import site.archive.domain.archive.entity.Emotion;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package site.archive.infra.user.oauth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.ProviderNotFoundException;
-import site.archive.api.dto.user.OAuthRegisterRequestDto;
+import site.archive.api.v1.dto.user.OAuthRegisterRequestDto;
 import site.archive.infra.user.oauth.provider.AppleClient;
 import site.archive.infra.user.oauth.provider.KakaoClient;
 
