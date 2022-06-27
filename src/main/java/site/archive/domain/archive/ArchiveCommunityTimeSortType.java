@@ -16,19 +16,19 @@ public enum ArchiveCommunityTimeSortType {
 
     CREATED_AT("createdAt") {
         @Override
-        public BooleanExpression getLtWhereCondition(QArchive archive, final long milli) {
+        public BooleanExpression getLtWhere(QArchive archive, final long milli) {
             var lastCreatedAtOfPage = DateTimeUtil.fromMilli(milli).toLocalDateTime();
             return archive.createdAt.lt(lastCreatedAtOfPage);
         }
 
         @Override
-        public BooleanExpression getEqWhereCondition(QArchive archive, long milli) {
+        public BooleanExpression getEqWhere(QArchive archive, long milli) {
             var lastCreatedAtOfPage = DateTimeUtil.fromMilli(milli).toLocalDateTime();
             return archive.createdAt.eq(lastCreatedAtOfPage);
         }
 
         @Override
-        public OrderSpecifier<?> getOrderCondition(QArchive archive) {
+        public OrderSpecifier<?> getOrderBy(QArchive archive) {
             return archive.createdAt.desc();
         }
 
@@ -39,19 +39,19 @@ public enum ArchiveCommunityTimeSortType {
     },
     WATCHED_ON("watchedOn") {
         @Override
-        public BooleanExpression getLtWhereCondition(QArchive archive, final long milli) {
+        public BooleanExpression getLtWhere(QArchive archive, final long milli) {
             var lastWatchedOnOfPage = DateTimeUtil.fromMilli(milli).toLocalDate();
             return archive.watchedOn.lt(lastWatchedOnOfPage);
         }
 
         @Override
-        public BooleanExpression getEqWhereCondition(QArchive archive, long milli) {
+        public BooleanExpression getEqWhere(QArchive archive, long milli) {
             var lastWatchedOnOfPage = DateTimeUtil.fromMilli(milli).toLocalDate();
             return archive.watchedOn.eq(lastWatchedOnOfPage);
         }
 
         @Override
-        public OrderSpecifier<?> getOrderCondition(QArchive archive) {
+        public OrderSpecifier<?> getOrderBy(QArchive archive) {
             return archive.watchedOn.desc();
         }
 
@@ -73,11 +73,11 @@ public enum ArchiveCommunityTimeSortType {
               .forEach(sortType -> sortTypeMap.put(sortType.getFieldName(), sortType));
     }
 
-    public abstract BooleanExpression getLtWhereCondition(QArchive archive, final long milli);
+    public abstract BooleanExpression getLtWhere(QArchive archive, final long milli);
 
-    public abstract BooleanExpression getEqWhereCondition(QArchive archive, final long milli);
+    public abstract BooleanExpression getEqWhere(QArchive archive, final long milli);
 
-    public abstract OrderSpecifier<?> getOrderCondition(QArchive archive);
+    public abstract OrderSpecifier<?> getOrderBy(QArchive archive);
 
     public abstract long getMilli(Archive archive);
 
