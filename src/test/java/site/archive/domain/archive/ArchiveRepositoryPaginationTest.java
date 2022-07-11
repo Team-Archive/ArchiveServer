@@ -30,7 +30,7 @@ class ArchiveRepositoryPaginationTest extends JpaTestSupport {
         var archivePageable = new ArchivePageable(timeSortType, emotion, null, null);
 
         // when
-        var firstPageArchives = archiveRepository.findFirstPage(archivePageable, TEST_PAGE_ELEMENT_SIZE);
+        var firstPageArchives = archiveRepository.findFirstPageOnlyPublic(archivePageable, TEST_PAGE_ELEMENT_SIZE);
 
         // then
         firstPageArchives.forEach(
@@ -43,7 +43,7 @@ class ArchiveRepositoryPaginationTest extends JpaTestSupport {
     void firstPageTest(ArchiveCommunityTimeSortType timeSortType) {
         // when
         var archivePageable = new ArchivePageable(timeSortType, null, null, null);
-        var firstPageArchives = archiveRepository.findFirstPage(archivePageable, TEST_PAGE_ELEMENT_SIZE);
+        var firstPageArchives = archiveRepository.findFirstPageOnlyPublic(archivePageable, TEST_PAGE_ELEMENT_SIZE);
 
         // then
         assertThat(firstPageArchives).hasSize(TEST_PAGE_ELEMENT_SIZE);
@@ -75,13 +75,13 @@ class ArchiveRepositoryPaginationTest extends JpaTestSupport {
     void nextPageTest(ArchiveCommunityTimeSortType timeSortType) {
         // given
         var archivePageable = new ArchivePageable(timeSortType, null, null, null);
-        var firstPageArchives = archiveRepository.findFirstPage(archivePageable, TEST_PAGE_ELEMENT_SIZE);
+        var firstPageArchives = archiveRepository.findFirstPageOnlyPublic(archivePageable, TEST_PAGE_ELEMENT_SIZE);
         var lastArchiveOfFirstPage = firstPageArchives.get(TEST_PAGE_ELEMENT_SIZE - 1);
         var lastArchiveMilli = timeSortType.convertToMillis(lastArchiveOfFirstPage);
 
         // when
         var archiveNextPageable = new ArchivePageable(timeSortType, null, lastArchiveMilli, lastArchiveOfFirstPage.getId());
-        var nextPageArchives = archiveRepository.findNextPage(archiveNextPageable, TEST_PAGE_ELEMENT_SIZE);
+        var nextPageArchives = archiveRepository.findNextPageOnlyPublic(archiveNextPageable, TEST_PAGE_ELEMENT_SIZE);
 
         // then
         nextPageArchives.forEach(archive -> {

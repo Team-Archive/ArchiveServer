@@ -15,14 +15,14 @@ public class ArchiveCommunityService {
     private final ArchiveRepository archiveRepository;
 
     public List<ArchiveCommunityResponseDto> getCommunityFirstPage(ArchivePageable pageable) {
-        var archives = archiveRepository.findFirstPage(pageable, ARCHIVE_COMMUNITY_PAGE_ELEMENT_SIZE);
+        var archives = archiveRepository.findFirstPageOnlyPublic(pageable, ARCHIVE_COMMUNITY_PAGE_ELEMENT_SIZE);
         return archives.stream()
                        .map(archive -> ArchiveCommunityResponseDto.from(archive, pageable.getSortType().convertToMillis(archive)))
                        .toList();
     }
 
     public List<ArchiveCommunityResponseDto> getCommunityNextPage(ArchivePageable pageable) {
-        var archives = archiveRepository.findNextPage(pageable, ARCHIVE_COMMUNITY_PAGE_ELEMENT_SIZE);
+        var archives = archiveRepository.findNextPageOnlyPublic(pageable, ARCHIVE_COMMUNITY_PAGE_ELEMENT_SIZE);
         return archives.stream()
                        .map(archive -> ArchiveCommunityResponseDto.from(archive, pageable.getSortType().convertToMillis(archive)))
                        .toList();

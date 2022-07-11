@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface ArchiveCustomRepository {
 
-    List<Archive> findFirstPage(ArchivePageable pageable, int pageElementSize);
+    List<Archive> findFirstPageOnlyPublic(ArchivePageable pageable, int pageElementSize);
 
-    List<Archive> findNextPage(ArchivePageable pageable, int pageElementSize);
+    List<Archive> findNextPageOnlyPublic(ArchivePageable pageable, int pageElementSize);
 
 }

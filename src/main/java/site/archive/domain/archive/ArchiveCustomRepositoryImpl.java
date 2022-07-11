@@ -18,7 +18,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Archive> findFirstPage(ArchivePageable pageable, int pageElementSize) {
+    public List<Archive> findFirstPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
         var firstPageWhere = addEmotionWhereWhenEmotionExist(archive.isPublic.eq(true),
                                                              pageable.getEmotion());
         var timeSortTypeDescOrderBy = pageable.getSortType().getOrderBy(archive);
@@ -32,7 +32,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     }
 
     @Override
-    public List<Archive> findNextPage(ArchivePageable pageable, int pageElementSize) {
+    public List<Archive> findNextPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
         var nextPageWhere = getNextPageWhere(pageable);
         var timeSortTypeDescOrderBy = pageable.getSortType().getOrderBy(archive);
         var archiveIdDescOrderBy = archive.id.desc();
