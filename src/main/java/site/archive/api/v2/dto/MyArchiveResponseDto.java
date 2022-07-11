@@ -24,6 +24,8 @@ public class MyArchiveResponseDto {
 
     public static MyArchiveResponseDto from(Archive archive, long dateMilli) {
         var author = archive.getAuthor();
+        var likeCount = archive.getLikes().stream()
+                               .filter(like -> !like.getIsDeleted()).count();
         return MyArchiveResponseDto.builder()
                                    .archiveId(archive.getId())
                                    .name(archive.getName())
@@ -31,7 +33,7 @@ public class MyArchiveResponseDto {
                                    .emotion(archive.getEmotion())
                                    .mainImage(archive.getMainImage())
                                    .authorId(author.getId())
-                                   .likeCount(0L)             // TODO: 추가필요
+                                   .likeCount(likeCount)
                                    .dateMilli(dateMilli)
                                    .build();
     }

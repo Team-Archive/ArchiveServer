@@ -25,8 +25,12 @@ public class ArchiveCommunityResponseDto {
     private final Long likeCount;
     private final Long dateMilli;
 
-    public static ArchiveCommunityResponseDto from(Archive archive, long dateMilli) {
+    public static ArchiveCommunityResponseDto from(Archive archive, Long currentUserIdx, long dateMilli) {
         var author = archive.getAuthor();
+        var isLiked = archive.getLikes().stream()
+                             .anyMatch(like -> !like.getIsDeleted() && like.getUser().getId().equals(currentUserIdx));
+        var likeCount = archive.getLikes().stream()
+                               .filter(like -> !like.getIsDeleted()).count();
         return ArchiveCommunityResponseDto.builder()
                                           .archiveId(archive.getId())
                                           .name(archive.getName())
@@ -36,8 +40,8 @@ public class ArchiveCommunityResponseDto {
                                           .authorId(author.getId())
                                           .authorNickname("")        // TODO: 추가필요
                                           .authorProfileImage("")    // TODO: 추가필요
-                                          .isLiked(false)            // TODO: 추가필요
-                                          .likeCount(0L)             // TODO: 추가필요
+                                          .isLiked(isLiked)
+                                          .likeCount(likeCount)
                                           .dateMilli(dateMilli)
                                           .build();
     }
