@@ -27,11 +27,10 @@ class ArchiveRepositoryPaginationTest extends JpaTestSupport {
         // given
         var emotion = Emotion.INTERESTING;
         var timeSortType = ArchiveCommunityTimeSortType.CREATED_AT;
+        var archivePageable = new ArchivePageable(timeSortType, emotion, null, null);
 
         // when
-        var firstPageArchives = archiveRepository.findFirstPage(timeSortType,
-                                                                emotion,
-                                                                TEST_PAGE_ELEMENT_SIZE);
+        var firstPageArchives = archiveRepository.findFirstPage(archivePageable, TEST_PAGE_ELEMENT_SIZE);
 
         // then
         firstPageArchives.forEach(
@@ -43,9 +42,8 @@ class ArchiveRepositoryPaginationTest extends JpaTestSupport {
     @EnumSource(value = ArchiveCommunityTimeSortType.class, names = {"CREATED_AT", "WATCHED_ON"})
     void firstPageTest(ArchiveCommunityTimeSortType timeSortType) {
         // when
-        var firstPageArchives = archiveRepository.findFirstPage(timeSortType,
-                                                                null,
-                                                                TEST_PAGE_ELEMENT_SIZE);
+        var archivePageable = new ArchivePageable(timeSortType, null, null, null);
+        var firstPageArchives = archiveRepository.findFirstPage(archivePageable, TEST_PAGE_ELEMENT_SIZE);
 
         // then
         assertThat(firstPageArchives).hasSize(TEST_PAGE_ELEMENT_SIZE);
@@ -76,18 +74,14 @@ class ArchiveRepositoryPaginationTest extends JpaTestSupport {
     @EnumSource(value = ArchiveCommunityTimeSortType.class, names = {"CREATED_AT", "WATCHED_ON"})
     void nextPageTest(ArchiveCommunityTimeSortType timeSortType) {
         // given
-        var firstPageArchives = archiveRepository.findFirstPage(timeSortType,
-                                                                null,
-                                                                TEST_PAGE_ELEMENT_SIZE);
+        var archivePageable = new ArchivePageable(timeSortType, null, null, null);
+        var firstPageArchives = archiveRepository.findFirstPage(archivePageable, TEST_PAGE_ELEMENT_SIZE);
         var lastArchiveOfFirstPage = firstPageArchives.get(TEST_PAGE_ELEMENT_SIZE - 1);
-        var lastArchiveMilli = timeSortType.getMilli(lastArchiveOfFirstPage);
+        var lastArchiveMilli = timeSortType.convertToMillis(lastArchiveOfFirstPage);
 
         // when
-        var nextPageArchives = archiveRepository.findNextPage(timeSortType,
-                                                              null,
-                                                              lastArchiveMilli,
-                                                              lastArchiveOfFirstPage.getId(),
-                                                              TEST_PAGE_ELEMENT_SIZE);
+        var archiveNextPageable = new ArchivePageable(timeSortType, null, lastArchiveMilli, lastArchiveOfFirstPage.getId());
+        var nextPageArchives = archiveRepository.findNextPage(archiveNextPageable, TEST_PAGE_ELEMENT_SIZE);
 
         // then
         nextPageArchives.forEach(archive -> {

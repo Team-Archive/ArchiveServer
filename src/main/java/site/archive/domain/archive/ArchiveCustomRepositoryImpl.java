@@ -18,33 +18,28 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Archive> findFirstPage(ArchiveCommunityTimeSortType timeSortType, Emotion emotion, int pageElementSize) {
-        var firstPageWhere = addEmotionWhereWhenEmotionExist(archive.isPublic.eq(true), emotion);
-        var timeSortTypeDescOrderBy = timeSortType.getOrderBy(archive);
+    public List<Archive> findFirstPage(ArchivePageable archivePageable, int pageElementSize) {
+        var firstPageWhere = addEmotionWhereWhenEmotionExist(archive.isPublic.eq(true),
+                                                             archivePageable.getEmotion());
+        var timeSortTypeDescOrderBy = archivePageable.getSortType().getOrderBy(archive);
         var archiveIdDescOrderBy = archive.id.desc();
         return jpaQueryFactory.selectFrom(archive)
                               .innerJoin(archive.author).fetchJoin()
                               .where(firstPageWhere)
-                              .orderBy(timeSortTypeDescOrderBy,
-                                       archiveIdDescOrderBy)
+                              .orderBy(timeSortTypeDescOrderBy, archiveIdDescOrderBy)
                               .limit(pageElementSize)
                               .fetch();
     }
 
     @Override
-    public List<Archive> findNextPage(ArchiveCommunityTimeSortType timeSortType,
-                                      Emotion emotion,
-                                      Long lastSeenArchiveDateMilli,
-                                      Long lastSeenArchiveId,
-                                      int pageElementSize) {
-        var nextPageWhere = getNextPageWhere(timeSortType, emotion, lastSeenArchiveDateMilli, lastSeenArchiveId);
-        var timeSortTypeDescOrderBy = timeSortType.getOrderBy(archive);
+    public List<Archive> findNextPage(ArchivePageable archivePageable, int pageElementSize) {
+        var nextPageWhere = getNextPageWhere(archivePageable);
+        var timeSortTypeDescOrderBy = archivePageable.getSortType().getOrderBy(archive);
         var archiveIdDescOrderBy = archive.id.desc();
         return jpaQueryFactory.selectFrom(archive)
                               .innerJoin(archive.author).fetchJoin()
                               .where(nextPageWhere)
-                              .orderBy(timeSortTypeDescOrderBy,
-                                       archiveIdDescOrderBy)
+                              .orderBy(timeSortTypeDescOrderBy, archiveIdDescOrderBy)
                               .limit(pageElementSize)
                               .fetch();
     }
@@ -53,25 +48,16 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
      * TimeSortType에 해당하는 필드의 값이 lastSeenArchiveDateMilli 값보다 작거나,
      * 같은 경우, archiveId에 해당하는 필드의 값이 lastSeenArchiveId 값보다 작아야 한다.
      * 그리고 public Archive만 조회하며, Emotion 필터가 설정된 경우 주어진 Emotion의 archive만 조회한다.
-     *
-     * @param timeSortType             시간 정렬 타입
-     * @param emotion                  감정 필터링 타입
-     * @param lastSeenArchiveDateMilli 현재 페이지의 마지막 시간 milli
-     * @param lastSeenArchiveId        현재 페이지의 마지막 archive id
-     * @return 위 조건에 해당하는 Where 조건식
      */
-    private BooleanExpression getNextPageWhere(ArchiveCommunityTimeSortType timeSortType,
-                                               Emotion emotion,
-                                               Long lastSeenArchiveDateMilli,
-                                               Long lastSeenArchiveId) {
-        var timeSortTypeLtWhere = timeSortType.getLtWhere(archive, lastSeenArchiveDateMilli);
-        var timeSortTypeEqWhere = timeSortType.getEqWhere(archive, lastSeenArchiveDateMilli);
-        var archiveIdLtWhere = archive.id.lt(lastSeenArchiveId);
+    private BooleanExpression getNextPageWhere(ArchivePageable archivePageable) {
+        var timeSortTypeLtWhere = archivePageable.getSortType().getLtWhere(archive, archivePageable.getLastArchiveDateTime());
+        var timeSortTypeEqWhere = archivePageable.getSortType().getEqWhere(archive, archivePageable.getLastArchiveDateTime());
+        var archiveIdLtWhere = archive.id.lt(archivePageable.getLastArchiveId());
         var timeSortTypeWhere = timeSortTypeLtWhere
                                     .or(timeSortTypeEqWhere.and(archiveIdLtWhere));
         var publicArchiveWhere = archive.isPublic.eq(true);
         var where = timeSortTypeWhere.and(publicArchiveWhere);
-        return addEmotionWhereWhenEmotionExist(where, emotion);
+        return addEmotionWhereWhenEmotionExist(where, archivePageable.getEmotion());
     }
 
     private BooleanExpression addEmotionWhereWhenEmotionExist(BooleanExpression where,
