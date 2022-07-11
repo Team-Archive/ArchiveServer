@@ -6,6 +6,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import site.archive.api.converter.StringToSortTypeConverter;
+import site.archive.api.resolver.ArchivePageableArgumentResolver;
 import site.archive.api.resolver.UserArgumentResolver;
 
 import java.util.List;
@@ -21,10 +22,8 @@ public class WebConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(userResolver());
+        resolvers.add(new UserArgumentResolver());
+        resolvers.add(new ArchivePageableArgumentResolver());
     }
 
-    public HandlerMethodArgumentResolver userResolver() {
-        return new UserArgumentResolver();
-    }
 }
