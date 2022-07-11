@@ -10,11 +10,11 @@ public class ArchivePageable {
 
     private ArchiveCommunityTimeSortType sortType;
     private Emotion emotion;
-    private Long lastSeenArchiveDateMilli;
-    private Long lastSeenArchiveId;
+    private Long lastArchiveDateTime;
+    private Long lastArchiveId;
 
-    public boolean isFirstPage() {
-        return lastSeenArchiveDateMilli == null || lastSeenArchiveId == null;
+    public boolean isRequestFirstPage() {
+        return lastArchiveDateTime == null || lastArchiveId == null;
     }
 
 }
