@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.archive.api.v1.dto.archive.ArchiveDto;
 import site.archive.api.v1.dto.archive.ArchiveListResponseDto;
-import site.archive.api.v2.dto.MyArchiveListResponseDto;
 import site.archive.api.v2.dto.MyArchiveResponseDto;
 import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.user.UserRepository;
@@ -13,6 +12,7 @@ import site.archive.domain.user.info.UserInfo;
 import site.archive.exception.common.ResourceNotFoundException;
 import site.archive.exception.common.UnauthorizedResourceException;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 @Service
@@ -58,22 +58,20 @@ public class ArchiveService {
         return ArchiveListResponseDto.from(archiveDtos);
     }
 
-    public MyArchiveListResponseDto getAllArchiveFirstPage(UserInfo info, ArchivePageable pageable) {
+    public List<MyArchiveResponseDto> getAllArchiveFirstPage(UserInfo info, ArchivePageable pageable) {
         var authorId = info.getUserId();
-        var archives = archiveRepository.findFirstPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
-                                        .map(archive -> MyArchiveResponseDto.from(archive,
-                                                                                  pageable.getSortType().convertToMillis(archive)))
-                                        .toList();
-        return MyArchiveListResponseDto.from(archives);
+        return archiveRepository.findFirstPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
+                                .map(archive -> MyArchiveResponseDto.from(archive,
+                                                                          pageable.getSortType().convertToMillis(archive)))
+                                .toList();
     }
 
-    public MyArchiveListResponseDto getAllArchiveNextPage(UserInfo info, ArchivePageable pageable) {
+    public List<MyArchiveResponseDto> getAllArchiveNextPage(UserInfo info, ArchivePageable pageable) {
         var authorId = info.getUserId();
-        var archives = archiveRepository.findNextPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
-                                        .map(archive -> MyArchiveResponseDto.from(archive,
-                                                                                  pageable.getSortType().convertToMillis(archive)))
-                                        .toList();
-        return MyArchiveListResponseDto.from(archives);
+        return archiveRepository.findNextPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
+                                .map(archive -> MyArchiveResponseDto.from(archive,
+                                                                          pageable.getSortType().convertToMillis(archive)))
+                                .toList();
     }
 
     /**

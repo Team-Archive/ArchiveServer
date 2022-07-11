@@ -23,14 +23,15 @@ public class ArchiveControllerV2 {
 
     private final ArchiveService archiveService;
 
-    @Operation(summary = "아카이브 리스트 조회 (필터 포함)", description = "홈 뷰 - 아카이브 리스트 조회")
+    @Operation(summary = "나의 관람 뷰 (아카이브 리스트)", description = "홈 뷰 - 아카이브 리스트 조회")
     @GetMapping
     public ResponseEntity<MyArchiveListResponseDto> archiveListView(@RequestUser UserInfo user,
                                                                     ArchivePageable pageable) {
-        if (pageable.isRequestFirstPage()) {
-            return ResponseEntity.ok(archiveService.getAllArchiveFirstPage(user, pageable));
-        }
-        return ResponseEntity.ok(archiveService.getAllArchiveNextPage(user, pageable));
+        var archiveCount = archiveService.countArchive(user);
+        var myArchives = pageable.isRequestFirstPage()
+                         ? archiveService.getAllArchiveFirstPage(user, pageable)
+                         : archiveService.getAllArchiveNextPage(user, pageable);
+        return ResponseEntity.ok(MyArchiveListResponseDto.from(archiveCount, myArchives));
     }
 
     @Operation(summary = "특정 유저 아카이브 리스트 조회")
