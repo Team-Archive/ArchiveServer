@@ -60,7 +60,9 @@ public class ArchiveService {
 
     public List<MyArchiveResponseDto> getAllArchiveFirstPage(UserInfo info, ArchivePageable pageable) {
         var authorId = info.getUserId();
-        return archiveRepository.findFirstPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
+        var archiveIds = archiveRepository.findFirstPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
+                                          .map(Archive::getId).toList();
+        return archiveRepository.findDistinctByIdIn(archiveIds).stream()
                                 .map(archive -> MyArchiveResponseDto.from(archive,
                                                                           pageable.getSortType().convertToMillis(archive)))
                                 .toList();
@@ -68,7 +70,9 @@ public class ArchiveService {
 
     public List<MyArchiveResponseDto> getAllArchiveNextPage(UserInfo info, ArchivePageable pageable) {
         var authorId = info.getUserId();
-        return archiveRepository.findNextPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
+        var archiveIds = archiveRepository.findNextPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
+                                          .map(Archive::getId).toList();
+        return archiveRepository.findDistinctByIdIn(archiveIds).stream()
                                 .map(archive -> MyArchiveResponseDto.from(archive,
                                                                           pageable.getSortType().convertToMillis(archive)))
                                 .toList();
