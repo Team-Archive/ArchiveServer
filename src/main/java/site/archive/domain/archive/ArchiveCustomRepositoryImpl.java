@@ -18,10 +18,10 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Archive> findFirstPage(ArchivePageable archivePageable, int pageElementSize) {
+    public List<Archive> findFirstPage(ArchivePageable pageable, int pageElementSize) {
         var firstPageWhere = addEmotionWhereWhenEmotionExist(archive.isPublic.eq(true),
-                                                             archivePageable.getEmotion());
-        var timeSortTypeDescOrderBy = archivePageable.getSortType().getOrderBy(archive);
+                                                             pageable.getEmotion());
+        var timeSortTypeDescOrderBy = pageable.getSortType().getOrderBy(archive);
         var archiveIdDescOrderBy = archive.id.desc();
         return jpaQueryFactory.selectFrom(archive)
                               .innerJoin(archive.author).fetchJoin()
@@ -32,9 +32,9 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     }
 
     @Override
-    public List<Archive> findNextPage(ArchivePageable archivePageable, int pageElementSize) {
-        var nextPageWhere = getNextPageWhere(archivePageable);
-        var timeSortTypeDescOrderBy = archivePageable.getSortType().getOrderBy(archive);
+    public List<Archive> findNextPage(ArchivePageable pageable, int pageElementSize) {
+        var nextPageWhere = getNextPageWhere(pageable);
+        var timeSortTypeDescOrderBy = pageable.getSortType().getOrderBy(archive);
         var archiveIdDescOrderBy = archive.id.desc();
         return jpaQueryFactory.selectFrom(archive)
                               .innerJoin(archive.author).fetchJoin()
@@ -49,15 +49,15 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
      * 같은 경우, archiveId에 해당하는 필드의 값이 lastSeenArchiveId 값보다 작아야 한다.
      * 그리고 public Archive만 조회하며, Emotion 필터가 설정된 경우 주어진 Emotion의 archive만 조회한다.
      */
-    private BooleanExpression getNextPageWhere(ArchivePageable archivePageable) {
-        var timeSortTypeLtWhere = archivePageable.getSortType().getLtWhere(archive, archivePageable.getLastArchiveDateTime());
-        var timeSortTypeEqWhere = archivePageable.getSortType().getEqWhere(archive, archivePageable.getLastArchiveDateTime());
-        var archiveIdLtWhere = archive.id.lt(archivePageable.getLastArchiveId());
+    private BooleanExpression getNextPageWhere(ArchivePageable pageable) {
+        var timeSortTypeLtWhere = pageable.getSortType().getLtWhere(archive, pageable.getLastArchiveDateTime());
+        var timeSortTypeEqWhere = pageable.getSortType().getEqWhere(archive, pageable.getLastArchiveDateTime());
+        var archiveIdLtWhere = archive.id.lt(pageable.getLastArchiveId());
         var timeSortTypeWhere = timeSortTypeLtWhere
                                     .or(timeSortTypeEqWhere.and(archiveIdLtWhere));
         var publicArchiveWhere = archive.isPublic.eq(true);
         var where = timeSortTypeWhere.and(publicArchiveWhere);
-        return addEmotionWhereWhenEmotionExist(where, archivePageable.getEmotion());
+        return addEmotionWhereWhenEmotionExist(where, pageable.getEmotion());
     }
 
     private BooleanExpression addEmotionWhereWhenEmotionExist(BooleanExpression where,

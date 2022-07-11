@@ -21,12 +21,12 @@ public class ArchiveCommunityControllerV2 {
 
     @Operation(summary = "아카이브 전시소통 리스트 조회")
     @GetMapping
-    public ResponseEntity<List<ArchiveCommunityResponseDto>> archiveCommunityView(ArchivePageable archivePageable) {
+    public ResponseEntity<List<ArchiveCommunityResponseDto>> archiveCommunityView(ArchivePageable pageable) {
 
-        if (archivePageable.isRequestFirstPage()) {
-            return ResponseEntity.ok(archiveCommunityService.getCommunityFirstPage(archivePageable));
+        if (pageable.isRequestFirstPage()) {
+            return ResponseEntity.ok(archiveCommunityService.getCommunityFirstPage(pageable));
         }
-        return ResponseEntity.ok(archiveCommunityService.getCommunityNextPage(archivePageable));
+        return ResponseEntity.ok(archiveCommunityService.getCommunityNextPage(pageable));
     }
 
 }
