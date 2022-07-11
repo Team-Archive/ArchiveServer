@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import site.archive.JpaTestSupport;
 import site.archive.domain.archive.entity.Emotion;
+import site.archive.domain.like.LikeRepository;
 
 import java.util.stream.IntStream;
 
@@ -20,6 +21,27 @@ class ArchiveRepositoryPaginationTest extends JpaTestSupport {
 
     @Autowired
     ArchiveRepository archiveRepository;
+
+    @Autowired
+    LikeRepository likeRepository;
+
+    @Test
+    @DisplayName("Like의 개수가 올바르게 반환되는지 확인한다")
+    void likeCountTest() {
+        // given
+        var timeSortType = ArchiveCommunityTimeSortType.CREATED_AT;
+        var archivePageable = new ArchivePageable(timeSortType, null, null, null);
+
+        // when
+        var firstPageArchives = archiveRepository.findFirstPageOnlyPublic(archivePageable, TEST_PAGE_ELEMENT_SIZE);
+
+        // then
+        firstPageArchives.forEach(archive -> {
+            var likes = likeRepository.findByArchiveId(archive.getId());
+            var likeCount = archive.getLikes().size();
+            assertThat(likes).hasSize(likeCount);
+        });
+    }
 
     @Test
     @DisplayName("설정한 Emotion에 맞게 제대로 필터링이 되었는지 확인한다")
