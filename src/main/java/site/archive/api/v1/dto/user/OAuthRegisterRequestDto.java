@@ -1,4 +1,4 @@
-package site.archive.api.dto.user;
+package site.archive.api.v1.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

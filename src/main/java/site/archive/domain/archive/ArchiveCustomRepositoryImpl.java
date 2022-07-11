@@ -1,6 +1,7 @@
 package site.archive.domain.archive;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -18,65 +19,79 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Archive> findFirstPage(ArchiveCommunityTimeSortType timeSortType, Emotion emotion, int pageElementSize) {
-        var firstPageWhereCondition = addEmotionWhereConditionWhenEmotionExist(archive.isPublic.eq(true), emotion);
-        var orderByTimeSortTypeDesc = timeSortType.getOrderCondition(archive);
-        var orderByArchiveIdDesc = archive.id.desc();
-        return jpaQueryFactory.selectFrom(archive)
-                              .innerJoin(archive.author).fetchJoin()
-                              .where(firstPageWhereCondition)
-                              .orderBy(orderByTimeSortTypeDesc,
-                                       orderByArchiveIdDesc)
-                              .limit(pageElementSize)
-                              .fetch();
+    public List<Archive> findFirstPageByAuthorId(Long authorId,
+                                                 ArchivePageable pageable,
+                                                 int pageElementSize) {
+        var archiveQuery = baseArchiveSelectQuery(pageable);
+        var whereAuthorId = archive.author.id.eq(authorId);
+        return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
+                   .where(whereAuthorId)
+                   .limit(pageElementSize)
+                   .fetch();
     }
 
     @Override
-    public List<Archive> findNextPage(ArchiveCommunityTimeSortType timeSortType,
-                                      Emotion emotion,
-                                      Long lastSeenArchiveDateMilli,
-                                      Long lastSeenArchiveId,
-                                      int pageElementSize) {
-        var nextPageWhereCondition = getNextPageWhereCondition(timeSortType, emotion, lastSeenArchiveDateMilli, lastSeenArchiveId);
-        var orderByTimeSortTypeDesc = timeSortType.getOrderCondition(archive);
-        var orderByArchiveIdDesc = archive.id.desc();
+    public List<Archive> findNextPageByAuthorId(Long authorId,
+                                                ArchivePageable pageable,
+                                                int pageElementSize) {
+        var archiveQuery = baseArchiveSelectQuery(pageable);
+        var whereAuthorId = archive.author.id.eq(authorId);
+        return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
+                   .where(whereAuthorId, whereNextPage(pageable))
+                   .limit(pageElementSize)
+                   .fetch();
+    }
+
+    @Override
+    public List<Archive> findFirstPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
+        var archiveQuery = baseArchiveSelectQuery(pageable);
+        var whereOnlyPublic = archive.isPublic.eq(true);
+        return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
+                   .where(whereOnlyPublic)
+                   .limit(pageElementSize)
+                   .fetch();
+    }
+
+    @Override
+    public List<Archive> findNextPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
+        var archiveQuery = baseArchiveSelectQuery(pageable);
+        var whereOnlyPublic = archive.isPublic.eq(true);
+        return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
+                   .where(whereOnlyPublic, whereNextPage(pageable))
+                   .limit(pageElementSize)
+                   .fetch();
+    }
+
+    /**
+     * 기본 Archive page select query
+     * - Join User table
+     * - order by TimeSortType, Archive id
+     */
+    private JPAQuery<Archive> baseArchiveSelectQuery(ArchivePageable pageable) {
+        var timeSortTypeDescOrderBy = pageable.getSortType().getOrderBy(archive);
+        var archiveIdDescOrderBy = archive.id.desc();
         return jpaQueryFactory.selectFrom(archive)
                               .innerJoin(archive.author).fetchJoin()
-                              .where(nextPageWhereCondition)
-                              .orderBy(orderByTimeSortTypeDesc,
-                                       orderByArchiveIdDesc)
-                              .limit(pageElementSize)
-                              .fetch();
+                              .orderBy(timeSortTypeDescOrderBy, archiveIdDescOrderBy);
+    }
+
+    /**
+     * Emotion이 있는 경우(Not null), where 조건 절을 추가한다.
+     */
+    private JPAQuery<Archive> whereEmotionIfExists(JPAQuery<Archive> jpaQuery,
+                                                   Emotion emotion) {
+        return emotion == null ? jpaQuery : jpaQuery.where(archive.emotion.eq(emotion));
     }
 
     /**
      * TimeSortType에 해당하는 필드의 값이 lastSeenArchiveDateMilli 값보다 작거나,
      * 같은 경우, archiveId에 해당하는 필드의 값이 lastSeenArchiveId 값보다 작아야 한다.
-     * 그리고 public Archive만 조회하며, Emotion 필터가 설정된 경우 주어진 Emotion의 archive만 조회한다.
-     *
-     * @param timeSortType             시간 정렬 타입
-     * @param emotion                  감정 필터링 타입
-     * @param lastSeenArchiveDateMilli 현재 페이지의 마지막 시간 milli
-     * @param lastSeenArchiveId        현재 페이지의 마지막 archive id
-     * @return 위 조건에 해당하는 Where 조건식
      */
-    private BooleanExpression getNextPageWhereCondition(ArchiveCommunityTimeSortType timeSortType,
-                                                        Emotion emotion,
-                                                        Long lastSeenArchiveDateMilli,
-                                                        Long lastSeenArchiveId) {
-        var timeSortTypeLtWhereCondition = timeSortType.getLtWhereCondition(archive, lastSeenArchiveDateMilli);
-        var timeSortTypeEqWhereCondition = timeSortType.getEqWhereCondition(archive, lastSeenArchiveDateMilli);
-        var archiveIdLtWhereCondition = archive.id.lt(lastSeenArchiveId);
-        var timeSortTypeWhereCondition = timeSortTypeLtWhereCondition
-                                             .or(timeSortTypeEqWhereCondition.and(archiveIdLtWhereCondition));
-        var publicArchiveWhereCondition = archive.isPublic.eq(true);
-        var whereCondition = timeSortTypeWhereCondition.and(publicArchiveWhereCondition);
-        return addEmotionWhereConditionWhenEmotionExist(whereCondition, emotion);
-    }
-
-    private BooleanExpression addEmotionWhereConditionWhenEmotionExist(BooleanExpression whereCondition,
-                                                                       Emotion emotion) {
-        return emotion == null ? whereCondition : whereCondition.and(archive.emotion.eq(emotion));
+    private BooleanExpression whereNextPage(ArchivePageable pageable) {
+        var timeSortTypeLtWhere = pageable.getSortType().getLtWhere(archive, pageable.getLastArchiveDateTime());
+        var timeSortTypeEqWhere = pageable.getSortType().getEqWhere(archive, pageable.getLastArchiveDateTime());
+        var archiveIdLtWhere = archive.id.lt(pageable.getLastArchiveId());
+        return timeSortTypeLtWhere.or(timeSortTypeEqWhere.and(archiveIdLtWhere));
     }
 
 }

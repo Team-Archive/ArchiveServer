@@ -1,4 +1,4 @@
-package site.archive.api.dto.user;
+package site.archive.api.v1.dto.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

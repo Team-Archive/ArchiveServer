@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import site.archive.api.command.OAuthRegisterCommand;
-import site.archive.api.dto.user.OAuthRegisterRequestDto;
+import site.archive.api.v1.dto.user.OAuthRegisterRequestDto;
 import site.archive.domain.user.entity.OAuthProvider;
 import site.archive.exception.user.OAuthRegisterFailException;
 import site.archive.infra.user.oauth.provider.dto.ApplePublicKeys;

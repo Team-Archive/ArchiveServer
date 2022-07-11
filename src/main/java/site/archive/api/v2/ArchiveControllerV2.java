@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import site.archive.api.dto.archive.ArchiveDto;
-import site.archive.api.dto.archive.ArchiveListResponseDto;
 import site.archive.api.resolver.annotation.RequestUser;
+import site.archive.api.v1.dto.archive.ArchiveDto;
+import site.archive.api.v1.dto.archive.ArchiveListResponseDto;
+import site.archive.api.v2.dto.MyArchiveListResponseDto;
+import site.archive.domain.archive.ArchivePageable;
 import site.archive.domain.archive.ArchiveService;
 import site.archive.domain.user.info.UserInfo;
 
@@ -20,6 +22,16 @@ import site.archive.domain.user.info.UserInfo;
 public class ArchiveControllerV2 {
 
     private final ArchiveService archiveService;
+
+    @Operation(summary = "아카이브 리스트 조회 (필터 포함)", description = "홈 뷰 - 아카이브 리스트 조회")
+    @GetMapping
+    public ResponseEntity<MyArchiveListResponseDto> archiveListView(@RequestUser UserInfo user,
+                                                                    ArchivePageable pageable) {
+        if (pageable.isRequestFirstPage()) {
+            return ResponseEntity.ok(archiveService.getAllArchiveFirstPage(user, pageable));
+        }
+        return ResponseEntity.ok(archiveService.getAllArchiveNextPage(user, pageable));
+    }
 
     @Operation(summary = "특정 유저 아카이브 리스트 조회")
     @GetMapping("/other")
