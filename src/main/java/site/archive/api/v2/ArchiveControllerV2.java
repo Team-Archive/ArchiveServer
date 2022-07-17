@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.api.v1.dto.archive.ArchiveDto;
 import site.archive.api.v1.dto.archive.ArchiveListResponseDto;
+import site.archive.api.v2.dto.ArchiveCountResponseDto;
 import site.archive.api.v2.dto.MyArchiveListResponseDto;
 import site.archive.domain.archive.ArchivePageable;
 import site.archive.domain.archive.ArchiveService;
@@ -48,5 +49,11 @@ public class ArchiveControllerV2 {
         return ResponseEntity.ok(archiveService.getOneArchiveById(user, archiveId));
     }
 
+    @Operation(summary = "이번 달 아카이브 개수 조회")
+    @GetMapping("/count/month")
+    public ResponseEntity<ArchiveCountResponseDto> countArchiveOfCurrentMonth(@RequestUser UserInfo user) {
+        var count = archiveService.countArchiveOfCurrentMonth(user);
+        return ResponseEntity.ok(new ArchiveCountResponseDto(count));
+    }
 
 }

@@ -131,6 +131,10 @@ public class ArchiveService {
         return archiveRepository.countArchiveByAuthorId(authorId);
     }
 
+    public long countArchiveOfCurrentMonth(UserInfo info) {
+        return archiveRepository.countArchiveOfCurrentMonthByAuthorId(info.getUserId());
+    }
+
     private Predicate<Archive> hasViewAuthority(Long currentUserId) {
         return archive -> archive.getAuthor().getId().equals(currentUserId)
                           || archive.getIsPublic();
