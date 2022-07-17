@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.archive.entity.Emotion;
+import site.archive.util.DateTimeUtil;
 
 import java.util.List;
 
@@ -60,6 +61,18 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
                    .where(whereOnlyPublic, whereNextPage(pageable))
                    .limit(pageElementSize)
                    .fetch();
+    }
+
+    @Override
+    public long countArchiveOfCurrentMonthByAuthorId(Long authorId) {
+        var firstDateOfCurrentMonth = DateTimeUtil.firstDateTimeOfMonth();
+        var firstDateOfNextMonth = firstDateOfCurrentMonth.plusMonths(1);
+        var currentMonthWhere = archive.createdAt.goe(firstDateOfCurrentMonth)
+                                                 .and(archive.createdAt.lt(firstDateOfNextMonth));
+        return jpaQueryFactory.selectFrom(archive)
+                              .innerJoin(archive.author).fetchJoin()
+                              .where(archive.author.id.eq(authorId), currentMonthWhere)
+                              .stream().count();
     }
 
     /**
