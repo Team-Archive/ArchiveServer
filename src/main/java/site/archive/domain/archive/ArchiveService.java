@@ -30,11 +30,11 @@ public class ArchiveService {
      * 유저의 모든 Archive 조회
      * public/private 권한을 계산하지 않음
      *
-     * @param info 현재 유저의 정보
+     * @param userInfo 현재 유저의 정보
      * @return archive list
      */
-    public ArchiveListResponseDto getAllArchive(UserInfo info) {
-        var authorId = info.getUserId();
+    public ArchiveListResponseDto getAllArchive(UserInfo userInfo) {
+        var authorId = userInfo.getUserId();
         var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
                                            .map(ArchiveDto::simpleFrom)
                                            .toList();
@@ -46,20 +46,20 @@ public class ArchiveService {
      * 자신의 Archive의 경우, 모든 archive 조회
      * 타인의 Archive의 경우, public archive 만 조회
      *
-     * @param info     현재 유저의 정보
+     * @param userInfo 현재 유저의 정보
      * @param authorId 조회하고자 하는 아카이브의 작성자 아이디
      * @return archive list
      */
-    public ArchiveListResponseDto getAllArchive(UserInfo info, Long authorId) {
+    public ArchiveListResponseDto getAllArchive(UserInfo userInfo, Long authorId) {
         var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
-                                           .filter(hasViewAuthority(info.getUserId()))
+                                           .filter(hasViewAuthority(userInfo.getUserId()))
                                            .map(ArchiveDto::simpleFrom)
                                            .toList();
         return ArchiveListResponseDto.from(archiveDtos);
     }
 
-    public List<MyArchiveResponseDto> getAllArchiveFirstPage(UserInfo info, ArchivePageable pageable) {
-        var authorId = info.getUserId();
+    public List<MyArchiveResponseDto> getAllArchiveFirstPage(UserInfo userInfo, ArchivePageable pageable) {
+        var authorId = userInfo.getUserId();
         var archiveIds = archiveRepository.findFirstPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
                                           .map(Archive::getId).toList();
         return archiveRepository.findDistinctByIdIn(archiveIds).stream()
@@ -68,8 +68,8 @@ public class ArchiveService {
                                 .toList();
     }
 
-    public List<MyArchiveResponseDto> getAllArchiveNextPage(UserInfo info, ArchivePageable pageable) {
-        var authorId = info.getUserId();
+    public List<MyArchiveResponseDto> getAllArchiveNextPage(UserInfo userInfo, ArchivePageable pageable) {
+        var authorId = userInfo.getUserId();
         var archiveIds = archiveRepository.findNextPageByAuthorId(authorId, pageable, ARCHIVE_PAGE_ELEMENT_SIZE).stream()
                                           .map(Archive::getId).toList();
         return archiveRepository.findDistinctByIdIn(archiveIds).stream()
@@ -98,13 +98,13 @@ public class ArchiveService {
      * 자신의 Archive의 경우, 모든 archive 조회
      * 타인의 Archive의 경우, public archive 만 조회
      *
-     * @param info      현재 유저의 정보
+     * @param userInfo  현재 유저의 정보
      * @param archiveId 상세 조회하려는 Archive id
      * @return Archive
      */
-    public ArchiveDto getOneArchiveById(UserInfo info, Long archiveId) {
+    public ArchiveDto getOneArchiveById(UserInfo userInfo, Long archiveId) {
         var archive = archiveRepository.findById(archiveId)
-                                       .filter(hasViewAuthority(info.getUserId()))
+                                       .filter(hasViewAuthority(userInfo.getUserId()))
                                        .orElseThrow(() -> new UnauthorizedResourceException("존재하지 않거나 권한이 없는 아카이브"));
         return ArchiveDto.specificFrom(archive);
     }
@@ -126,9 +126,13 @@ public class ArchiveService {
                   .forEach(archive::addImage);
     }
 
-    public long countArchive(UserInfo info) {
-        var authorId = info.getUserId();
+    public long countArchive(UserInfo userInfo) {
+        var authorId = userInfo.getUserId();
         return archiveRepository.countArchiveByAuthorId(authorId);
+    }
+
+    public long countArchiveOfCurrentMonth(UserInfo userInfo) {
+        return archiveRepository.countArchiveOfCurrentMonthByAuthorId(userInfo.getUserId());
     }
 
     private Predicate<Archive> hasViewAuthority(Long currentUserId) {

@@ -26,4 +26,15 @@ class DateTimeUtilTest {
         assertThat(convertedDateTime).isEqualTo("1995-09-25 11:11:11");
     }
 
+    @Test
+    void dateOfMonthTest() {
+        DateTimeUtil.changeClock(LocalDate.of(2022, 7, 2));
+        var julFirstDate = DateTimeUtil.firstDateTimeOfMonth();
+        assertThat(julFirstDate).isEqualTo(LocalDateTime.of(2022, 7, 1, 0, 0));
+
+        var augFirstDate = julFirstDate.plusMonths(1);
+        DateTimeUtil.changeClock(LocalDate.of(2022, 8, 22));
+        assertThat(augFirstDate).isEqualTo(DateTimeUtil.firstDateTimeOfMonth());
+    }
+
 }

@@ -34,7 +34,7 @@ public enum ArchiveCommunityTimeSortType {
 
         @Override
         public long convertToMillis(Archive archive) {
-            return archive.getCreatedAt().atZone(DateTimeUtil.ASIA_ZONE).toInstant().toEpochMilli();
+            return archive.getCreatedAt().atZone(DateTimeUtil.ASIA_SEOUL_ZONE).toInstant().toEpochMilli();
         }
     },
     WATCHED_ON("watchedOn") {
@@ -57,7 +57,7 @@ public enum ArchiveCommunityTimeSortType {
 
         @Override
         public long convertToMillis(Archive archive) {
-            return archive.getWatchedOn().atStartOfDay(DateTimeUtil.ASIA_ZONE).toInstant().toEpochMilli();
+            return archive.getWatchedOn().atStartOfDay(DateTimeUtil.ASIA_SEOUL_ZONE).toInstant().toEpochMilli();
         }
     };
 

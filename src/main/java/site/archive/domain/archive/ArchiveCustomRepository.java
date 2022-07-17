@@ -14,4 +14,6 @@ public interface ArchiveCustomRepository {
 
     List<Archive> findNextPageOnlyPublic(ArchivePageable pageable, int pageElementSize);
 
+    long countArchiveOfCurrentMonthByAuthorId(Long authorId);
+
 }
