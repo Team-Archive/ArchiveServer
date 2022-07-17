@@ -9,6 +9,8 @@ import site.archive.domain.common.BaseTimeEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +32,11 @@ public class Banner extends BaseTimeEntity {
     @Column(name = "summary_image")
     private String summaryImage;
 
-    @Column(name = "main_image")
-    private String mainImage;
+    @Column(name = "main_content")
+    private String mainContent;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private BannerType type;
 
 }

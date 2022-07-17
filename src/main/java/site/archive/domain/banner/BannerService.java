@@ -13,7 +13,9 @@ public class BannerService {
 
     public BannerListResponseDto getAllBanner() {
         var bannerResponse = bannerRepository.findAllByOrderByCreatedAtDesc().stream()
-                                             .map(banner -> new BannerResponseDto(banner.getSummaryImage(), banner.getMainImage()))
+                                             .map(banner -> new BannerResponseDto(banner.getType().toString(),
+                                                                                  banner.getSummaryImage(),
+                                                                                  banner.getMainContent()))
                                              .toList();
         return new BannerListResponseDto(bannerResponse);
     }
