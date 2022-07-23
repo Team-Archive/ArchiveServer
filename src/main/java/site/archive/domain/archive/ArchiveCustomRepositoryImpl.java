@@ -64,6 +64,15 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     }
 
     @Override
+    public List<Archive> findByIdInWithLike(List<Long> archiveIds, ArchivePageable pageable) {
+        var archiveQuery = baseArchiveSelectQuery(pageable)
+                               .innerJoin(archive.likes).fetchJoin();
+        return archiveQuery.where(archive.id.in(archiveIds))
+                           .distinct()
+                           .fetch();
+    }
+
+    @Override
     public long countArchiveOfCurrentMonthByAuthorId(Long authorId) {
         var firstDateOfCurrentMonth = DateTimeUtil.firstDateTimeOfMonth();
         var firstDateOfNextMonth = firstDateOfCurrentMonth.plusMonths(1);

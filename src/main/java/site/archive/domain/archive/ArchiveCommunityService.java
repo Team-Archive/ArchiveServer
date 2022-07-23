@@ -18,7 +18,7 @@ public class ArchiveCommunityService {
     public List<ArchiveCommunityResponseDto> getCommunityFirstPage(Long currentUserIdx, ArchivePageable pageable) {
         var archiveIds = archiveRepository.findFirstPageOnlyPublic(pageable, ARCHIVE_COMMUNITY_PAGE_ELEMENT_SIZE).stream()
                                           .map(Archive::getId).toList();
-        return archiveRepository.findDistinctByIdIn(archiveIds).stream()
+        return archiveRepository.findByIdInWithLike(archiveIds, pageable).stream()
                                 .map(archive -> ArchiveCommunityResponseDto.from(archive, currentUserIdx,
                                                                                  pageable.getSortType().convertToMillis(archive)))
                                 .toList();
@@ -27,7 +27,7 @@ public class ArchiveCommunityService {
     public List<ArchiveCommunityResponseDto> getCommunityNextPage(Long currentUserIdx, ArchivePageable pageable) {
         var archiveIds = archiveRepository.findNextPageOnlyPublic(pageable, ARCHIVE_COMMUNITY_PAGE_ELEMENT_SIZE).stream()
                                           .map(Archive::getId).toList();
-        return archiveRepository.findDistinctByIdIn(archiveIds).stream()
+        return archiveRepository.findByIdInWithLike(archiveIds, pageable).stream()
                                 .map(archive -> ArchiveCommunityResponseDto.from(archive, currentUserIdx,
                                                                                  pageable.getSortType().convertToMillis(archive)))
                                 .toList();
