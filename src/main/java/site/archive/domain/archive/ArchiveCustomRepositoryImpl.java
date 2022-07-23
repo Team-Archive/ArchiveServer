@@ -23,7 +23,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     public List<Archive> findFirstPageByAuthorId(Long authorId,
                                                  ArchivePageable pageable,
                                                  int pageElementSize) {
-        var archiveQuery = baseArchiveSelectQuery(pageable);
+        var archiveQuery = archiveSelectQueryWithAuthor(pageable);
         var whereAuthorId = archive.author.id.eq(authorId);
         return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
                    .where(whereAuthorId)
@@ -35,7 +35,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     public List<Archive> findNextPageByAuthorId(Long authorId,
                                                 ArchivePageable pageable,
                                                 int pageElementSize) {
-        var archiveQuery = baseArchiveSelectQuery(pageable);
+        var archiveQuery = archiveSelectQueryWithAuthor(pageable);
         var whereAuthorId = archive.author.id.eq(authorId);
         return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
                    .where(whereAuthorId, whereNextPage(pageable))
@@ -45,7 +45,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
 
     @Override
     public List<Archive> findFirstPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
-        var archiveQuery = baseArchiveSelectQuery(pageable);
+        var archiveQuery = archiveSelectQueryWithAuthor(pageable);
         var whereOnlyPublic = archive.isPublic.eq(true);
         return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
                    .where(whereOnlyPublic)
@@ -55,7 +55,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
 
     @Override
     public List<Archive> findNextPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
-        var archiveQuery = baseArchiveSelectQuery(pageable);
+        var archiveQuery = archiveSelectQueryWithAuthor(pageable);
         var whereOnlyPublic = archive.isPublic.eq(true);
         return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
                    .where(whereOnlyPublic, whereNextPage(pageable))
@@ -65,7 +65,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
 
     @Override
     public List<Archive> findByIdInWithLike(List<Long> archiveIds, ArchivePageable pageable) {
-        var archiveQuery = baseArchiveSelectQuery(pageable)
+        var archiveQuery = archiveSelectQueryWithAuthor(pageable)
                                .innerJoin(archive.likes).fetchJoin();
         return archiveQuery.where(archive.id.in(archiveIds))
                            .distinct()
@@ -89,7 +89,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
      * - Join User table
      * - order by TimeSortType, Archive id
      */
-    private JPAQuery<Archive> baseArchiveSelectQuery(ArchivePageable pageable) {
+    private JPAQuery<Archive> archiveSelectQueryWithAuthor(ArchivePageable pageable) {
         var timeSortTypeDescOrderBy = pageable.getSortType().getOrderBy(archive);
         var archiveIdDescOrderBy = archive.id.desc();
         return jpaQueryFactory.selectFrom(archive)
