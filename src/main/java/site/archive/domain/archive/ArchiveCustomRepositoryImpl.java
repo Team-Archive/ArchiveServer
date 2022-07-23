@@ -66,7 +66,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
     @Override
     public List<Archive> findByIdInWithLike(List<Long> archiveIds, ArchivePageable pageable) {
         var archiveQuery = archiveSelectQueryWithAuthor(pageable)
-                               .innerJoin(archive.likes).fetchJoin();
+                               .leftJoin(archive.likes).fetchJoin();
         return archiveQuery.where(archive.id.in(archiveIds))
                            .distinct()
                            .fetch();
