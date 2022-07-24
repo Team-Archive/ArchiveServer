@@ -18,6 +18,7 @@ public class MyArchiveResponseDto {
     private final String watchedOn;
     private final Emotion emotion;
     private final String mainImage;
+    private final Boolean isPublic;
     private final Long authorId;
     private final Long likeCount;
     private final Long dateMilli;
@@ -32,6 +33,7 @@ public class MyArchiveResponseDto {
                                    .watchedOn(archive.getWatchedOn().format(YY_MM_DD_FORMATTER))
                                    .emotion(archive.getEmotion())
                                    .mainImage(archive.getMainImage())
+                                   .isPublic(archive.getIsPublic())
                                    .authorId(author.getId())
                                    .likeCount(likeCount)
                                    .dateMilli(dateMilli)
