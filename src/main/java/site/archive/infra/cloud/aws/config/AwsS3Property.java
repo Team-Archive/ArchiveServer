@@ -14,5 +14,6 @@ public class AwsS3Property {
     private String region;
 
     private String bucketName;
+    private String cdnAddressName;
 
 }

@@ -70,6 +70,7 @@ cloud:
       static: ap-northeast-2
     s3:
       bucket-name: ${PRD_AWS_S3_BUCKET_NAME}
+      cdn-address-name: ${PRD_CDN_ADDRESS_NAME}
     stack:
       auto: false
 

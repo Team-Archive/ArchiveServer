@@ -11,6 +11,8 @@ import site.archive.exception.infra.FileInvalidException;
 import site.archive.infra.cloud.aws.config.AwsS3Property;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @Service
@@ -35,8 +37,7 @@ public class S3Service implements ArchiveImageService {
         } catch (AmazonServiceException e) {
             throw new IllegalStateException("Failed to upload the file", e);
         }
-
-        return amazonS3.getUrl(bucket, fileName).toString();
+        return s3Property.getCdnAddressName() + URLEncoder.encode(fileName, StandardCharsets.UTF_8);
     }
 
     private ObjectMetadata getObjectMetadataFromFile(final MultipartFile imageFile) {
