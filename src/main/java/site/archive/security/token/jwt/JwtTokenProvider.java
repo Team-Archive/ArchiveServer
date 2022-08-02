@@ -2,7 +2,6 @@ package site.archive.security.token.jwt;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -42,12 +41,12 @@ public class JwtTokenProvider implements TokenProvider {
 
     public UserInfo parseUserInfoFromToken(String token) {
         try {
-            Claims jwtClaims = Jwts.parser()
-                                   .setSigningKey(secretKey.getBytes())
-                                   .parseClaimsJws(token)
-                                   .getBody();
-            HashMap<String, Object> map = (HashMap<String, Object>) jwtClaims.get("info");
-            UserInfo info = mapper.convertValue(map, UserInfo.class);
+            var jwtClaims = Jwts.parser()
+                                .setSigningKey(secretKey.getBytes())
+                                .parseClaimsJws(token)
+                                .getBody();
+            var map = (HashMap<String, Object>) jwtClaims.get("info");
+            var info = mapper.convertValue(map, UserInfo.class);
             log.debug("토큰 파싱 결과; id: {}, email: {}, role: {}", info.getUserId(), info.getMailAddress(), info.getUserRole());
             return info;
         } catch (Exception e) {

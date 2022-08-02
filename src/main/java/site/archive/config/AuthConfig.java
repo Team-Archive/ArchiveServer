@@ -10,7 +10,7 @@ import site.archive.domain.archive.ArchiveRepository;
 import site.archive.domain.user.UserAuthService;
 import site.archive.domain.user.UserRegisterService;
 import site.archive.domain.user.UserService;
-import site.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
+import site.archive.security.authz.ArchiveAdminOrAuthorChecker;
 import site.archive.security.general.UserNamePasswordAuthenticationProvider;
 import site.archive.security.oauth.OAuthUserService;
 import site.archive.security.result.LoginFailureHandler;

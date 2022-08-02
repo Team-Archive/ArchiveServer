@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.api.v1.dto.archive.ArchiveCountResponseDto;
 import site.archive.api.v1.dto.archive.ArchiveDto;
 import site.archive.api.v1.dto.archive.ArchiveImageUrlResponseDto;
 import site.archive.api.v1.dto.archive.ArchiveListResponseDto;
-import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.domain.archive.ArchiveImageService;
 import site.archive.domain.archive.ArchiveService;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.security.authorization.annotation.RequirePermission;
-import site.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
+import site.archive.security.authz.annotation.RequirePermission;
+import site.archive.security.authz.ArchiveAdminOrAuthorChecker;
 
 @RestController
 @RequestMapping("/api/v1/archive")
