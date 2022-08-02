@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
         log.error("handleMethodArgumentNotValidException", e);
         final var errMsg = makeErrorMessage(e);
         final var response = errMsg
-                                 .map((err) -> ExceptionResponse.of(ExceptionCode.NO_VALUE, err))
+                                 .map(err -> ExceptionResponse.of(ExceptionCode.NO_VALUE, err))
                                  .orElse(ExceptionResponse.of(ExceptionCode.NO_VALUE));
         return new ResponseEntity<>(response, ExceptionCode.NO_VALUE.getStatus());
     }
