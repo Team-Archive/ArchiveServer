@@ -1,42 +1,38 @@
 package site.archive.security.token.jwt;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
-import site.archive.domain.user.info.UserInfo;
-import site.archive.exception.security.TokenNotFoundException;
+import org.springframework.web.filter.OncePerRequestFilter;
 import site.archive.security.token.HttpAuthTokenSupport;
 import site.archive.security.token.TokenProvider;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
-public class JwtTokenPersistFilter extends HttpFilter {
+public class JwtTokenPersistFilter extends OncePerRequestFilter {
 
     private final HttpAuthTokenSupport httpTokenExtractor;
     private final TokenProvider tokenProvider;
 
     @Override
-    protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-        throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+        throws ServletException, IOException {
         try {
-            String tokenStr = httpTokenExtractor.extractToken(request);
-            UserInfo authToken = tokenProvider.parseUserInfoFromToken(tokenStr);
+            var tokenStr = httpTokenExtractor.extractToken(request);
+            var authToken = tokenProvider.parseUserInfoFromToken(tokenStr);
             SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(authToken));
-            super.doFilter(request, response, chain);
-        } catch (TokenNotFoundException exception) {
-            super.doFilter(request, response, chain);
         } catch (Exception e) {
-            log.error("Failed to set SecurityContext", e);
-            super.doFilter(request, response, chain);
+            log.error("JwtTokenPersistFilter error [토큰 오류]", e);
+            SecurityContextHolder.clearContext();
         }
+        filterChain.doFilter(request, response);
     }
 
 }
