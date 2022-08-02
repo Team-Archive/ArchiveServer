@@ -1,6 +1,5 @@
 package site.archive.security.permissionhandler;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,9 +10,12 @@ import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.user.entity.BaseUser;
 import site.archive.domain.user.entity.UserRole;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.security.authorization.permissionhandler.ArchiveAdminOrAuthorChecker;
+import site.archive.security.authz.ArchiveAdminOrAuthorChecker;
 
-import static org.mockito.Mockito.when;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class ArchiveAdminOrAuthorCheckerTest {
@@ -26,39 +28,37 @@ class ArchiveAdminOrAuthorCheckerTest {
     private ArchiveRepository archiveRepository;
 
     @Mock
-    private Archive entityMock;
+    private Archive archive;
 
     @Test
     void checkByAuthor() {
-        long authorId = 10, requesterId = 10;
-        mockArchiveAuthor(authorId);
-        UserInfo requester = createUserInfo(requesterId, UserRole.GENERAL);
+        var requesterId = 10L;
+        var requester = createUserInfo(requesterId, UserRole.GENERAL);
 
-        Assertions.assertTrue(handler.checkParam(requester, POST_ID));
+        given(archiveRepository.findById(POST_ID)).willReturn(Optional.of(archive));
+        given(archive.getAuthor()).willReturn(new BaseUser(requesterId));
+
+        assertThat(handler.checkParam(requester, POST_ID)).isTrue();
     }
 
     @Test
     void checkByAdmin() {
-        long requesterId = 11;
-        UserInfo requester = createUserInfo(requesterId, UserRole.ADMIN);
-
-        Assertions.assertTrue(handler.checkParam(requester, POST_ID));
+        var requesterId = 11;
+        var requester = createUserInfo(requesterId, UserRole.ADMIN);
+        assertThat(handler.checkParam(requester, POST_ID)).isTrue();
     }
 
     @Test
     void checkByNonAuthor() {
-        long authorId = 10, requesterId = 11;
-        mockArchiveAuthor(authorId);
-        UserInfo requester = createUserInfo(requesterId, UserRole.GENERAL);
+        var realAuthorId = 100L;
+        var requesterId = 10L;
+        var requester = createUserInfo(requesterId, UserRole.GENERAL);
 
-        Assertions.assertFalse(handler.checkParam(requester, POST_ID));
+        given(archiveRepository.findById(POST_ID)).willReturn(Optional.of(archive));
+        given(archive.getAuthor()).willReturn(new BaseUser(realAuthorId));
+
+        assertThat(handler.checkParam(requester, POST_ID)).isFalse();
     }
-
-    private void mockArchiveAuthor(long authorId) {
-        when(archiveRepository.getById(POST_ID)).thenReturn(entityMock);
-        when(entityMock.getAuthor()).thenReturn(new BaseUser(authorId, "", UserRole.GENERAL));
-    }
-
 
     private UserInfo createUserInfo(long id, UserRole userRole) {
         return UserInfo.builder()
