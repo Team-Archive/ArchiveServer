@@ -68,6 +68,7 @@ public class UserControllerV1 {
         return ResponseEntity.ok().build();
     }
 
+    @Deprecated
     @Operation(summary = "비밀번호 초기화 - 새로운 비밀번호 설정")
     @PostMapping("/password/reset")
     public ResponseEntity<Void> resetPassword(@Validated @RequestBody UserPasswordResetRequestDto userPasswordResetRequestDto) {

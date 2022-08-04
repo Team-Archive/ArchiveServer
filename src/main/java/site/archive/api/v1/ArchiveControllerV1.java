@@ -53,6 +53,7 @@ public class ArchiveControllerV1 {
         archiveService.delete(id);
     }
 
+    @Deprecated
     @Operation(summary = "이미지 업로드")
     @PostMapping(path = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArchiveImageUrlResponseDto> uploadImage(@RequestParam("image") MultipartFile imageFile) {
