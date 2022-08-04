@@ -1,4 +1,4 @@
-package site.archive.security.token.jwt;
+package site.archive.config.security.token.jwt;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,7 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import site.archive.domain.user.info.UserInfo;
 import site.archive.exception.security.TokenNotFoundException;
-import site.archive.security.token.TokenProvider;
+import site.archive.config.security.token.TokenProvider;
 
 import java.util.Base64;
 import java.util.Date;

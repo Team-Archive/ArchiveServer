@@ -1,4 +1,4 @@
-package site.archive.security.general;
+package site.archive.config.security.authn;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;

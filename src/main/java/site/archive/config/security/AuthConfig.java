@@ -1,4 +1,4 @@
-package site.archive.config;
+package site.archive.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,15 +10,15 @@ import site.archive.domain.archive.ArchiveRepository;
 import site.archive.domain.user.UserAuthService;
 import site.archive.domain.user.UserRegisterService;
 import site.archive.domain.user.UserService;
-import site.archive.security.authz.ArchiveAdminOrAuthorChecker;
-import site.archive.security.general.UserNamePasswordAuthenticationProvider;
-import site.archive.security.oauth.OAuthUserService;
-import site.archive.security.result.LoginFailureHandler;
-import site.archive.security.result.LoginSuccessHandler;
-import site.archive.security.token.HttpAuthTokenSupport;
-import site.archive.security.token.TokenProvider;
-import site.archive.security.token.jwt.JwtTokenProvider;
-import site.archive.security.token.jwt.JwtTokenSupport;
+import site.archive.config.security.authz.ArchiveAdminOrAuthorChecker;
+import site.archive.config.security.authn.UserNamePasswordAuthenticationProvider;
+import site.archive.config.security.oauth.OAuthUserService;
+import site.archive.config.security.common.handler.LoginFailureHandler;
+import site.archive.config.security.common.handler.LoginSuccessHandler;
+import site.archive.config.security.token.HttpAuthTokenSupport;
+import site.archive.config.security.token.TokenProvider;
+import site.archive.config.security.token.jwt.JwtTokenProvider;
+import site.archive.config.security.token.jwt.JwtTokenSupport;
 
 
 @Configuration

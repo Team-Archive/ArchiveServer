@@ -1,4 +1,4 @@
-package site.archive.security.authz;
+package site.archive.config.security.authz;
 
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -8,7 +8,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
-import site.archive.security.authz.annotation.RequirePermission;
+import site.archive.config.security.authz.annotation.RequirePermission;
 import site.archive.util.SecurityUtils;
 
 @Aspect
@@ -18,7 +18,7 @@ public class ArchivePermissionAdvice {
 
     private final ApplicationContext context;
 
-    @Around("@annotation(site.archive.security.authz.annotation.RequirePermission)")
+    @Around("@annotation(site.archive.config.security.authz.annotation.RequirePermission)")
     public Object handlePermission(ProceedingJoinPoint joinPoint) throws Throwable {
         var signature = (MethodSignature) joinPoint.getSignature();
         var annotation = signature.getMethod().getAnnotation(RequirePermission.class);

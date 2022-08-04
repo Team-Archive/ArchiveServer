@@ -1,4 +1,4 @@
-package site.archive.config;
+package site.archive.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,16 +12,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import site.archive.security.authn.CustomAuthenticationEntryPoint;
-import site.archive.security.authz.CustomAccessDeniedHandler;
-import site.archive.security.general.BodyCredentialAuthenticationFilter;
-import site.archive.security.general.UserNamePasswordAuthenticationProvider;
-import site.archive.security.oauth.OAuthUserService;
-import site.archive.security.result.LoginFailureHandler;
-import site.archive.security.result.LoginSuccessHandler;
-import site.archive.security.token.HttpAuthTokenSupport;
-import site.archive.security.token.TokenProvider;
-import site.archive.security.token.jwt.JwtTokenPersistFilter;
+import site.archive.config.security.authn.CustomAuthenticationEntryPoint;
+import site.archive.config.security.authz.CustomAccessDeniedHandler;
+import site.archive.config.security.authn.BodyCredentialAuthenticationFilter;
+import site.archive.config.security.authn.UserNamePasswordAuthenticationProvider;
+import site.archive.config.security.oauth.OAuthUserService;
+import site.archive.config.security.common.handler.LoginFailureHandler;
+import site.archive.config.security.common.handler.LoginSuccessHandler;
+import site.archive.config.security.token.HttpAuthTokenSupport;
+import site.archive.config.security.token.TokenProvider;
+import site.archive.config.security.token.jwt.JwtTokenPersistFilter;
 
 @Configuration
 @EnableWebSecurity

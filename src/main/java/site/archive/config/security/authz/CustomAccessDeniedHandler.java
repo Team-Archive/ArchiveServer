@@ -1,4 +1,4 @@
-package site.archive.security.authz;
+package site.archive.config.security.authz;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;

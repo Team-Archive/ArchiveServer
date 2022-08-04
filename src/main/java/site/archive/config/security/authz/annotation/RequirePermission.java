@@ -1,6 +1,6 @@
-package site.archive.security.authz.annotation;
+package site.archive.config.security.authz.annotation;
 
-import site.archive.security.authz.permissionhandler.ArchivePermissionHandler;
+import site.archive.config.security.authz.permissionhandler.ArchivePermissionHandler;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,11 +1,11 @@
-package site.archive.security.token.jwt;
+package site.archive.config.security.token.jwt;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-import site.archive.security.token.HttpAuthTokenSupport;
-import site.archive.security.token.TokenProvider;
+import site.archive.config.security.token.HttpAuthTokenSupport;
+import site.archive.config.security.token.TokenProvider;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

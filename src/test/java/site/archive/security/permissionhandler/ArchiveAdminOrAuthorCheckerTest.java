@@ -10,7 +10,7 @@ import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.user.entity.BaseUser;
 import site.archive.domain.user.entity.UserRole;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.security.authz.ArchiveAdminOrAuthorChecker;
+import site.archive.config.security.authz.ArchiveAdminOrAuthorChecker;
 
 import java.util.Optional;
 

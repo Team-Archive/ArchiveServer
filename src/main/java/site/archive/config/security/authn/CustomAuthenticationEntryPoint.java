@@ -1,4 +1,4 @@
-package site.archive.security.authn;
+package site.archive.config.security.authn;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;

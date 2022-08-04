@@ -1,4 +1,4 @@
-package site.archive.security.authz.permissionhandler;
+package site.archive.config.security.authz.permissionhandler;
 
 import site.archive.domain.user.info.UserInfo;
 
