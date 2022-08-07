@@ -2,7 +2,7 @@ package site.archive.domain.user.entity;
 
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.security.common.UserPrincipal;
+import site.archive.config.security.common.UserPrincipal;
 
 import java.util.Arrays;
 import java.util.Map;

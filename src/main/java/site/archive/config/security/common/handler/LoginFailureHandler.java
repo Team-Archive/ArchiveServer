@@ -1,4 +1,4 @@
-package site.archive.security.result;
+package site.archive.config.security.common.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

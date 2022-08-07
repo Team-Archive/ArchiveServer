@@ -1,4 +1,4 @@
-package site.archive.security.general;
+package site.archive.config.security.authn;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,7 +9,7 @@ import site.archive.domain.user.UserAuthService;
 import site.archive.domain.user.info.UserInfo;
 import site.archive.exception.BaseException;
 import site.archive.exception.security.WrappingAuthenticationException;
-import site.archive.security.common.UserPrincipal;
+import site.archive.config.security.common.UserPrincipal;
 
 import java.util.Collections;
 

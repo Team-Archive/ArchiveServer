@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.archive.api.command.LoginCommand;
+import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.api.v1.dto.archive.EmailDuplicateResponseDto;
 import site.archive.api.v1.dto.user.UserEmailRequestDto;
 import site.archive.api.v1.dto.user.UserPasswordResetRequestDto;
-import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.domain.user.UserAuthService;
 import site.archive.domain.user.UserService;
 import site.archive.domain.user.info.UserInfo;
@@ -68,6 +68,7 @@ public class UserControllerV1 {
         return ResponseEntity.ok().build();
     }
 
+    @Deprecated
     @Operation(summary = "비밀번호 초기화 - 새로운 비밀번호 설정")
     @PostMapping("/password/reset")
     public ResponseEntity<Void> resetPassword(@Validated @RequestBody UserPasswordResetRequestDto userPasswordResetRequestDto) {

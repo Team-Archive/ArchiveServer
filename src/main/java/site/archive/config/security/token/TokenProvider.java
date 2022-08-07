@@ -1,4 +1,4 @@
-package site.archive.security.token;
+package site.archive.config.security.token;
 
 import site.archive.domain.user.info.UserInfo;
 

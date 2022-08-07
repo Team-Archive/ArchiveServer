@@ -1,12 +1,12 @@
 package site.archive.exception.security;
 
-import site.archive.exception.BaseException;
+import org.springframework.security.core.AuthenticationException;
 import site.archive.exception.ExceptionCode;
 
-public class TokenNotFoundException extends BaseException {
+public class TokenNotFoundException extends AuthenticationException {
 
     public TokenNotFoundException() {
-        super(ExceptionCode.TOKEN_NOT_FOUND);
+        super(ExceptionCode.TOKEN_NOT_FOUND.getMessage());
     }
 
 }

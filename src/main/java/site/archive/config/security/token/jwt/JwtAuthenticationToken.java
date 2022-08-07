@@ -1,12 +1,12 @@
-package site.archive.security.token.jwt;
+package site.archive.config.security.token.jwt;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import site.archive.config.security.common.UserPrincipal;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.security.common.UserPrincipal;
 
 import java.util.Collection;
 import java.util.LinkedList;

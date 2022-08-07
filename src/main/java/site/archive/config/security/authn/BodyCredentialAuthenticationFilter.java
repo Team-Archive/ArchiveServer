@@ -1,4 +1,4 @@
-package site.archive.security.general;
+package site.archive.config.security.authn;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,21 +15,22 @@ import java.io.IOException;
 
 public class BodyCredentialAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private final ObjectMapper objMapper;
+    private final ObjectMapper mapper;
 
     public BodyCredentialAuthenticationFilter(String defaultFilterProcessesUrl,
                                               AuthenticationManager authenticationManager,
                                               ObjectMapper mapper) {
         super(defaultFilterProcessesUrl, authenticationManager);
-        this.objMapper = mapper;
+        this.mapper = mapper;
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
         throws AuthenticationException, IOException {
-        byte[] bodyBytes = httpServletRequest.getInputStream().readAllBytes();
-        LoginCommand command = objMapper.readValue(bodyBytes, LoginCommand.class);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(command.getEmail(), command.getPassword());
+        var bodyBytes = httpServletRequest.getInputStream().readAllBytes();
+        var command = mapper.readValue(bodyBytes, LoginCommand.class);
+        var token = new UsernamePasswordAuthenticationToken(command.getEmail(), command.getPassword());
         return getAuthenticationManager().authenticate(token);
     }
+
 }

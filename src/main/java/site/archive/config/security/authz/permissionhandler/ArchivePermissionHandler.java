@@ -1,9 +1,8 @@
-package site.archive.security.authorization;
+package site.archive.config.security.authz.permissionhandler;
 
 import site.archive.domain.user.info.UserInfo;
 
 public interface ArchivePermissionHandler {
     boolean checkParam(UserInfo requester, Object id);
 
-    boolean checkReturn(UserInfo requester, Object ret);
 }

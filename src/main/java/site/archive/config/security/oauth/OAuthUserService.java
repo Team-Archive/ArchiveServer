@@ -1,13 +1,13 @@
-package site.archive.security.oauth;
+package site.archive.config.security.oauth;
 
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import site.archive.api.command.OAuthRegisterCommand;
+import site.archive.config.security.common.UserPrincipal;
 import site.archive.domain.user.UserRegisterService;
 import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.security.common.UserPrincipal;
 
 public class OAuthUserService extends DefaultOAuth2UserService {
 

@@ -3,6 +3,7 @@ package site.archive.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -36,7 +37,7 @@ public class GlobalExceptionHandler {
         log.error("handleMethodArgumentNotValidException", e);
         final var errMsg = makeErrorMessage(e);
         final var response = errMsg
-                                 .map((err) -> ExceptionResponse.of(ExceptionCode.NO_VALUE, err))
+                                 .map(err -> ExceptionResponse.of(ExceptionCode.NO_VALUE, err))
                                  .orElse(ExceptionResponse.of(ExceptionCode.NO_VALUE));
         return new ResponseEntity<>(response, ExceptionCode.NO_VALUE.getStatus());
     }
@@ -80,6 +81,13 @@ public class GlobalExceptionHandler {
         log.error("handleAccessDeniedException", e);
         final var response = ExceptionResponse.of(ExceptionCode.HANDLE_ACCESS_DENIED);
         return new ResponseEntity<>(response, ExceptionCode.HANDLE_ACCESS_DENIED.getStatus());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    protected ResponseEntity<ExceptionResponse> handleAuthenticationException(AuthenticationException e) {
+        log.error("AuthenticationException", e);
+        final var response = ExceptionResponse.of(ExceptionCode.AUTHENTICATION_FAILURE);
+        return new ResponseEntity<>(response, ExceptionCode.AUTHENTICATION_FAILURE.getStatus());
     }
 
     @ExceptionHandler(BaseException.class)

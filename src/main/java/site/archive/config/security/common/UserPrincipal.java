@@ -1,4 +1,4 @@
-package site.archive.security.common;
+package site.archive.config.security.common;
 
 import lombok.Builder;
 import lombok.Getter;
