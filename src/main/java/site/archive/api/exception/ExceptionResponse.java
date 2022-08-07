@@ -1,4 +1,4 @@
-package site.archive.exception;
+package site.archive.api.exception;
 
 import lombok.AccessLevel;
 import lombok.Getter;
