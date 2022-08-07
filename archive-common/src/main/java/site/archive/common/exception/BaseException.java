@@ -1,4 +1,4 @@
-package site.archive.exception;
+package site.archive.common.exception;
 
 import java.util.Optional;
 

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import site.archive.api.command.OAuthRegisterCommand;
 import site.archive.api.v1.dto.user.OAuthRegisterRequestDto;
+import site.archive.common.exception.user.OAuthRegisterFailException;
 import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.exception.user.OAuthRegisterFailException;
 import site.archive.infra.user.oauth.provider.dto.KakaoProviderRequirements;
 import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
 
@@ -45,7 +45,7 @@ public class KakaoClient implements OAuthProviderClient {
         if (response.getStatusCode() != HttpStatus.OK || kakaoUserInfo == null || kakaoUserInfo.getEmail() == null) {
             log.error("Kakao getUserEmail process - get user info error: status code {}, user info {}",
                       response.getStatusCodeValue(), userInfoUrl);
-            throw new OAuthRegisterFailException(OAuthProvider.KAKAO, "UserInfoUrl Response error");
+            throw new OAuthRegisterFailException(OAuthProvider.KAKAO.getRegistrationId(), "UserInfoUrl Response error");
         }
 
         return kakaoUserInfo.getEmail();

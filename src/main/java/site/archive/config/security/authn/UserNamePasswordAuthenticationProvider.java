@@ -5,11 +5,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import site.archive.api.command.LoginCommand;
+import site.archive.common.exception.BaseException;
+import site.archive.common.exception.security.WrappingAuthenticationException;
+import site.archive.config.security.common.UserPrincipal;
 import site.archive.domain.user.UserAuthService;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.exception.BaseException;
-import site.archive.exception.security.WrappingAuthenticationException;
-import site.archive.config.security.common.UserPrincipal;
 
 import java.util.Collections;
 

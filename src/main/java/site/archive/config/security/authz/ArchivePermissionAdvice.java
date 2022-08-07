@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import site.archive.config.security.authz.annotation.RequirePermission;
-import site.archive.util.SecurityUtils;
+import site.archive.config.security.util.SecurityUtils;
 
 @Aspect
 @Component

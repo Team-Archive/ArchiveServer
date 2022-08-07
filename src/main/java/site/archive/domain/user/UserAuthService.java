@@ -6,12 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.archive.api.command.LoginCommand;
 import site.archive.api.v1.dto.user.UserPasswordResetRequestDto;
+import site.archive.common.exception.common.ResourceNotFoundException;
+import site.archive.common.exception.user.LoginFailException;
+import site.archive.common.exception.user.OAuthUserHasNotPasswordException;
 import site.archive.domain.user.entity.BaseUser;
 import site.archive.domain.user.entity.PasswordUser;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.exception.common.ResourceNotFoundException;
-import site.archive.exception.user.LoginFailException;
-import site.archive.exception.user.OAuthUserHasNotPasswordException;
 import site.archive.infra.mail.MailService;
 
 @Service

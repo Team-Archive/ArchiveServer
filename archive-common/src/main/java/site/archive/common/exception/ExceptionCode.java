@@ -1,8 +1,7 @@
-package site.archive.exception;
+package site.archive.common.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
-
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ExceptionCode {

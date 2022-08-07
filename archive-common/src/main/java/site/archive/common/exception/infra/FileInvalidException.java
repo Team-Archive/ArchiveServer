@@ -1,7 +1,7 @@
-package site.archive.exception.infra;
+package site.archive.common.exception.infra;
 
-import site.archive.exception.BaseException;
-import site.archive.exception.ExceptionCode;
+import site.archive.common.exception.BaseException;
+import site.archive.common.exception.ExceptionCode;
 
 public class FileInvalidException extends BaseException {
 

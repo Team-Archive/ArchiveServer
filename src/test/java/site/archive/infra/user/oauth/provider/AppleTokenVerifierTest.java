@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import site.archive.exception.user.OAuthRegisterFailException;
+import site.archive.common.exception.user.OAuthRegisterFailException;
 import site.archive.infra.user.oauth.provider.AppleClient.AppleOAuthProperty;
 import site.archive.infra.user.oauth.provider.AppleClient.AppleTokenVerifier;
 import site.archive.infra.user.oauth.provider.dto.ApplePublicKeys;

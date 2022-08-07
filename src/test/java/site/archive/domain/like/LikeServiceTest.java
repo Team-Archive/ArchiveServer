@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import site.archive.common.exception.common.ResourceNotFoundException;
 import site.archive.domain.like.entity.Like;
-import site.archive.exception.common.ResourceNotFoundException;
 
 import java.util.Optional;
 

@@ -6,11 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import site.archive.api.v1.dto.archive.ArchiveDto;
 import site.archive.api.v1.dto.archive.ArchiveListResponseDto;
 import site.archive.api.v2.dto.MyArchiveResponseDto;
+import site.archive.common.exception.common.ResourceNotFoundException;
+import site.archive.common.exception.common.UnauthorizedResourceException;
 import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.user.UserRepository;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.exception.common.ResourceNotFoundException;
-import site.archive.exception.common.UnauthorizedResourceException;
 
 import java.util.List;
 import java.util.function.Predicate;

@@ -12,7 +12,9 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import site.archive.exception.common.DuplicateResourceException;
+import site.archive.common.exception.BaseException;
+import site.archive.common.exception.ExceptionCode;
+import site.archive.common.exception.common.DuplicateResourceException;
 
 import java.util.List;
 import java.util.Optional;

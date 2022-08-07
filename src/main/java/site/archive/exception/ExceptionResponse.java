@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
+import site.archive.common.exception.ExceptionCode;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

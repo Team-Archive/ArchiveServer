@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.archive.entity.Emotion;
 
-import static site.archive.util.DateTimeUtil.YY_MM_DD_FORMATTER;
+import static site.archive.common.DateTimeUtil.YY_MM_DD_FORMATTER;
 
 @RequiredArgsConstructor
 @Builder

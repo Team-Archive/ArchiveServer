@@ -1,4 +1,4 @@
-package site.archive.exception.infra;
+package site.archive.common.exception.infra;
 
 public class SlackException extends RuntimeException {
 

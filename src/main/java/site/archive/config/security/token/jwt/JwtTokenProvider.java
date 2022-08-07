@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
-import site.archive.domain.user.info.UserInfo;
-import site.archive.exception.security.TokenNotFoundException;
+import site.archive.common.exception.security.TokenNotFoundException;
 import site.archive.config.security.token.TokenProvider;
+import site.archive.domain.user.info.UserInfo;
 
 import java.util.Base64;
 import java.util.Date;

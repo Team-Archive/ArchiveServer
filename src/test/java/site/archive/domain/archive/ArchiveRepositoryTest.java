@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import site.archive.JpaTestSupport;
-import site.archive.util.DateTimeUtil;
+import site.archive.common.DateTimeUtil;
 
 import java.time.LocalDate;
 

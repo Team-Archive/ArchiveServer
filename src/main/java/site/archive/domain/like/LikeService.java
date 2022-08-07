@@ -3,9 +3,9 @@ package site.archive.domain.like;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.archive.common.exception.common.ResourceNotFoundException;
 import site.archive.domain.common.BaseTimeEntity;
 import site.archive.domain.like.entity.Like;
-import site.archive.exception.common.ResourceNotFoundException;
 
 @Service
 @Transactional(readOnly = true)

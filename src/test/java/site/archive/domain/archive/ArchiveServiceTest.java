@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import site.archive.common.exception.common.UnauthorizedResourceException;
 import site.archive.domain.archive.entity.Archive;
 import site.archive.domain.archive.entity.Emotion;
 import site.archive.domain.user.UserRepository;
 import site.archive.domain.user.entity.BaseUser;
 import site.archive.domain.user.entity.UserRole;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.exception.common.UnauthorizedResourceException;
 
 import java.time.LocalDate;
 import java.util.Collections;

@@ -7,12 +7,11 @@ import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.RSAKey;
 import lombok.Getter;
+import site.archive.common.exception.user.OAuthRegisterFailException;
 import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.exception.user.OAuthRegisterFailException;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 public class ApplePublicKeys {
@@ -22,7 +21,7 @@ public class ApplePublicKeys {
     public List<RSASSAVerifier> toVerifier(ObjectMapper objectMapper) {
         return keys.stream()
                    .map(key -> key.toRSAVerifier(objectMapper))
-                   .collect(Collectors.toList());
+                   .toList();
     }
 
     @Getter
@@ -40,7 +39,7 @@ public class ApplePublicKeys {
                 var publicKey = rsaKey.toRSAPublicKey();
                 return new RSASSAVerifier(publicKey);
             } catch (ParseException | JsonProcessingException | JOSEException ex) {
-                throw new OAuthRegisterFailException(OAuthProvider.APPLE,
+                throw new OAuthRegisterFailException(OAuthProvider.APPLE.getRegistrationId(),
                                                      "Error occurred when create verifier using public key : " + ex.getMessage());
             }
         }

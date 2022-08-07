@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import site.archive.api.command.OAuthRegisterCommand;
 import site.archive.api.v1.dto.user.OAuthRegisterRequestDto;
+import site.archive.common.exception.user.OAuthRegisterFailException;
 import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.exception.user.OAuthRegisterFailException;
 import site.archive.infra.user.oauth.provider.dto.ApplePublicKeys;
 import site.archive.infra.user.oauth.provider.dto.AppleTokenPayload;
 
@@ -54,7 +54,7 @@ public class AppleClient implements OAuthProviderClient {
         try {
             return SignedJWT.parse(jwtToken);
         } catch (ParseException e) {
-            throw new OAuthRegisterFailException(OAuthProvider.APPLE, "Apple token parse failure. " + e.getMessage());
+            throw new OAuthRegisterFailException(OAuthProvider.APPLE.getRegistrationId(), "Apple token parse failure. " + e.getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ public class AppleClient implements OAuthProviderClient {
             var jwtClaimsSet = jwtToken.getJWTClaimsSet();
             return objectMapper.convertValue(jwtClaimsSet.toJSONObject(), AppleTokenPayload.class);
         } catch (ParseException e) {
-            throw new OAuthRegisterFailException(OAuthProvider.APPLE, "Apple token parse failure. " + e.getMessage());
+            throw new OAuthRegisterFailException(OAuthProvider.APPLE.getRegistrationId(), "Apple token parse failure. " + e.getMessage());
         }
     }
 
@@ -88,19 +88,19 @@ public class AppleClient implements OAuthProviderClient {
         private static void verifyExpirationDate(long expirationDateOfSecs) {
             var expireDateTime = Instant.ofEpochSecond(expirationDateOfSecs).atZone(UTC).toLocalDateTime();
             if (!LocalDateTime.now(UTC).isBefore(expireDateTime)) {
-                throw new OAuthRegisterFailException(OAuthProvider.APPLE, "Apple token is expired.");
+                throw new OAuthRegisterFailException(OAuthProvider.APPLE.getRegistrationId(), "Apple token is expired.");
             }
         }
 
         private static void verifyAudience(String audience, String audienceByToken) {
             if (!audience.equals(audienceByToken)) {
-                throw new OAuthRegisterFailException(OAuthProvider.APPLE, "Audience of Apple token is wrong.");
+                throw new OAuthRegisterFailException(OAuthProvider.APPLE.getRegistrationId(), "Audience of Apple token is wrong.");
             }
         }
 
         private static void verifyIssuer(String issuer, String issuerByToken) {
             if (!issuer.equals(issuerByToken)) {
-                throw new OAuthRegisterFailException(OAuthProvider.APPLE, "Issuer of Apple token is wrong.");
+                throw new OAuthRegisterFailException(OAuthProvider.APPLE.getRegistrationId(), "Issuer of Apple token is wrong.");
             }
         }
 
@@ -110,7 +110,7 @@ public class AppleClient implements OAuthProviderClient {
                                                                SignedJWT jwtToken) {
             var verifiers = getPublicKeyVerifiers(restTemplate, objectMapper, applePublicKeyUri);
             if (!isJwtVerifiedByKeys(jwtToken, verifiers)) {
-                throw new OAuthRegisterFailException(OAuthProvider.APPLE,
+                throw new OAuthRegisterFailException(OAuthProvider.APPLE.getRegistrationId(),
                                                      "This token isn't signed with the apple public key.");
             }
 
@@ -121,7 +121,7 @@ public class AppleClient implements OAuthProviderClient {
                                                                   String applePublicKeyUri) {
             var response = restTemplate.getForEntity(applePublicKeyUri, ApplePublicKeys.class);
             if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
-                throw new OAuthRegisterFailException(OAuthProvider.APPLE, "Failed to get apple public key.");
+                throw new OAuthRegisterFailException(OAuthProvider.APPLE.getRegistrationId(), "Failed to get apple public key.");
             }
             return response.getBody().toVerifier(objectMapper);
         }
@@ -132,7 +132,7 @@ public class AppleClient implements OAuthProviderClient {
                                 try {
                                     return jwtToken.verify(verifier);
                                 } catch (JOSEException ex) {
-                                    throw new OAuthRegisterFailException(OAuthProvider.APPLE,
+                                    throw new OAuthRegisterFailException(OAuthProvider.APPLE.getRegistrationId(),
                                                                          "Error occurred when create verifier using public key : " + ex.getMessage());
                                 }
                             })

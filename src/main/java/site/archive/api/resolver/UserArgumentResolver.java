@@ -7,8 +7,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import site.archive.api.resolver.annotation.RequestUser;
+import site.archive.config.security.util.SecurityUtils;
 import site.archive.domain.user.info.UserInfo;
-import site.archive.util.SecurityUtils;
 
 @Slf4j
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {

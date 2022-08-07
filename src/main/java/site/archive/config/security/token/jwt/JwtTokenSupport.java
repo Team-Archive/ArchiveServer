@@ -2,8 +2,8 @@ package site.archive.config.security.token.jwt;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
+import site.archive.common.exception.security.TokenNotFoundException;
 import site.archive.config.security.token.HttpAuthTokenSupport;
-import site.archive.exception.security.TokenNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

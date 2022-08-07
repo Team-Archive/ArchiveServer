@@ -1,4 +1,4 @@
-package site.archive.util;
+package site.archive.common;
 
 import org.junit.jupiter.api.Test;
 

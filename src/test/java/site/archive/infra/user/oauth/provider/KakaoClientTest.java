@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import site.archive.api.v1.dto.user.OAuthRegisterRequestDto;
+import site.archive.common.exception.user.OAuthRegisterFailException;
 import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.exception.user.OAuthRegisterFailException;
 import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
 
 import java.util.Collections;

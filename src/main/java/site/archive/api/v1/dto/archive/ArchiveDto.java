@@ -13,7 +13,7 @@ import site.archive.domain.user.entity.BaseUser;
 import java.time.LocalDate;
 import java.util.List;
 
-import static site.archive.util.DateTimeUtil.YY_MM_DD_FORMATTER;
+import static site.archive.common.DateTimeUtil.YY_MM_DD_FORMATTER;
 
 @NoArgsConstructor
 @AllArgsConstructor

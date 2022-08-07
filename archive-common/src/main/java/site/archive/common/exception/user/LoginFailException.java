@@ -1,7 +1,7 @@
-package site.archive.exception.user;
+package site.archive.common.exception.user;
 
-import site.archive.exception.BaseException;
-import site.archive.exception.ExceptionCode;
+import site.archive.common.exception.BaseException;
+import site.archive.common.exception.ExceptionCode;
 
 public class LoginFailException extends BaseException {
 
