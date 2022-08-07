@@ -10,32 +10,35 @@ repositories {
     mavenCentral()
 }
 
-def queryDslVersion = "5.0.0"
-def testContainerVersion = "1.17.2"
+ext {
+    queryDslVersion = "5.0.0"
+    testContainerVersion = "1.17.2"
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-    implementation 'mysql:mysql-connector-java'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'com.slack.api:slack-api-client:1.22.1'
     implementation 'io.sentry:sentry-logback:5.7.4'
+
+    implementation 'mysql:mysql-connector-java'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor(
             "javax.persistence:javax.persistence-api",
             "javax.annotation:javax.annotation-api",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
-
     runtimeOnly 'com.h2database:h2'
+
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation "org.testcontainers:testcontainers:${testContainerVersion}"
     testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
@@ -43,6 +46,8 @@ dependencies {
 
     implementation 'io.rest-assured:rest-assured-all:4.5.1'
     testImplementation 'io.rest-assured:rest-assured:4.5.1'
+
+    implementation project(':archive-domain')
 }
 
 allprojects { // 추후 root project 제거시 subproject 로 수정
@@ -64,7 +69,8 @@ allprojects { // 추후 root project 제거시 subproject 로 수정
     }
 
     dependencies {
-        implementation("org.springframework.boot:spring-boot-starter-json")
+        implementation 'org.springframework.boot:spring-boot-starter-json'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'

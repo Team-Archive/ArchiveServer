@@ -1,4 +1,4 @@
-package site.archive.config;
+package site.archive.domain.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
