@@ -13,9 +13,9 @@ import site.archive.api.v1.dto.archive.ArchiveDto;
 import site.archive.api.v1.dto.archive.ArchiveListResponseDto;
 import site.archive.api.v2.dto.ArchiveCountResponseDto;
 import site.archive.api.v2.dto.MyArchiveListResponseDto;
-import site.archive.domain.archive.ArchivePageable;
 import site.archive.domain.archive.ArchiveService;
-import site.archive.domain.user.info.UserInfo;
+import site.archive.domain.archive.custom.ArchivePageable;
+import site.archive.domain.user.UserInfo;
 
 @RestController
 @RequestMapping("/api/v2/archive")

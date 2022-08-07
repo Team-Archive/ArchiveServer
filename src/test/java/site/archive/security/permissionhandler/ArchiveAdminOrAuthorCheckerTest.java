@@ -5,12 +5,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import site.archive.domain.archive.ArchiveRepository;
-import site.archive.domain.archive.entity.Archive;
-import site.archive.domain.user.entity.BaseUser;
-import site.archive.domain.user.entity.UserRole;
-import site.archive.domain.user.info.UserInfo;
 import site.archive.config.security.authz.ArchiveAdminOrAuthorChecker;
+import site.archive.domain.archive.Archive;
+import site.archive.domain.archive.ArchiveRepository;
+import site.archive.domain.user.BaseUser;
+import site.archive.domain.user.UserInfo;
+import site.archive.domain.user.UserRole;
 
 import java.util.Optional;
 

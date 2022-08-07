@@ -9,9 +9,7 @@ import site.archive.api.command.BasicRegisterCommand;
 import site.archive.api.command.OAuthRegisterCommand;
 import site.archive.api.v1.dto.user.BaseUserDto;
 import site.archive.common.exception.common.DuplicateResourceException;
-import site.archive.domain.common.MessagingService;
-import site.archive.domain.user.entity.BaseUser;
-import site.archive.domain.user.info.UserInfo;
+import site.archive.domain.message.MessagingService;
 
 @Service
 @Transactional

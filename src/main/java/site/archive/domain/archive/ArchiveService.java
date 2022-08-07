@@ -8,9 +8,9 @@ import site.archive.api.v1.dto.archive.ArchiveListResponseDto;
 import site.archive.api.v2.dto.MyArchiveResponseDto;
 import site.archive.common.exception.common.ResourceNotFoundException;
 import site.archive.common.exception.common.UnauthorizedResourceException;
-import site.archive.domain.archive.entity.Archive;
+import site.archive.domain.archive.custom.ArchivePageable;
+import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRepository;
-import site.archive.domain.user.info.UserInfo;
 
 import java.util.List;
 import java.util.function.Predicate;

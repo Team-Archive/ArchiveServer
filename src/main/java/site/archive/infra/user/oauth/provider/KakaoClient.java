@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import site.archive.api.command.OAuthRegisterCommand;
 import site.archive.api.v1.dto.user.OAuthRegisterRequestDto;
 import site.archive.common.exception.user.OAuthRegisterFailException;
-import site.archive.domain.user.entity.OAuthProvider;
+import site.archive.domain.user.OAuthProvider;
 import site.archive.infra.user.oauth.provider.dto.KakaoProviderRequirements;
 import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
 

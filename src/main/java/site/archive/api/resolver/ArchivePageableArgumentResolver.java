@@ -6,9 +6,9 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import site.archive.domain.archive.ArchiveCommunityTimeSortType;
-import site.archive.domain.archive.ArchivePageable;
-import site.archive.domain.archive.entity.Emotion;
+import site.archive.domain.archive.Emotion;
+import site.archive.domain.archive.custom.ArchiveCommunityTimeSortType;
+import site.archive.domain.archive.custom.ArchivePageable;
 
 public class ArchivePageableArgumentResolver implements HandlerMethodArgumentResolver {
 

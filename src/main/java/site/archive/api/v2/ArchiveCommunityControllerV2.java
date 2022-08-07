@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.api.v2.dto.ArchiveCommunityResponseDto;
 import site.archive.domain.archive.ArchiveCommunityService;
-import site.archive.domain.archive.ArchivePageable;
-import site.archive.domain.user.info.UserInfo;
+import site.archive.domain.archive.custom.ArchivePageable;
+import site.archive.domain.user.UserInfo;
 
 import java.util.List;
 

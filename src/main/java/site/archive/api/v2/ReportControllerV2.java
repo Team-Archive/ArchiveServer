@@ -14,7 +14,7 @@ import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.api.v2.dto.ReportCheckResponse;
 import site.archive.api.v2.dto.ReportRequestDto;
 import site.archive.domain.report.ReportService;
-import site.archive.domain.user.info.UserInfo;
+import site.archive.domain.user.UserInfo;
 
 @RestController
 @RequestMapping("/api/v2/report")

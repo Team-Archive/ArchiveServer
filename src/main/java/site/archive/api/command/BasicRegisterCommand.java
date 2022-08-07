@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import site.archive.domain.user.entity.BaseUser;
+import site.archive.domain.user.BaseUser;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

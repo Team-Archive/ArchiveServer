@@ -3,7 +3,6 @@ package site.archive.domain.report;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.archive.domain.common.BaseTimeEntity;
-import site.archive.domain.report.entity.Report;
 
 import javax.transaction.Transactional;
 

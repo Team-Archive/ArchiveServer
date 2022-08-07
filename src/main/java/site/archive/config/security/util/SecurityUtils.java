@@ -3,7 +3,7 @@ package site.archive.config.security.util;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import site.archive.config.security.token.jwt.JwtAuthenticationToken;
-import site.archive.domain.user.info.UserInfo;
+import site.archive.domain.user.UserInfo;
 
 import java.security.SecureRandom;
 

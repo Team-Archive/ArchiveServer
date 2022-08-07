@@ -3,7 +3,7 @@ package site.archive.api.v1.dto.user;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import site.archive.common.DateTimeUtil;
-import site.archive.domain.user.entity.BaseUser;
+import site.archive.domain.user.BaseUser;
 
 import java.time.LocalDateTime;
 

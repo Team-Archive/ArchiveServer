@@ -9,7 +9,7 @@ import site.archive.common.exception.BaseException;
 import site.archive.common.exception.security.WrappingAuthenticationException;
 import site.archive.config.security.common.UserPrincipal;
 import site.archive.domain.user.UserAuthService;
-import site.archive.domain.user.info.UserInfo;
+import site.archive.domain.user.UserInfo;
 
 import java.util.Collections;
 

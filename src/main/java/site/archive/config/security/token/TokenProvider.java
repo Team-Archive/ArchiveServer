@@ -1,6 +1,6 @@
 package site.archive.config.security.token;
 
-import site.archive.domain.user.info.UserInfo;
+import site.archive.domain.user.UserInfo;
 
 public interface TokenProvider {
     String createToken(UserInfo token);

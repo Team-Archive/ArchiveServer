@@ -19,11 +19,11 @@ import site.archive.api.v1.dto.archive.ArchiveCountResponseDto;
 import site.archive.api.v1.dto.archive.ArchiveDto;
 import site.archive.api.v1.dto.archive.ArchiveImageUrlResponseDto;
 import site.archive.api.v1.dto.archive.ArchiveListResponseDto;
+import site.archive.config.security.authz.ArchiveAdminOrAuthorChecker;
+import site.archive.config.security.authz.annotation.RequirePermission;
 import site.archive.domain.archive.ArchiveImageService;
 import site.archive.domain.archive.ArchiveService;
-import site.archive.domain.user.info.UserInfo;
-import site.archive.config.security.authz.annotation.RequirePermission;
-import site.archive.config.security.authz.ArchiveAdminOrAuthorChecker;
+import site.archive.domain.user.UserInfo;
 
 @RestController
 @RequestMapping("/api/v1/archive")

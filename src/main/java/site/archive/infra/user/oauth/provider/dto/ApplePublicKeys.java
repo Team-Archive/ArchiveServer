@@ -8,7 +8,7 @@ import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.RSAKey;
 import lombok.Getter;
 import site.archive.common.exception.user.OAuthRegisterFailException;
-import site.archive.domain.user.entity.OAuthProvider;
+import site.archive.domain.user.OAuthProvider;
 
 import java.text.ParseException;
 import java.util.List;

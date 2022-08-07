@@ -1,7 +1,7 @@
 package site.archive.api.converter;
 
 import org.springframework.core.convert.converter.Converter;
-import site.archive.domain.archive.ArchiveCommunityTimeSortType;
+import site.archive.domain.archive.custom.ArchiveCommunityTimeSortType;
 
 public class StringToSortTypeConverter implements Converter<String, ArchiveCommunityTimeSortType> {
 

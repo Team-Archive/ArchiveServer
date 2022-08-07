@@ -3,8 +3,8 @@ package site.archive.api.v2.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import site.archive.domain.archive.entity.Archive;
-import site.archive.domain.archive.entity.Emotion;
+import site.archive.domain.archive.Archive;
+import site.archive.domain.archive.Emotion;
 
 import static site.archive.common.DateTimeUtil.YY_MM_DD_FORMATTER;
 

@@ -3,7 +3,7 @@ package site.archive.domain.archive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import site.archive.api.v2.dto.ArchiveCommunityResponseDto;
-import site.archive.domain.archive.entity.Archive;
+import site.archive.domain.archive.custom.ArchivePageable;
 
 import java.util.List;
 

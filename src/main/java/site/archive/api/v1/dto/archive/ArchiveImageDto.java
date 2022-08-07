@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import site.archive.domain.archive.entity.Archive;
-import site.archive.domain.archive.entity.ArchiveImage;
+import site.archive.domain.archive.Archive;
+import site.archive.domain.archive.ArchiveImage;
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.archive.common.exception.common.ResourceNotFoundException;
 import site.archive.domain.common.BaseTimeEntity;
-import site.archive.domain.like.entity.Like;
 
 @Service
 @Transactional(readOnly = true)

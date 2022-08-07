@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.archive.api.resolver.annotation.RequestUser;
 import site.archive.domain.like.LikeService;
-import site.archive.domain.user.info.UserInfo;
+import site.archive.domain.user.UserInfo;
 
 @RestController
 @RequestMapping("/api/v2/archive")

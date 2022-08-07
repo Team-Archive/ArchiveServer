@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import site.archive.api.v1.dto.user.BaseUserDto;
 import site.archive.common.exception.infra.SlackException;
-import site.archive.domain.common.MessagingService;
+import site.archive.domain.message.MessagingService;
 import site.archive.infra.messaging.config.SlackProperty;
 
 import java.io.IOException;

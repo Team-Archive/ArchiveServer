@@ -2,10 +2,10 @@ package site.archive.api.command;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import site.archive.domain.user.entity.BaseUser;
-import site.archive.domain.user.entity.OAuthProvider;
-import site.archive.domain.user.entity.OAuthUser;
-import site.archive.domain.user.entity.UserRole;
+import site.archive.domain.user.BaseUser;
+import site.archive.domain.user.OAuthProvider;
+import site.archive.domain.user.OAuthUser;
+import site.archive.domain.user.UserRole;
 
 @NoArgsConstructor
 @Getter

@@ -6,7 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import site.archive.config.security.common.UserPrincipal;
-import site.archive.domain.user.info.UserInfo;
+import site.archive.domain.user.UserInfo;
 
 import java.util.Collection;
 import java.util.LinkedList;
