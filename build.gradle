@@ -15,27 +15,7 @@ ext {
     testContainerVersion = "1.17.2"
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-    implementation 'io.sentry:sentry-logback:5.7.4'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-
-    testImplementation 'org.springframework.security:spring-security-test'
-
-    implementation 'io.rest-assured:rest-assured-all:4.5.1'
-    testImplementation 'io.rest-assured:rest-assured:4.5.1'
-
-    implementation project(':archive-domain')
-    implementation project(':archive-application')
-}
-
-allprojects { // 추후 root project 제거시 subproject 로 수정
+subprojects { // 추후 root project 제거시 subproject 로 수정
     apply {
         plugin 'java'
         plugin 'io.spring.dependency-management'
@@ -82,14 +62,5 @@ allprojects { // 추후 root project 제거시 subproject 로 수정
 configure(allprojects.findAll { it.name != 'archive-common' }) {
     dependencies {
         implementation project(':archive-common')
-    }
-}
-
-// QueryDSL
-sourceSets {
-    main {
-        java {
-            srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
-        }
     }
 }

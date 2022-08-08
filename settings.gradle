@@ -3,4 +3,5 @@ rootProject.name = 'archive'
 include 'archive-domain'
 include 'archive-common'
 include 'archive-application'
+include 'archive-web'
 
