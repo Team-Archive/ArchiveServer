@@ -29,7 +29,7 @@ public class JwtTokenPersistFilter extends OncePerRequestFilter {
             var authToken = tokenProvider.parseUserInfoFromToken(tokenStr);
             SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(authToken));
         } catch (Exception e) {
-            log.error("JwtTokenPersistFilter error [토큰 오류]", e);
+            log.debug("JwtTokenPersistFilter error [토큰 오류]", e);
             SecurityContextHolder.clearContext();
         }
         filterChain.doFilter(request, response);
