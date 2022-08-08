@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import site.archive.api.resolver.annotation.RequestUser;
-import site.archive.api.v1.dto.archive.ArchiveDto;
-import site.archive.api.v1.dto.archive.ArchiveListResponseDto;
-import site.archive.api.v2.dto.ArchiveCountResponseDto;
-import site.archive.api.v2.dto.MyArchiveListResponseDto;
-import site.archive.domain.archive.ArchiveService;
 import site.archive.domain.archive.custom.ArchivePageable;
 import site.archive.domain.user.UserInfo;
+import site.archive.dto.v1.archive.ArchiveDto;
+import site.archive.dto.v1.archive.ArchiveListResponseDto;
+import site.archive.dto.v2.ArchiveCountResponseDto;
+import site.archive.dto.v2.MyArchiveListResponseDto;
+import site.archive.service.archive.ArchiveService;
 
 @RestController
 @RequestMapping("/api/v2/archive")

@@ -7,10 +7,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import site.archive.config.security.authz.ArchiveAdminOrAuthorChecker;
 import site.archive.domain.archive.Archive;
-import site.archive.domain.archive.ArchiveRepository;
 import site.archive.domain.user.BaseUser;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRole;
+import site.archive.service.archive.ArchiveService;
 
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ class ArchiveAdminOrAuthorCheckerTest {
     private ArchiveAdminOrAuthorChecker handler;
 
     @Mock
-    private ArchiveRepository archiveRepository;
+    private ArchiveService archiveService;
 
     @Mock
     private Archive archive;
@@ -35,8 +35,7 @@ class ArchiveAdminOrAuthorCheckerTest {
         var requesterId = 10L;
         var requester = createUserInfo(requesterId, UserRole.GENERAL);
 
-        given(archiveRepository.findById(POST_ID)).willReturn(Optional.of(archive));
-        given(archive.getAuthor()).willReturn(new BaseUser(requesterId));
+        given(archiveService.getArchiveAuthorId(POST_ID)).willReturn(Optional.of(requesterId));
 
         assertThat(handler.checkParam(requester, POST_ID)).isTrue();
     }
@@ -54,8 +53,7 @@ class ArchiveAdminOrAuthorCheckerTest {
         var requesterId = 10L;
         var requester = createUserInfo(requesterId, UserRole.GENERAL);
 
-        given(archiveRepository.findById(POST_ID)).willReturn(Optional.of(archive));
-        given(archive.getAuthor()).willReturn(new BaseUser(realAuthorId));
+        given(archiveService.getArchiveAuthorId(POST_ID)).willReturn(Optional.of(realAuthorId));
 
         assertThat(handler.checkParam(requester, POST_ID)).isFalse();
     }

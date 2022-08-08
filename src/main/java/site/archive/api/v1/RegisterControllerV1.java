@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import site.archive.api.command.PasswordRegisterCommand;
-import site.archive.api.v1.dto.user.OAuthRegisterRequestDto;
 import site.archive.config.security.token.HttpAuthTokenSupport;
 import site.archive.config.security.token.TokenProvider;
 import site.archive.domain.user.UserInfo;
-import site.archive.domain.user.UserRegisterService;
+import site.archive.dto.v1.auth.PasswordRegisterCommand;
+import site.archive.dto.v1.user.OAuthRegisterRequestDto;
 import site.archive.infra.user.oauth.OAuthUserService;
+import site.archive.service.user.UserRegisterService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;

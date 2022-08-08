@@ -5,10 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import site.archive.config.security.token.HttpAuthTokenSupport;
-import site.archive.domain.user.UserService;
 import site.archive.config.security.common.UserPrincipal;
+import site.archive.config.security.token.HttpAuthTokenSupport;
 import site.archive.config.security.token.TokenProvider;
+import site.archive.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

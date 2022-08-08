@@ -4,12 +4,12 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import site.archive.api.command.OAuthRegisterCommand;
 import site.archive.config.security.common.UserPrincipal;
 import site.archive.domain.user.OAuthProvider;
 import site.archive.domain.user.UserInfo;
-import site.archive.domain.user.UserRegisterService;
 import site.archive.domain.user.UserRole;
+import site.archive.dto.v1.auth.OAuthRegisterCommand;
+import site.archive.service.user.UserRegisterService;
 
 import java.util.Map;
 import java.util.Objects;

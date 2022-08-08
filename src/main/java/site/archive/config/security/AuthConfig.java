@@ -6,19 +6,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import site.archive.domain.archive.ArchiveRepository;
-import site.archive.domain.user.UserAuthService;
-import site.archive.domain.user.UserRegisterService;
-import site.archive.domain.user.UserService;
-import site.archive.config.security.authz.ArchiveAdminOrAuthorChecker;
 import site.archive.config.security.authn.UserNamePasswordAuthenticationProvider;
-import site.archive.config.security.oauth.OAuthUserService;
+import site.archive.config.security.authz.ArchiveAdminOrAuthorChecker;
 import site.archive.config.security.common.handler.LoginFailureHandler;
 import site.archive.config.security.common.handler.LoginSuccessHandler;
+import site.archive.config.security.oauth.OAuthUserService;
 import site.archive.config.security.token.HttpAuthTokenSupport;
 import site.archive.config.security.token.TokenProvider;
 import site.archive.config.security.token.jwt.JwtTokenProvider;
 import site.archive.config.security.token.jwt.JwtTokenSupport;
+import site.archive.service.archive.ArchiveService;
+import site.archive.service.user.UserAuthService;
+import site.archive.service.user.UserRegisterService;
+import site.archive.service.user.UserService;
 
 
 @Configuration
@@ -65,7 +65,8 @@ public class AuthConfig {
     }
 
     @Bean
-    public ArchiveAdminOrAuthorChecker checker(ArchiveRepository repository) {
-        return new ArchiveAdminOrAuthorChecker(repository);
+    public ArchiveAdminOrAuthorChecker checker(ArchiveService archiveService) {
+        return new ArchiveAdminOrAuthorChecker(archiveService);
     }
+
 }

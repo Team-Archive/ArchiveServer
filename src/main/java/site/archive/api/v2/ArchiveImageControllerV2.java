@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import site.archive.api.v1.dto.archive.ArchiveImageUrlResponseDto;
-import site.archive.domain.archive.ArchiveImageService;
+import site.archive.dto.v1.archive.ArchiveImageUrlResponseDto;
+import site.archive.service.archive.ArchiveImageService;
 
 @RestController
 @RequestMapping("/api/v2/archive")

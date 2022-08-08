@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.archive.api.resolver.annotation.RequestUser;
-import site.archive.api.v2.dto.ReportCheckResponse;
-import site.archive.api.v2.dto.ReportRequestDto;
-import site.archive.domain.report.ReportService;
 import site.archive.domain.user.UserInfo;
+import site.archive.dto.v2.ReportCheckResponse;
+import site.archive.dto.v2.ReportRequestDto;
+import site.archive.service.report.ReportService;
 
 @RestController
 @RequestMapping("/api/v2/report")

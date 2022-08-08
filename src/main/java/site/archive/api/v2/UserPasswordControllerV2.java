@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import site.archive.api.v1.dto.user.UserPasswordResetRequestDto;
-import site.archive.domain.user.UserAuthService;
+import site.archive.dto.v1.user.UserPasswordResetRequestDto;
+import site.archive.service.user.UserAuthService;
 
 @RestController
 @RequestMapping("/api/v2/auth")

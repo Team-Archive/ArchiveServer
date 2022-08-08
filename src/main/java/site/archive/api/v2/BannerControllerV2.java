@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import site.archive.api.v2.dto.BannerListResponseDto;
-import site.archive.domain.banner.BannerService;
+import site.archive.dto.v2.BannerListResponseDto;
+import site.archive.service.banner.BannerService;
 
 @RestController
 @RequestMapping("/api/v2/banner")

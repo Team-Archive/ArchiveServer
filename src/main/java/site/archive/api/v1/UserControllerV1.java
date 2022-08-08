@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import site.archive.api.command.LoginCommand;
 import site.archive.api.resolver.annotation.RequestUser;
-import site.archive.api.v1.dto.archive.EmailDuplicateResponseDto;
-import site.archive.api.v1.dto.user.UserEmailRequestDto;
-import site.archive.api.v1.dto.user.UserPasswordResetRequestDto;
 import site.archive.config.security.util.SecurityUtils;
-import site.archive.domain.user.UserAuthService;
 import site.archive.domain.user.UserInfo;
-import site.archive.domain.user.UserService;
+import site.archive.dto.v1.archive.EmailDuplicateResponseDto;
+import site.archive.dto.v1.auth.LoginCommand;
+import site.archive.dto.v1.user.UserEmailRequestDto;
+import site.archive.dto.v1.user.UserPasswordResetRequestDto;
+import site.archive.service.user.UserAuthService;
+import site.archive.service.user.UserService;
 
 @RestController
 @RequestMapping("/api/v1/auth")

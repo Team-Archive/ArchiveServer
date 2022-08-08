@@ -1,6 +1,5 @@
 package site.archive.api.resolver;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -9,6 +8,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import site.archive.domain.archive.Emotion;
 import site.archive.domain.archive.custom.ArchiveCommunityTimeSortType;
 import site.archive.domain.archive.custom.ArchivePageable;
+
+import javax.validation.constraints.NotNull;
 
 public class ArchivePageableArgumentResolver implements HandlerMethodArgumentResolver {
 
