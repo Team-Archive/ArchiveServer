@@ -1,4 +1,4 @@
-package site.archive.web.config;
+package site.archive.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

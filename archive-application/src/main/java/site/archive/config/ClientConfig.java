@@ -1,4 +1,4 @@
-package site.archive.web.config;
+package site.archive.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
