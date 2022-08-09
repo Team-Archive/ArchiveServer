@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import site.archive.web.config.security.authn.BodyCredentialAuthenticationFilter;
@@ -65,6 +66,16 @@ public class SecurityConfig {
                    // .successHandler(successHandler).failureHandler(failureHandler).and()
                    .build();
         // @formatter:on
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring().antMatchers("/h2-console/**",
+                                                 "/favicon.ico",
+                                                 "/error",
+                                                 "/swagger-ui/**",
+                                                 "/swagger-resources/**",
+                                                 "/v3/api-docs");
     }
 
     @Bean
