@@ -37,6 +37,9 @@ public class SecurityConfig {
     private final HttpAuthTokenSupport tokenSupport;
     private final ObjectMapper mapper;
 
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    AuthenticationManager authenticationManager)
@@ -48,14 +51,13 @@ public class SecurityConfig {
                    .logout().disable()
                    .headers().frameOptions().sameOrigin().and()
                    .authorizeRequests()
-                       .antMatchers("/h2-console/**").permitAll()
                        .antMatchers("/api/v1/**").permitAll()
                        .antMatchers("/login/**").permitAll()
                        .antMatchers(HttpMethod.GET, "/exception/**").permitAll()
                        .anyRequest().authenticated().and()
                    .exceptionHandling()
-                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                        .accessDeniedHandler(new CustomAccessDeniedHandler()).and()
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
+                        .accessDeniedHandler(customAccessDeniedHandler).and()
                    .addFilterBefore(bodyCredentialAuthenticationFilter(authenticationManager, mapper),
                                     UsernamePasswordAuthenticationFilter.class)
                    .addFilterBefore(tokenPersistFilter(),
