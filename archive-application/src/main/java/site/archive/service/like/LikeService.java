@@ -47,4 +47,11 @@ public class LikeService {
                                                                        }));
     }
 
+    public List<Long> likeArchiveIds(Long userId) {
+        return likeRepository.findAllByUserId(userId).stream()
+                             .filter(like -> !like.getIsDeleted())
+                             .map(like -> like.getArchive().getId())
+                             .toList();
+    }
+
 }

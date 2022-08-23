@@ -8,12 +8,15 @@ import site.archive.common.exception.common.UnauthorizedResourceException;
 import site.archive.domain.archive.Archive;
 import site.archive.domain.archive.ArchiveRepository;
 import site.archive.domain.archive.custom.ArchivePageable;
+import site.archive.domain.like.Like;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRepository;
 import site.archive.dto.v1.archive.ArchiveDto;
 import site.archive.dto.v1.archive.ArchiveListResponseDto;
+import site.archive.dto.v2.ArchiveLikeResponseDto;
 import site.archive.dto.v2.MyArchiveResponseDto;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -60,6 +63,16 @@ public class ArchiveService {
                                            .toList();
         return ArchiveListResponseDto.from(archiveDtos);
     }
+
+    public List<ArchiveLikeResponseDto> getAllArchive(Long currentUserId, List<Long> archiveIds) {
+        return archiveRepository.findAllByIdIn(archiveIds).stream()
+                                .filter(Archive::getIsPublic)
+                                .sorted(Comparator.comparing(archive -> getLikeOfArchiveByUserId(currentUserId, archive).getUpdatedAt(),
+                                                             Comparator.reverseOrder()))
+                                .map(archive -> ArchiveLikeResponseDto.from(archive, currentUserId))
+                                .toList();
+    }
+
 
     public List<MyArchiveResponseDto> getAllArchiveFirstPage(UserInfo userInfo, ArchivePageable pageable) {
         var authorId = userInfo.getUserId();
@@ -146,6 +159,11 @@ public class ArchiveService {
     private Predicate<Archive> hasViewAuthority(Long currentUserId) {
         return archive -> archive.getAuthor().getId().equals(currentUserId)
                           || archive.getIsPublic();
+    }
+
+    private Like getLikeOfArchiveByUserId(Long currentUserId, Archive archive) {
+        return archive.getLikeByUserId(currentUserId)
+                      .orElseThrow(() -> new ResourceNotFoundException("UserId에 속하는 Archive Like 리소스가 없습니다."));
     }
 
 }

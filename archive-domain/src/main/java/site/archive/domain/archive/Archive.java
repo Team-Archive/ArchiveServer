@@ -29,6 +29,8 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -89,6 +91,12 @@ public class Archive extends BaseTimeEntity {
 
     public void addImage(ArchiveImage archiveImage) {
         this.archiveImages.add(archiveImage);
+    }
+
+    public Optional<Like> getLikeByUserId(Long userId) {
+        return likes.stream()
+                    .filter(like -> Objects.equals(like.getUser().getId(), userId))
+                    .findFirst();
     }
 
 }
