@@ -8,6 +8,8 @@ import site.archive.domain.common.BaseTimeEntity;
 import site.archive.domain.like.Like;
 import site.archive.domain.like.LikeRepository;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -23,10 +25,26 @@ public class LikeService {
     }
 
     @Transactional
+    public void save(Long userId, List<Long> archiveIds) {
+        archiveIds.forEach(archiveId -> likeRepository.findByUserIdAndArchiveId(userId, archiveId)
+                                                      .ifPresentOrElse(BaseTimeEntity::softDeleteCancel,
+                                                                       () -> likeRepository.save(Like.of(userId, archiveId))));
+    }
+
+    @Transactional
     public void delete(Long userId, Long archiveId) {
         likeRepository.findByUserIdAndArchiveId(userId, archiveId)
                       .ifPresentOrElse(likeRepository::delete,
                                        () -> {throw new ResourceNotFoundException("조건에 맞는 Like 데이터가 없습니다");});
+    }
+
+    @Transactional
+    public void delete(Long userId, List<Long> archiveIds) {
+        archiveIds.forEach(archiveId -> likeRepository.findByUserIdAndArchiveId(userId, archiveId)
+                                                      .ifPresentOrElse(likeRepository::delete,
+                                                                       () -> {
+                                                                           throw new ResourceNotFoundException("조건에 맞는 Like 데이터가 없습니다");
+                                                                       }));
     }
 
 }
