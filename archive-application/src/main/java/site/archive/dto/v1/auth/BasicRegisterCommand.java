@@ -19,5 +19,7 @@ public abstract class BasicRegisterCommand {
     @Email(message = "올바른 이메일을 입력해 주세요.")
     private String email;
 
+    private String nickname;
+
     public abstract BaseUser toUserEntity();
 }

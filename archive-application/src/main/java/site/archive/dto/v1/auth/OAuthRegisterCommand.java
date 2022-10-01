@@ -13,12 +13,12 @@ public class OAuthRegisterCommand extends BasicRegisterCommand {
 
     private OAuthProvider provider;
 
-    public OAuthRegisterCommand(String mailAddress, OAuthProvider provider) {
-        super(mailAddress);
+    public OAuthRegisterCommand(String mailAddress, String nickname, OAuthProvider provider) {
+        super(mailAddress, nickname);
         this.provider = provider;
     }
 
     public BaseUser toUserEntity() {
-        return new OAuthUser(getEmail(), UserRole.GENERAL, provider);
+        return new OAuthUser(getEmail(), getNickname(), UserRole.GENERAL, provider);
     }
 }

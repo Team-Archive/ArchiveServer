@@ -22,13 +22,13 @@ public class PasswordRegisterCommand extends BasicRegisterCommand {
              message = "비밀번호는 영문/숫자 를 꼭 포함하여 8~20자리로 입력해 주세요.")
     private String password;
 
-    public PasswordRegisterCommand(String userMail, String password) {
-        super(userMail);
+    public PasswordRegisterCommand(String userMail, String nickname, String password) {
+        super(userMail, nickname);
         this.password = password;
     }
 
     @Override
     public BaseUser toUserEntity() {
-        return new PasswordUser(getEmail(), UserRole.GENERAL, getPassword());
+        return new PasswordUser(getEmail(), getNickname(), UserRole.GENERAL, getPassword());
     }
 }

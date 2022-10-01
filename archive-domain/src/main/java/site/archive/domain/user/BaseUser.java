@@ -42,6 +42,9 @@ public class BaseUser extends BaseTimeEntity {
     @Column(name = "mail_address", unique = true)
     private String mailAddress;
 
+    @Column(name = "nickname", unique = true)
+    private String nickname;
+
     @NonNull
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
@@ -51,13 +54,14 @@ public class BaseUser extends BaseTimeEntity {
         this.id = id;
     }
 
-    protected BaseUser(String mailAddress, UserRole role) {
+    protected BaseUser(String mailAddress, String nickname, UserRole role) {
         this.role = role;
+        this.nickname = nickname;
         this.mailAddress = mailAddress;
     }
 
     public UserInfo convertToUserInfo() {
-        return new UserInfo(mailAddress, role, id);
+        return new UserInfo(mailAddress, nickname, role, id);
     }
 
 }
