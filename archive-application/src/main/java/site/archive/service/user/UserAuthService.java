@@ -47,6 +47,12 @@ public class UserAuthService {
         passwordUser.updatePassword(encoder.encode(userPasswordResetRequestDto.getNewPassword()), false);
     }
 
+    public boolean isTemporaryPasswordLogin(long userId) {
+        return passwordUserRepository.findById(userId)
+                                     .map(PasswordUser::isCurrentTemporaryPassword)
+                                     .orElse(false);
+    }
+
     private PasswordUser verifyPasswordReturnUser(final String email, final String password) {
         var user = passwordUserRepository.findByMailAddress(email)
                                          .orElseThrow(() -> new ResourceNotFoundException("Email"));

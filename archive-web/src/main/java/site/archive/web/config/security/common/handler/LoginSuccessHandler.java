@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import site.archive.service.user.UserService;
+import site.archive.service.user.UserAuthService;
 import site.archive.web.config.security.common.UserPrincipal;
 import site.archive.web.config.security.token.HttpAuthTokenSupport;
 import site.archive.web.config.security.token.TokenProvider;
@@ -19,7 +19,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final TokenProvider provider;
     private final HttpAuthTokenSupport tokenSupport;
-    private final UserService userService;
+    private final UserAuthService userAuthService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
@@ -30,7 +30,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         var successToken = provider.createToken(authToken);
         log.debug("유저 로그인 성공, 아이디: {}, 이메일: {}, 토큰: {}", authToken.getUserId(), authToken.getMailAddress(), successToken);
 
-        if (userService.isTemporaryPasswordLogin(authToken.getUserId())) {
+        if (userAuthService.isTemporaryPasswordLogin(authToken.getUserId())) {
             httpServletResponse.setStatus(HttpStatus.RESET_CONTENT.value());
         } else {
             tokenSupport.injectToken(httpServletResponse, successToken);
