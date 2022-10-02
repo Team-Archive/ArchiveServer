@@ -25,6 +25,8 @@ import site.archive.web.api.resolver.annotation.RequestUser;
 import site.archive.web.config.security.authz.ArchiveAdminOrAuthorChecker;
 import site.archive.web.config.security.authz.annotation.RequirePermission;
 
+import static site.archive.service.archive.ArchiveImageService.ARCHIVE_IMAGE_DIRECTORY;
+
 @RestController
 @RequestMapping("/api/v1/archive")
 @RequiredArgsConstructor
@@ -58,8 +60,8 @@ public class ArchiveControllerV1 {
     @PostMapping(path = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArchiveImageUrlResponseDto> uploadImage(@RequestParam("image") MultipartFile imageFile) {
         imageService.verifyImageFile(imageFile);
-        var imageUrl = imageService.upload(imageFile);
-        return ResponseEntity.ok(new ArchiveImageUrlResponseDto(imageUrl));
+        var imageUri = imageService.upload(ARCHIVE_IMAGE_DIRECTORY, imageFile);
+        return ResponseEntity.ok(new ArchiveImageUrlResponseDto(imageUri));
     }
 
     @Operation(summary = "아키이브 추가")

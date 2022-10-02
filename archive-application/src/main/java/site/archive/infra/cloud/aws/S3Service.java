@@ -23,9 +23,8 @@ public class S3Service implements ArchiveImageService {
     private final AwsS3Property s3Property;
 
     @Override
-    public String upload(final MultipartFile imageFile) {
-        var directory = "images";
-        var fileName = String.format("%s/%s-%s", directory, UUID.randomUUID(), imageFile.getOriginalFilename());
+    public String upload(final String directory, final MultipartFile imageFile) {
+        var fileName = String.format("%s%s-%s", directory, UUID.randomUUID(), imageFile.getOriginalFilename());
         var bucket = s3Property.getBucketName();
 
         try {
@@ -35,9 +34,19 @@ public class S3Service implements ArchiveImageService {
         } catch (IOException e) {
             throw new FileInvalidException();
         } catch (AmazonServiceException e) {
-            throw new IllegalStateException("Failed to upload the file", e);
+            throw new IllegalStateException("Failed to upload the file (%s)".formatted(fileName), e);
         }
         return s3Property.getCdnAddressName() + URLEncoder.encode(fileName, StandardCharsets.UTF_8);
+    }
+
+    @Override
+    public void remove(String fileName) {
+        var bucket = s3Property.getBucketName();
+        try {
+            amazonS3.deleteObject(bucket, fileName);
+        } catch (AmazonServiceException e) {
+            throw new IllegalStateException("Failed to remove the file (%s)".formatted(fileName), e);
+        }
     }
 
     private ObjectMetadata getObjectMetadataFromFile(final MultipartFile imageFile) {
