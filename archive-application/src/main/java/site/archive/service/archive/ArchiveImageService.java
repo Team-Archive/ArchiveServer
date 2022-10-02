@@ -11,6 +11,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 public interface ArchiveImageService {
 
     String ARCHIVE_IMAGE_DIRECTORY = "images/";
+    String USER_PROFILE_IMAGE_DIRECTORY = "user-profile/";
 
     default void verifyImageFile(final MultipartFile imageFile) {
         if (!Arrays.asList(IMAGE_PNG_VALUE, IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE)
@@ -21,6 +22,8 @@ public interface ArchiveImageService {
 
     String upload(String directory, MultipartFile imageFile);
 
-    void remove(String fileName);
+    void remove(String fileUri);
+
+    String update(String directory, String outdatedFileName, MultipartFile imageFile);
 
 }

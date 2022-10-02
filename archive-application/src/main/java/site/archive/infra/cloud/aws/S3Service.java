@@ -20,6 +20,7 @@ import java.util.UUID;
 public class S3Service implements ArchiveImageService {
 
     private static final String SEPARATOR = "/";
+    private static final String SEPARATOR_CODE = "%2F";
     private static final String HTTPS_URI_PREFIX = "https://";
 
     private final AmazonS3 amazonS3;
@@ -45,13 +46,21 @@ public class S3Service implements ArchiveImageService {
     @Override
     public void remove(String fileUri) {
         var fileNameStartIndex = fileUri.indexOf(SEPARATOR, HTTPS_URI_PREFIX.length() + 1);
-        var fileName = fileUri.substring(fileNameStartIndex + 1); // except Separator
+        var fileName = fileUri.substring(fileNameStartIndex + 1).replace(SEPARATOR_CODE, SEPARATOR); // except Separator
         var bucket = s3Property.getBucketName();
         try {
             amazonS3.deleteObject(bucket, fileName);
         } catch (AmazonServiceException e) {
             throw new IllegalStateException("Failed to remove the file (%s)".formatted(fileName), e);
         }
+    }
+
+    @Override
+    public String update(String directory, String outdatedFileUri, MultipartFile imageFile) {
+        if (outdatedFileUri != null) {
+            remove(outdatedFileUri);
+        }
+        return upload(directory, imageFile);
     }
 
     private ObjectMetadata getObjectMetadataFromFile(final MultipartFile imageFile) {
