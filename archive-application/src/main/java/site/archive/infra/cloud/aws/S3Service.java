@@ -19,6 +19,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class S3Service implements ArchiveImageService {
 
+    private static final String SEPARATOR = "/";
+    private static final String HTTPS_URI_PREFIX = "https://";
+
     private final AmazonS3 amazonS3;
     private final AwsS3Property s3Property;
 
@@ -40,7 +43,9 @@ public class S3Service implements ArchiveImageService {
     }
 
     @Override
-    public void remove(String fileName) {
+    public void remove(String fileUri) {
+        var fileNameStartIndex = fileUri.indexOf(SEPARATOR, HTTPS_URI_PREFIX.length() + 1);
+        var fileName = fileUri.substring(fileNameStartIndex + 1); // except Separator
         var bucket = s3Property.getBucketName();
         try {
             amazonS3.deleteObject(bucket, fileName);

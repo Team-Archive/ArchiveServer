@@ -35,9 +35,7 @@ public class ArchiveImageControllerV2 {
     @Operation(summary = "이미지 제거")
     @DeleteMapping("/image/remove")
     public ResponseEntity<Void> removeImage(@RequestParam String fileUri) {
-        var fileNameStartIndex = fileUri.indexOf(ARCHIVE_IMAGE_DIRECTORY);
-        var fileName = fileUri.substring(fileNameStartIndex);
-        imageService.remove(fileName);
+        imageService.remove(fileUri);
         return ResponseEntity.noContent().build();
     }
 

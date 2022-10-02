@@ -99,12 +99,14 @@ class S3ServiceTest {
     void removeSuccessTest() {
         // given
         var originalFileName = "imageFile.png";
+        var originalFileUri = "https://test.com/%s".formatted(originalFileName);
+
 
         doNothing()
             .when(amazonS3).deleteObject(TEST_BUCKETNAME, originalFileName);
 
         // when
-        s3Service.remove(originalFileName);
+        s3Service.remove(originalFileUri);
 
         // then
         verify(amazonS3).deleteObject(TEST_BUCKETNAME, originalFileName);
@@ -115,13 +117,14 @@ class S3ServiceTest {
     @Test
     void removeFailureTest() {
         // given
-        var originalFileName = "imageFile.png";
+        var originalFileName = "some-of-the-imageFile.png";
+        var originalFileUri = "https://test.com/%s".formatted(originalFileName);
 
         doThrow(AmazonServiceException.class)
             .when(amazonS3).deleteObject(TEST_BUCKETNAME, originalFileName);
 
         // when & then
-        assertThatThrownBy(() -> s3Service.remove(originalFileName))
+        assertThatThrownBy(() -> s3Service.remove(originalFileUri))
             .isInstanceOf(IllegalStateException.class)
             .hasMessageStartingWith("Failed to remove the file");
     }
