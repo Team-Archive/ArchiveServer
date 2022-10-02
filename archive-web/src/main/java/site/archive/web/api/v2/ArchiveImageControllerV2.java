@@ -28,8 +28,8 @@ public class ArchiveImageControllerV2 {
                  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArchiveImageUrlResponseDto> uploadImage(@RequestParam("image") MultipartFile imageFile) {
         imageService.verifyImageFile(imageFile);
-        var imageUrl = imageService.upload(ARCHIVE_IMAGE_DIRECTORY, imageFile);
-        return ResponseEntity.ok(new ArchiveImageUrlResponseDto(imageUrl));
+        var imageUri = imageService.upload(ARCHIVE_IMAGE_DIRECTORY, imageFile);
+        return ResponseEntity.ok(new ArchiveImageUrlResponseDto(imageUri));
     }
 
     @Operation(summary = "이미지 제거")
