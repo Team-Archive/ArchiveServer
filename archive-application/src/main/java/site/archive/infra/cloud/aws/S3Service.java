@@ -23,8 +23,7 @@ public class S3Service implements ArchiveImageService {
     private final AwsS3Property s3Property;
 
     @Override
-    public String upload(final MultipartFile imageFile) {
-        var directory = "images";
+    public String upload(final String directory, final MultipartFile imageFile) {
         var fileName = String.format("%s/%s-%s", directory, UUID.randomUUID(), imageFile.getOriginalFilename());
         var bucket = s3Property.getBucketName();
 

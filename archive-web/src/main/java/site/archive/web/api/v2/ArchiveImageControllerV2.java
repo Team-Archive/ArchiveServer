@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import site.archive.dto.v1.archive.ArchiveImageUrlResponseDto;
 import site.archive.service.archive.ArchiveImageService;
 
+import static site.archive.service.archive.ArchiveImageService.ARCHIVE_IMAGE_DIRECTORY;
+
 @RestController
 @RequestMapping("/api/v2/archive")
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class ArchiveImageControllerV2 {
                  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArchiveImageUrlResponseDto> uploadImage(@RequestParam("image") MultipartFile imageFile) {
         imageService.verifyImageFile(imageFile);
-        var imageUrl = imageService.upload(imageFile);
+        var imageUrl = imageService.upload(ARCHIVE_IMAGE_DIRECTORY, imageFile);
         return ResponseEntity.ok(new ArchiveImageUrlResponseDto(imageUrl));
     }
 
