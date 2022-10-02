@@ -15,7 +15,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 
@@ -91,5 +94,36 @@ class S3ServiceTest {
             .hasMessageStartingWith("Failed to upload the file");
     }
 
+    @DisplayName("image file remove에 성공하면 예외가 발생하지 않는다")
+    @Test
+    void removeSuccessTest() {
+        // given
+        var originalFileName = "imageFile.png";
+
+        doNothing()
+            .when(amazonS3).deleteObject(TEST_BUCKETNAME, originalFileName);
+
+        // when
+        s3Service.remove(originalFileName);
+
+        // then
+        verify(amazonS3).deleteObject(TEST_BUCKETNAME, originalFileName);
+    }
+
+
+    @DisplayName("Remove 시에 문제가 발생해 AmazonServiceException 예외가 발생하면 IllegalStateException 예외가 던져진다")
+    @Test
+    void removeFailureTest() {
+        // given
+        var originalFileName = "imageFile.png";
+
+        doThrow(AmazonServiceException.class)
+            .when(amazonS3).deleteObject(TEST_BUCKETNAME, originalFileName);
+
+        // when & then
+        assertThatThrownBy(() -> s3Service.remove(originalFileName))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageStartingWith("Failed to remove the file");
+    }
 
 }
