@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,14 @@ public class ArchiveImageControllerV2 {
         imageService.verifyImageFile(imageFile);
         var imageUrl = imageService.upload(ARCHIVE_IMAGE_DIRECTORY, imageFile);
         return ResponseEntity.ok(new ArchiveImageUrlResponseDto(imageUrl));
+    }
+
+    @DeleteMapping("/image/remove")
+    public ResponseEntity<Void> removeImage(@RequestParam String fileUri) {
+        var fileNameStartIndex = fileUri.indexOf(ARCHIVE_IMAGE_DIRECTORY);
+        var fileName = fileUri.substring(fileNameStartIndex);
+        imageService.remove(fileName);
+        return ResponseEntity.noContent().build();
     }
 
 }
