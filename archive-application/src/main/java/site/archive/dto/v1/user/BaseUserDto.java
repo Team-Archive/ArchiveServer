@@ -14,9 +14,13 @@ public class BaseUserDto {
     private final Long userId;
     private final String mailAddress;
     private final LocalDateTime createdAt;
+    private final String profileImage;
 
     public static BaseUserDto from(BaseUser baseUser) {
-        return new BaseUserDto(baseUser.getId(), baseUser.getMailAddress(), baseUser.getCreatedAt());
+        return new BaseUserDto(baseUser.getId(),
+                               baseUser.getMailAddress(),
+                               baseUser.getCreatedAt(),
+                               baseUser.getProfileImage());
     }
 
     public String getCreatedAt() {

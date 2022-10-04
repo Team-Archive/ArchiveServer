@@ -47,6 +47,9 @@ public class BaseUser extends BaseTimeEntity {
     @Column(name = "user_role")
     private UserRole role;
 
+    @Column(name = "profile_image")
+    private String profileImage;
+
     public BaseUser(Long id) {
         this.id = id;
     }

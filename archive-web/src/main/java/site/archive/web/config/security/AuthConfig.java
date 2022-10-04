@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import site.archive.service.archive.ArchiveService;
 import site.archive.service.user.UserAuthService;
 import site.archive.service.user.UserRegisterService;
-import site.archive.service.user.UserService;
 import site.archive.web.config.security.authn.UserNamePasswordAuthenticationProvider;
 import site.archive.web.config.security.authz.ArchiveAdminOrAuthorChecker;
 import site.archive.web.config.security.common.handler.LoginFailureHandler;
@@ -50,8 +49,8 @@ public class AuthConfig {
     @Bean
     public LoginSuccessHandler successHandler(TokenProvider tokenProvider,
                                               HttpAuthTokenSupport authTokenSupport,
-                                              UserService userService) {
-        return new LoginSuccessHandler(tokenProvider, authTokenSupport, userService);
+                                              UserAuthService userAuthService) {
+        return new LoginSuccessHandler(tokenProvider, authTokenSupport, userAuthService);
     }
 
     @Bean

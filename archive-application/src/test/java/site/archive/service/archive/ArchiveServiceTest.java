@@ -28,7 +28,7 @@ import static org.mockito.BDDMockito.given;
 class ArchiveServiceTest {
 
     private static final long USER_ID = 1L;
-    private static final BaseUser USER = new BaseUser(USER_ID, "mail", UserRole.GENERAL);
+    private static final BaseUser USER = new BaseUser(USER_ID, "mail", UserRole.GENERAL, null);
 
     @Mock
     ArchiveRepository archiveRepository;
