@@ -4,7 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +54,13 @@ public class BannerControllerV2 {
                                                              @RequestParam String mainContentUrl) {
         var summaryImageUri = imageUploadAndGetUri(BANNER_SUMMARY_IMAGE_DIRECTORY, summaryImage);
         bannerService.createBanner(summaryImageUri, mainContentUrl, BannerType.URL);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "배너 제거")
+    @DeleteMapping("/{bannerId}")
+    public ResponseEntity<Void> deleteArchiveCommunityBanner(@PathVariable Long bannerId) {
+        bannerService.deleteBanner(bannerId);
         return ResponseEntity.noContent().build();
     }
 

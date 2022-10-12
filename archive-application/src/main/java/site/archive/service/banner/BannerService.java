@@ -31,4 +31,9 @@ public class BannerService {
         return BannerResponseDto.from(banner);
     }
 
+    @Transactional
+    public void deleteBanner(Long bannerId) {
+        bannerRepository.deleteById(bannerId);
+    }
+
 }
