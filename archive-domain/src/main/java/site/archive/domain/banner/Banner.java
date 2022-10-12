@@ -39,4 +39,10 @@ public class Banner extends BaseTimeEntity {
     @Column(name = "type")
     private BannerType type;
 
+    public Banner(String summaryImage, String mainContent, BannerType type) {
+        this.summaryImage = summaryImage;
+        this.mainContent = mainContent;
+        this.type = type;
+    }
+
 }
