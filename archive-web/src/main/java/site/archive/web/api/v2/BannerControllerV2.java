@@ -1,5 +1,6 @@
 package site.archive.web.api.v2;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ public class BannerControllerV2 {
 
     private final BannerService bannerService;
 
+    @Operation(summary = "배너 조회")
     @GetMapping
     public ResponseEntity<BannerListResponseDto> archiveCommunityBannerView() {
         return ResponseEntity.ok(bannerService.getAllBanner());
