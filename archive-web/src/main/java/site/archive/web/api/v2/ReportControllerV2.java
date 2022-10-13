@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import site.archive.domain.user.UserInfo;
 import site.archive.dto.v2.ReportCheckResponse;
 import site.archive.dto.v2.ReportRequestDto;
+import site.archive.service.archive.ArchiveService;
+import site.archive.service.message.MessagingService;
 import site.archive.service.report.ReportService;
 import site.archive.web.api.resolver.annotation.RequestUser;
 
@@ -22,6 +24,8 @@ import site.archive.web.api.resolver.annotation.RequestUser;
 public class ReportControllerV2 {
 
     private final ReportService reportService;
+    private final ArchiveService archiveService;
+    private final MessagingService messagingService;
 
     @Operation(summary = "신고 여부 확인")
     @GetMapping("/{archiveId}")
@@ -37,6 +41,8 @@ public class ReportControllerV2 {
                                        @RequestUser UserInfo userInfo,
                                        @RequestBody ReportRequestDto reportRequestDto) {
         reportService.reportArchive(archiveId, userInfo.getUserId(), reportRequestDto.getReason());
+        var archive = archiveService.getOneArchiveById(archiveId);
+        messagingService.sendArchiveReportMessage(userInfo.getMailAddress(), reportRequestDto.getReason(), archive);
         return ResponseEntity.noContent().build();
     }
 
