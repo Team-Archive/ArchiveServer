@@ -29,8 +29,8 @@ public class ArchiveControllerV2 {
     public ResponseEntity<MyArchiveListResponseDto> archiveListView(@RequestUser UserInfo userInfo,
                                                                     ArchivePageable pageable) {
         var archiveCount = pageable.getEmotion() == null
-                           ? archiveService.countArchive(userInfo)
-                           : archiveService.countArchive(userInfo, pageable.getEmotion());
+                           ? archiveService.countArchiveByAuthorId(userInfo)
+                           : archiveService.countArchiveByAuthorIdAndEmotion(userInfo, pageable.getEmotion());
         var myArchives = pageable.isRequestFirstPage()
                          ? archiveService.getAllArchiveFirstPage(userInfo, pageable)
                          : archiveService.getAllArchiveNextPage(userInfo, pageable);

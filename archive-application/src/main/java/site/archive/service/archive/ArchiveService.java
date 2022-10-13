@@ -143,12 +143,12 @@ public class ArchiveService {
                   .forEach(archive::addImage);
     }
 
-    public long countArchive(UserInfo userInfo) {
+    public long countArchiveByAuthorId(UserInfo userInfo) {
         var authorId = userInfo.getUserId();
         return archiveRepository.countArchiveByAuthorId(authorId);
     }
 
-    public long countArchive(UserInfo userInfo, Emotion emotion) {
+    public long countArchiveByAuthorIdAndEmotion(UserInfo userInfo, Emotion emotion) {
         var authorId = userInfo.getUserId();
         return archiveRepository.countArchiveByAuthorIdAndEmotion(authorId, emotion);
     }

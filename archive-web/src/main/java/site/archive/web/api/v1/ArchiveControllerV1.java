@@ -74,7 +74,7 @@ public class ArchiveControllerV1 {
     @Operation(summary = "아카이브 개수 조회")
     @GetMapping("/count")
     public ResponseEntity<ArchiveCountResponseDto> countArchive(@RequestUser UserInfo user) {
-        var archiveCountDto = new ArchiveCountResponseDto(archiveService.countArchive(user));
+        var archiveCountDto = new ArchiveCountResponseDto(archiveService.countArchiveByAuthorId(user));
         return ResponseEntity.ok(archiveCountDto);
     }
 
