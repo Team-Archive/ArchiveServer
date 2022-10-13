@@ -12,6 +12,8 @@ public interface ArchiveImageService {
 
     String ARCHIVE_IMAGE_DIRECTORY = "images/";
     String USER_PROFILE_IMAGE_DIRECTORY = "user-profile/";
+    String BANNER_MAIN_IMAGE_DIRECTORY = "banner/main/";
+    String BANNER_SUMMARY_IMAGE_DIRECTORY = "banner/summary/";
 
     default void verifyImageFile(final MultipartFile imageFile) {
         if (!Arrays.asList(IMAGE_PNG_VALUE, IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE)

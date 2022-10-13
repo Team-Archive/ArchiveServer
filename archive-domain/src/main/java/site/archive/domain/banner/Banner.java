@@ -25,7 +25,7 @@ import javax.persistence.Table;
 public class Banner extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "banner_id")
     private Long id;
 
@@ -38,5 +38,11 @@ public class Banner extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private BannerType type;
+
+    public Banner(String summaryImage, String mainContent, BannerType type) {
+        this.summaryImage = summaryImage;
+        this.mainContent = mainContent;
+        this.type = type;
+    }
 
 }
