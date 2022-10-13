@@ -9,6 +9,7 @@ import org.hibernate.annotations.Where;
 import site.archive.domain.archive.converter.CompanionsConverter;
 import site.archive.domain.common.BaseTimeEntity;
 import site.archive.domain.like.Like;
+import site.archive.domain.report.Report;
 import site.archive.domain.user.BaseUser;
 
 import javax.persistence.CascadeType;
@@ -44,6 +45,9 @@ public class Archive extends BaseTimeEntity {
     private final List<Like> likes = new ArrayList<>();
     @OneToMany(mappedBy = "archive", cascade = CascadeType.ALL)
     private final List<ArchiveImage> archiveImages = new ArrayList<>();
+    @OneToMany(mappedBy = "archive", cascade = CascadeType.ALL)
+    private final List<Report> reports = new ArrayList<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "archive_id")
