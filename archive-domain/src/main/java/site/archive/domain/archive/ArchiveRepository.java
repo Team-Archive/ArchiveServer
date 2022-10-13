@@ -12,6 +12,8 @@ public interface ArchiveRepository extends JpaRepository<Archive, Long>, Archive
 
     long countArchiveByAuthorId(Long authorId);
 
+    long countArchiveByAuthorIdAndEmotion(Long authorId, Emotion emotion);
+
     @EntityGraph(attributePaths = {"author", "likes"})
     List<Archive> findAllByIdIn(List<Long> archiveIds);
 

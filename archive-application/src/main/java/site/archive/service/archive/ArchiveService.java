@@ -7,6 +7,7 @@ import site.archive.common.exception.common.ResourceNotFoundException;
 import site.archive.common.exception.common.UnauthorizedResourceException;
 import site.archive.domain.archive.Archive;
 import site.archive.domain.archive.ArchiveRepository;
+import site.archive.domain.archive.Emotion;
 import site.archive.domain.archive.custom.ArchivePageable;
 import site.archive.domain.like.Like;
 import site.archive.domain.user.UserInfo;
@@ -142,9 +143,14 @@ public class ArchiveService {
                   .forEach(archive::addImage);
     }
 
-    public long countArchive(UserInfo userInfo) {
+    public long countArchiveByAuthorId(UserInfo userInfo) {
         var authorId = userInfo.getUserId();
         return archiveRepository.countArchiveByAuthorId(authorId);
+    }
+
+    public long countArchiveByAuthorIdAndEmotion(UserInfo userInfo, Emotion emotion) {
+        var authorId = userInfo.getUserId();
+        return archiveRepository.countArchiveByAuthorIdAndEmotion(authorId, emotion);
     }
 
     public long countArchiveOfCurrentMonth(UserInfo userInfo) {
