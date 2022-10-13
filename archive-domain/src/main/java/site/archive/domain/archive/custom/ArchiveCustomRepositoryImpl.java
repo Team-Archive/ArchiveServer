@@ -44,7 +44,8 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
 
     @Override
     public List<Archive> findFirstPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
-        var archiveQuery = archiveSelectQueryWithAuthor(pageable);
+        var archiveQuery = archiveSelectQueryWithAuthor(pageable)
+                               .leftJoin(QArchive.archive.reports).fetchJoin();
         var whereOnlyPublic = QArchive.archive.isPublic.eq(true);
         return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
                    .where(whereOnlyPublic)
@@ -54,7 +55,8 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
 
     @Override
     public List<Archive> findNextPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
-        var archiveQuery = archiveSelectQueryWithAuthor(pageable);
+        var archiveQuery = archiveSelectQueryWithAuthor(pageable)
+                               .leftJoin(QArchive.archive.reports).fetchJoin();
         var whereOnlyPublic = QArchive.archive.isPublic.eq(true);
         return whereEmotionIfExists(archiveQuery, pageable.getEmotion())
                    .where(whereOnlyPublic, whereNextPage(pageable))
