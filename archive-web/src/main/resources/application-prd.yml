@@ -79,7 +79,8 @@ sentry:
 
 slack:
   token: ${SLACK_TOKEN}
-  channel: ${SLACK_CHANNEL}
+  channel: ${SLACK_CHANNEL} # 회원가입 알림 채널
+  report-channel: ${SLACK_REPORT_CHANNEL}
 
 archive:
   server:

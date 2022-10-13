@@ -78,7 +78,8 @@ cloud:
 
 slack:
   token: ${DEV_SLACK_TOKEN}
-  channel: ${DEV_SLACK_CHANNEL}
+  channel: ${DEV_SLACK_CHANNEL} # 회원가입 알림 채널
+  report-channel: ${DEV_SLACK_REPORT_CHANNEL}
 
 archive:
   server:

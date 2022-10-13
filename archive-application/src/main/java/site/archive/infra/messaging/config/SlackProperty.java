@@ -11,5 +11,6 @@ public class SlackProperty {
 
     private String token;
     private String channel;
+    private String reportChannel;
 
 }
