@@ -12,9 +12,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "oauth_user")
-@DiscriminatorValue("oauth")
+@DiscriminatorValue(OAuthUser.OAUTH_TYPE)
 @NoArgsConstructor
 public class OAuthUser extends BaseUser {
+
+    public static final String OAUTH_TYPE = "oauth";
 
     @Getter
     @Column(name = "oauth_provider")
