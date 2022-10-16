@@ -47,6 +47,7 @@ public class UserControllerV1 {
         return ResponseEntity.ok().build();
     }
 
+    @Deprecated
     @Operation(summary = "자기 정보 조회")
     @GetMapping("/info")
     public ResponseEntity<UserInfo> getUserInfo(@RequestUser UserInfo user) {
