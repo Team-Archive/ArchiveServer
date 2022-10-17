@@ -56,7 +56,7 @@ public class ArchiveControllerV1 {
     }
 
     @Deprecated
-    @Operation(summary = "이미지 업로드")
+    @Operation(summary = "[Deprecated -> /api/v2/user/profile/image/upload] 이미지 업로드")
     @PostMapping(path = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArchiveImageUrlResponseDto> uploadImage(@RequestParam("image") MultipartFile imageFile) {
         imageService.verifyImageFile(imageFile);

@@ -48,14 +48,14 @@ public class UserControllerV1 {
     }
 
     @Deprecated
-    @Operation(summary = "자기 정보 조회")
+    @Operation(summary = "[Deprecated -> /api/v2/user/profile] 자기 정보 조회")
     @GetMapping("/info")
     public ResponseEntity<UserInfo> getUserInfo(@RequestUser UserInfo user) {
         return ResponseEntity.ok(user);
     }
 
     @Deprecated
-    @Operation(summary = "[NoAuth] 이메일 중복 검사")
+    @Operation(summary = "[Deprecated -> /api/v2/user/duplicate/email] 이메일 중복 검사")
     @GetMapping("/email/{email}")
     public ResponseEntity<EmailDuplicateResponseDto> checkDuplicatedEmail(@PathVariable String email) {
         var emailDuplicateResponseDto = new EmailDuplicateResponseDto(userService.existsEmail(email));
@@ -71,7 +71,7 @@ public class UserControllerV1 {
     }
 
     @Deprecated
-    @Operation(summary = "비밀번호 초기화 - 새로운 비밀번호 설정")
+    @Operation(summary = "[Deprecated -> /api/v2/auth/password/reset] 비밀번호 초기화 - 새로운 비밀번호 설정")
     @PostMapping("/password/reset")
     public ResponseEntity<Void> resetPassword(@Validated @RequestBody UserPasswordResetRequestDto userPasswordResetRequestDto) {
         userAuthService.resetPassword(userPasswordResetRequestDto);
