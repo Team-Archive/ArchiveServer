@@ -37,6 +37,10 @@ public class UserService {
         return userRepository.findByMailAddress(email).isPresent();
     }
 
+    public boolean existsNickname(String nickname) {
+        return userRepository.findByNickname(nickname).isPresent();
+    }
+
     @Transactional
     public void deleteUser(long userId) {
         userRepository.deleteById(userId);

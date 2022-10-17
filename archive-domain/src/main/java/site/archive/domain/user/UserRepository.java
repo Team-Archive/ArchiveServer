@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<BaseUser, Long> {
     Optional<BaseUser> findByMailAddress(String mailAddress);
 
+    Optional<BaseUser> findByNickname(String nickname);
+
     @Modifying
     @Query("update BaseUser u set u.isDeleted = true where u.id = :userId")
     void deleteById(@NotNull @Param("userId") Long userId);
