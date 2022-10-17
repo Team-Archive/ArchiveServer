@@ -21,6 +21,7 @@ public enum ExceptionCode {
     DUPLICATED_RESOURCE(HttpStatus.CONFLICT, "Common001", "이미 존재하는 리소스 입니다"),
     NOT_FOUND_RESOURCE(HttpStatus.BAD_REQUEST, "Common002", "존재 하지 않는 리소스 입니다"),
     UNAUTHORIZED_RESOURCE(HttpStatus.FORBIDDEN, "Common003", "리소스에 대한 접근권한이 없습니다"),
+    DUPLICATED_FIELD_VALUE(HttpStatus.BAD_REQUEST, "Common004", "중복된 값 입니다"),
 
     // User
     LOGIN_FAIL(HttpStatus.BAD_REQUEST, "User001", "로그인에 실패했습니다"),
