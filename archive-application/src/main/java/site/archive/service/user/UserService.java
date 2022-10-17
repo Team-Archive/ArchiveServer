@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.archive.common.exception.common.DuplicateResourceException;
 import site.archive.common.exception.common.ResourceNotFoundException;
 import site.archive.domain.user.OAuthUser;
 import site.archive.domain.user.OAuthUserRepository;
@@ -48,6 +49,9 @@ public class UserService {
 
     @Transactional
     public void updateUserNickname(long userId, String nickname) {
+        if (existsNickname(nickname)) {
+            throw new DuplicateResourceException("nickname");
+        }
         userRepository.updateNickName(userId, nickname);
     }
 
