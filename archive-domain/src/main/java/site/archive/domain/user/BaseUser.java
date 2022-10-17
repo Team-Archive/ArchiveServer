@@ -50,6 +50,9 @@ public class BaseUser extends BaseTimeEntity {
     @Column(name = "user_type")
     private String userType;
 
+    @Column(name = "nickname")
+    private String nickname;
+
     public BaseUser(Long id) {
         this.id = id;
     }
@@ -61,6 +64,10 @@ public class BaseUser extends BaseTimeEntity {
 
     public UserInfo convertToUserInfo() {
         return new UserInfo(mailAddress, role, id);
+    }
+
+    public String getMailAddressId() {
+        return mailAddress.substring(0, mailAddress.indexOf('@'));
     }
 
 }

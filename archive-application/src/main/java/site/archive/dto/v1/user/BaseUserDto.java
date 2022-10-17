@@ -19,16 +19,22 @@ public class BaseUserDto {
     private final UserRole userRole;
     private final LocalDateTime createdAt;
     private final String profileImage;
+    private final String nickname;
 
     // mutable field
     private String userType;
 
     public static BaseUserDto from(BaseUser baseUser) {
+        var nickname = baseUser.getNickname() == null
+                       ? baseUser.getMailAddressId()
+                       : baseUser.getNickname();
+
         return new BaseUserDto(baseUser.getId(),
                                baseUser.getMailAddress(),
                                baseUser.getRole(),
                                baseUser.getCreatedAt(),
                                baseUser.getProfileImage(),
+                               nickname,
                                baseUser.getUserType());
     }
 
