@@ -42,6 +42,11 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
+    @Transactional
+    public void updateUserNickname(long userId, String nickname) {
+        userRepository.updateNickName(userId, nickname);
+    }
+
     private void updateUserTypeWithProviderWhenOAuthUser(long userId, BaseUserDto user) {
         if (OAuthUser.OAUTH_TYPE.equals(user.getUserType())) {
             var oAuthType = oAuthUserRepository.findById(userId)

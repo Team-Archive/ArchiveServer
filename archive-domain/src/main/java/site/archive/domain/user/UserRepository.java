@@ -21,4 +21,9 @@ public interface UserRepository extends JpaRepository<BaseUser, Long> {
     void updateUserProfileImage(@Param("userId") Long userId,
                                 @Param("profileImage") String profileImageUri);
 
+    @Modifying
+    @Query("update BaseUser u set u.nickname = :nickname where u.id = :userId")
+    void updateNickName(@Param("userId") Long userId,
+                        @Param("nickname") String nickname);
+
 }
