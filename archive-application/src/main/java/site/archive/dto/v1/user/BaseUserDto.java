@@ -25,16 +25,12 @@ public class BaseUserDto {
     private String userType;
 
     public static BaseUserDto from(BaseUser baseUser) {
-        var nickname = baseUser.getNickname() == null
-                       ? baseUser.getMailAddressId()
-                       : baseUser.getNickname();
-
         return new BaseUserDto(baseUser.getId(),
                                baseUser.getMailAddress(),
                                baseUser.getRole(),
                                baseUser.getCreatedAt(),
                                baseUser.getProfileImage(),
-                               nickname,
+                               baseUser.getNickname(),
                                baseUser.getUserType());
     }
 

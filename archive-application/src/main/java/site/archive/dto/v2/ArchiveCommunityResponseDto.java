@@ -38,8 +38,8 @@ public class ArchiveCommunityResponseDto {
                                           .emotion(archive.getEmotion())
                                           .mainImage(archive.getMainImage())
                                           .authorId(author.getId())
-                                          .authorNickname("")        // TODO: 추가필요
-                                          .authorProfileImage("")    // TODO: 추가필요
+                                          .authorNickname(author.getNickname())
+                                          .authorProfileImage(author.getProfileImage())
                                           .isLiked(isLiked)
                                           .likeCount(likeCount)
                                           .dateMilli(dateMilli)

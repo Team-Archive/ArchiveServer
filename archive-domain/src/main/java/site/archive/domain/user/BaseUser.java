@@ -66,8 +66,8 @@ public class BaseUser extends BaseTimeEntity {
         return new UserInfo(mailAddress, role, id);
     }
 
-    public String getMailAddressId() {
-        return mailAddress.substring(0, mailAddress.indexOf('@'));
+    public String getNickname() {
+        return nickname != null ? nickname : mailAddress.substring(0, mailAddress.indexOf('@'));
     }
 
 }
