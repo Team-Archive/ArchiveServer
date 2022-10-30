@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 public enum ExceptionCode {
 
     // Global
-    NO_VALUE(HttpStatus.BAD_REQUEST, "Global001", "필요한 값이 없거나 문제가 없습니다."),
+    NO_VALUE(HttpStatus.BAD_REQUEST, "Global001", "필요한 값이 없거나 전달된 값에 문제가 있습니다."),
     INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "Global002", "Invalid Input Value"),
     TYPE_MISMATCH_VALUE(HttpStatus.BAD_REQUEST, "Global003", "타입(enum)이 일치하지 않습니다."),
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "Global004", "Invalid Input Value"),
