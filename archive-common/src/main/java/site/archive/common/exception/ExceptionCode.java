@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 public enum ExceptionCode {
 
     // Global
-    NO_VALUE(HttpStatus.BAD_REQUEST, "Global001", "필요한 값이 없거나 문제가 없습니다."),
+    NO_VALUE(HttpStatus.BAD_REQUEST, "Global001", "필요한 값이 없거나 전달된 값에 문제가 있습니다."),
     INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "Global002", "Invalid Input Value"),
     TYPE_MISMATCH_VALUE(HttpStatus.BAD_REQUEST, "Global003", "타입(enum)이 일치하지 않습니다."),
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "Global004", "Invalid Input Value"),
@@ -21,6 +21,7 @@ public enum ExceptionCode {
     DUPLICATED_RESOURCE(HttpStatus.CONFLICT, "Common001", "이미 존재하는 리소스 입니다"),
     NOT_FOUND_RESOURCE(HttpStatus.BAD_REQUEST, "Common002", "존재 하지 않는 리소스 입니다"),
     UNAUTHORIZED_RESOURCE(HttpStatus.FORBIDDEN, "Common003", "리소스에 대한 접근권한이 없습니다"),
+    DUPLICATED_FIELD_VALUE(HttpStatus.BAD_REQUEST, "Common004", "중복된 값 입니다"),
 
     // User
     LOGIN_FAIL(HttpStatus.BAD_REQUEST, "User001", "로그인에 실패했습니다"),

@@ -11,10 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "password_user")
-@DiscriminatorValue("password")
+@DiscriminatorValue(PasswordUser.PASSWORD_TYPE)
 @DynamicInsert
 @NoArgsConstructor
 public class PasswordUser extends BaseUser {
+
+    public static final String PASSWORD_TYPE = "password";
 
     @Getter
     @Column(name = "password")

@@ -3,7 +3,6 @@ package site.archive.domain.user;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -38,17 +37,21 @@ public class BaseUser extends BaseTimeEntity {
     @Setter
     private Long id;
 
-    @NonNull
     @Column(name = "mail_address", unique = true)
     private String mailAddress;
 
-    @NonNull
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
     private UserRole role;
 
     @Column(name = "profile_image")
     private String profileImage;
+
+    @Column(name = "user_type")
+    private String userType;
+
+    @Column(name = "nickname")
+    private String nickname;
 
     public BaseUser(Long id) {
         this.id = id;
@@ -61,6 +64,10 @@ public class BaseUser extends BaseTimeEntity {
 
     public UserInfo convertToUserInfo() {
         return new UserInfo(mailAddress, role, id);
+    }
+
+    public String getNickname() {
+        return nickname != null ? nickname : mailAddress.substring(0, mailAddress.indexOf('@'));
     }
 
 }

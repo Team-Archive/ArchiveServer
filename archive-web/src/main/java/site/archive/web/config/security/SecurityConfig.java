@@ -52,6 +52,7 @@ public class SecurityConfig {
                    .headers().frameOptions().sameOrigin().and()
                    .authorizeRequests()
                        .antMatchers("/api/v1/**").permitAll()
+                       .antMatchers("/api/v2/user/duplicate/**").permitAll()
                        .antMatchers("/login/**").permitAll()
                        .antMatchers(HttpMethod.GET, "/exception/**").permitAll()
                        .anyRequest().authenticated().and()

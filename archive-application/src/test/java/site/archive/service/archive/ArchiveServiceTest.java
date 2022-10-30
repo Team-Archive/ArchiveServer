@@ -11,6 +11,7 @@ import site.archive.domain.archive.Archive;
 import site.archive.domain.archive.ArchiveRepository;
 import site.archive.domain.archive.Emotion;
 import site.archive.domain.user.BaseUser;
+import site.archive.domain.user.PasswordUser;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRepository;
 import site.archive.domain.user.UserRole;
@@ -28,7 +29,7 @@ import static org.mockito.BDDMockito.given;
 class ArchiveServiceTest {
 
     private static final long USER_ID = 1L;
-    private static final BaseUser USER = new BaseUser(USER_ID, "mail", UserRole.GENERAL, null);
+    private static final BaseUser USER = new BaseUser(USER_ID, "mail", UserRole.GENERAL, null, PasswordUser.PASSWORD_TYPE, "nickname");
 
     @Mock
     ArchiveRepository archiveRepository;
