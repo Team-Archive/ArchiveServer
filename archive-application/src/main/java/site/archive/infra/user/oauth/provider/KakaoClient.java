@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import site.archive.common.exception.user.OAuthRegisterFailException;
 import site.archive.domain.user.OAuthProvider;
-import site.archive.dto.v1.auth.OAuthRegisterCommand;
+import site.archive.dto.v1.auth.OAuthRegisterCommandV1;
 import site.archive.dto.v1.user.OAuthRegisterRequestDto;
 import site.archive.infra.user.oauth.provider.dto.KakaoProviderRequirements;
 import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
@@ -32,9 +32,9 @@ public class KakaoClient implements OAuthProviderClient {
     }
 
     @Override
-    public OAuthRegisterCommand getOAuthRegisterInfo(OAuthRegisterRequestDto oAuthRegisterRequestDto) {
+    public OAuthRegisterCommandV1 getOAuthRegisterInfo(OAuthRegisterRequestDto oAuthRegisterRequestDto) {
         var userEmail = getUserEmail(KakaoProviderRequirements.from(oAuthRegisterRequestDto));
-        return new OAuthRegisterCommand(userEmail, OAuthProvider.KAKAO);
+        return new OAuthRegisterCommandV1(userEmail, OAuthProvider.KAKAO);
     }
 
     private String getUserEmail(KakaoProviderRequirements requirements) {

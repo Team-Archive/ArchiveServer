@@ -7,19 +7,22 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import site.archive.domain.user.OAuthProvider;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRole;
-import site.archive.dto.v1.auth.OAuthRegisterCommand;
-import site.archive.service.user.UserRegisterService;
+import site.archive.dto.v1.auth.OAuthRegisterCommandV1;
+import site.archive.service.user.UserRegisterServiceV1;
 import site.archive.web.config.security.common.UserPrincipal;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class OAuthUserService extends DefaultOAuth2UserService {
 
-    private final UserRegisterService userRegisterService;
+// TODO: 미사용, 추후 Android 지원을 위해 남겨둠
+@Deprecated
+public class OAuthUserServiceV1 extends DefaultOAuth2UserService {
 
-    public OAuthUserService(UserRegisterService userRegisterService) {
-        this.userRegisterService = userRegisterService;
+    private final UserRegisterServiceV1 userRegisterServiceV1;
+
+    public OAuthUserServiceV1(UserRegisterServiceV1 userRegisterServiceV1) {
+        this.userRegisterServiceV1 = userRegisterServiceV1;
     }
 
     @Override
@@ -38,8 +41,8 @@ public class OAuthUserService extends DefaultOAuth2UserService {
     }
 
     private void registerOrUpdateUser(UserPrincipal principal, OAuthProvider provider) {
-        var command = new OAuthRegisterCommand(principal.getName(), provider);
-        var userId = userRegisterService.getOrRegisterUser(command);
+        var command = new OAuthRegisterCommandV1(principal.getName(), provider);
+        var userId = userRegisterServiceV1.getOrRegisterUser(command);
         principal.setUserId(userId);
     }
 

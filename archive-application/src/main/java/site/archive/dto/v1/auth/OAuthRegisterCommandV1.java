@@ -9,11 +9,11 @@ import site.archive.domain.user.UserRole;
 
 @NoArgsConstructor
 @Getter
-public class OAuthRegisterCommand extends BasicRegisterCommand {
+public class OAuthRegisterCommandV1 extends BasicRegisterCommandV1 {
 
     private OAuthProvider provider;
 
-    public OAuthRegisterCommand(String mailAddress, OAuthProvider provider) {
+    public OAuthRegisterCommandV1(String mailAddress, OAuthProvider provider) {
         super(mailAddress);
         this.provider = provider;
     }

@@ -8,12 +8,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import site.archive.service.archive.ArchiveService;
 import site.archive.service.user.UserAuthService;
-import site.archive.service.user.UserRegisterService;
+import site.archive.service.user.UserRegisterServiceV1;
 import site.archive.web.config.security.authn.UserNamePasswordAuthenticationProvider;
 import site.archive.web.config.security.authz.ArchiveAdminOrAuthorChecker;
 import site.archive.web.config.security.common.handler.LoginFailureHandler;
 import site.archive.web.config.security.common.handler.LoginSuccessHandler;
-import site.archive.web.config.security.oauth.OAuthUserService;
+import site.archive.web.config.security.oauth.OAuthUserServiceV1;
 import site.archive.web.config.security.token.HttpAuthTokenSupport;
 import site.archive.web.config.security.token.TokenProvider;
 import site.archive.web.config.security.token.jwt.JwtTokenProvider;
@@ -32,8 +32,8 @@ public class AuthConfig {
     }
 
     @Bean
-    public OAuthUserService oAuthUserService(UserRegisterService userRegisterService) {
-        return new OAuthUserService(userRegisterService);
+    public OAuthUserServiceV1 oAuthUserServiceV1(UserRegisterServiceV1 userRegisterServiceV1) {
+        return new OAuthUserServiceV1(userRegisterServiceV1);
     }
 
     @Bean
