@@ -29,7 +29,7 @@ public class RegisterControllerV1 {
     @Operation(summary = "[NoAuth] 패스워드 유저 회원가입")
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@Validated @RequestBody PasswordRegisterCommandV1 command) {
-        encryptPassword(command);
+        command.setPassword(encoder.encode(command.getPassword()));
         var userInfo = userRegisterServiceV1.registerUser(command).convertToUserInfo();
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(userInfo));
         return ResponseEntity.ok().build();
@@ -43,10 +43,6 @@ public class RegisterControllerV1 {
         var userInfo = userRegisterServiceV1.getOrRegisterUserReturnInfo(oAuthRegisterInfo);
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(userInfo));
         return ResponseEntity.ok().build();
-    }
-
-    private void encryptPassword(PasswordRegisterCommandV1 command) {
-        command.setPassword(encoder.encode(command.getPassword()));
     }
 
 }
