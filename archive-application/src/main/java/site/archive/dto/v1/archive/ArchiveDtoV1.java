@@ -20,7 +20,7 @@ import static site.archive.common.DateTimeUtil.YY_MM_DD_FORMATTER;
 @Getter
 @Builder
 @JsonInclude(Include.NON_NULL)
-public class ArchiveDto {
+public class ArchiveDtoV1 {
     private Long archiveId;
     private String name;
     private String watchedOn;
@@ -31,36 +31,36 @@ public class ArchiveDto {
     private long authorId;
 
     private List<String> companions;
-    private List<ArchiveImageDto> images;
+    private List<ArchiveImageDtoV1> images;
 
-    public static ArchiveDto specificFrom(Archive archive) {
+    public static ArchiveDtoV1 specificFrom(Archive archive) {
         var archiveImages = archive.getArchiveImages().stream()
-                                   .map(ArchiveImageDto::from)
+                                   .map(ArchiveImageDtoV1::from)
                                    .toList();
-        return ArchiveDto.builder()
-                         .archiveId(archive.getId())
-                         .name(archive.getName())
-                         .watchedOn(archive.getWatchedOn().format(YY_MM_DD_FORMATTER))
-                         .emotion(archive.getEmotion())
-                         .mainImage(archive.getMainImage())
-                         .companions(archive.getCompanions())
-                         .images(archiveImages)
-                         .authorId(archive.getAuthor().getId())
-                         .isPublic(archive.getIsPublic())
-                         .build();
+        return ArchiveDtoV1.builder()
+                           .archiveId(archive.getId())
+                           .name(archive.getName())
+                           .watchedOn(archive.getWatchedOn().format(YY_MM_DD_FORMATTER))
+                           .emotion(archive.getEmotion())
+                           .mainImage(archive.getMainImage())
+                           .companions(archive.getCompanions())
+                           .images(archiveImages)
+                           .authorId(archive.getAuthor().getId())
+                           .isPublic(archive.getIsPublic())
+                           .build();
     }
 
-    public static ArchiveDto simpleFrom(Archive archive) {
-        return ArchiveDto.builder()
-                         .archiveId(archive.getId())
-                         .name(archive.getName())
-                         .watchedOn(archive.getWatchedOn().format(YY_MM_DD_FORMATTER))
-                         .emotion(archive.getEmotion())
-                         .companions(archive.getCompanions())
-                         .mainImage(archive.getMainImage())
-                         .authorId(archive.getAuthor().getId())
-                         .isPublic(archive.getIsPublic())
-                         .build();
+    public static ArchiveDtoV1 simpleFrom(Archive archive) {
+        return ArchiveDtoV1.builder()
+                           .archiveId(archive.getId())
+                           .name(archive.getName())
+                           .watchedOn(archive.getWatchedOn().format(YY_MM_DD_FORMATTER))
+                           .emotion(archive.getEmotion())
+                           .companions(archive.getCompanions())
+                           .mainImage(archive.getMainImage())
+                           .authorId(archive.getAuthor().getId())
+                           .isPublic(archive.getIsPublic())
+                           .build();
     }
 
     public Archive toEntity(BaseUser user) {

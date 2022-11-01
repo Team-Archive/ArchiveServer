@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import site.archive.dto.v1.auth.LoginCommand;
+import site.archive.dto.v1.auth.LoginCommandV1;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +28,7 @@ public class BodyCredentialAuthenticationFilter extends AbstractAuthenticationPr
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
         throws AuthenticationException, IOException {
         var bodyBytes = httpServletRequest.getInputStream().readAllBytes();
-        var command = mapper.readValue(bodyBytes, LoginCommand.class);
+        var command = mapper.readValue(bodyBytes, LoginCommandV1.class);
         var token = new UsernamePasswordAuthenticationToken(command.getEmail(), command.getPassword());
         return getAuthenticationManager().authenticate(token);
     }

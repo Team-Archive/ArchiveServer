@@ -1,21 +1,23 @@
 package site.archive.dto.v1.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEmailRequestDto {
+public class OAuthRegisterRequestDtoV1 {
 
-    @Email
     @NotNull
-    @NotBlank
-    private String email;
+    private String provider;
+
+    @JsonProperty("providerAccessToken")
+    private String token;
 
 }

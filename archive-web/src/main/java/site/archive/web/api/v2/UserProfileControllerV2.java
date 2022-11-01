@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import site.archive.domain.user.UserInfo;
-import site.archive.dto.v1.user.BaseUserDto;
+import site.archive.dto.v1.user.BaseUserDtoV1;
 import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.user.UserProfileImageService;
 import site.archive.service.user.UserService;
@@ -31,7 +31,7 @@ public class UserProfileControllerV2 {
 
     @Operation(summary = "프로필 정보 조회")
     @GetMapping
-    public ResponseEntity<BaseUserDto> getUserProfileInfo(@RequestUser UserInfo user) {
+    public ResponseEntity<BaseUserDtoV1> getUserProfileInfo(@RequestUser UserInfo user) {
         return ResponseEntity.ok(userService.findSpecificUserById(user.getUserId()));
     }
 

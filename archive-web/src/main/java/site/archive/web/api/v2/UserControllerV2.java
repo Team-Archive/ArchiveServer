@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import site.archive.domain.user.UserInfo;
-import site.archive.dto.v1.archive.EmailDuplicateResponseDto;
+import site.archive.dto.v1.archive.EmailDuplicateResponseDtoV1;
 import site.archive.dto.v2.NicknameDuplicateResponseDto;
 import site.archive.dto.v2.UserNicknameUpdateRequest;
 import site.archive.service.user.UserService;
@@ -25,8 +25,8 @@ public class UserControllerV2 {
 
     @Operation(summary = "[NoAuth] 이메일 중복 검사")
     @GetMapping("/duplicate/email")
-    public ResponseEntity<EmailDuplicateResponseDto> checkDuplicatedEmail(@RequestParam(value = "value") String email) {
-        var emailDuplicateResponseDto = new EmailDuplicateResponseDto(userService.existsEmail(email));
+    public ResponseEntity<EmailDuplicateResponseDtoV1> checkDuplicatedEmail(@RequestParam(value = "value") String email) {
+        var emailDuplicateResponseDto = new EmailDuplicateResponseDtoV1(userService.existsEmail(email));
         return ResponseEntity.ok(emailDuplicateResponseDto);
     }
 

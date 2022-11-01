@@ -19,7 +19,7 @@ import site.archive.web.config.security.authn.UserNamePasswordAuthenticationProv
 import site.archive.web.config.security.authz.CustomAccessDeniedHandler;
 import site.archive.web.config.security.common.handler.LoginFailureHandler;
 import site.archive.web.config.security.common.handler.LoginSuccessHandler;
-import site.archive.web.config.security.oauth.OAuthUserService;
+import site.archive.web.config.security.oauth.OAuthUserServiceV1;
 import site.archive.web.config.security.token.HttpAuthTokenSupport;
 import site.archive.web.config.security.token.TokenProvider;
 import site.archive.web.config.security.token.jwt.JwtTokenPersistFilter;
@@ -31,7 +31,7 @@ public class SecurityConfig {
 
     private final LoginSuccessHandler successHandler;
     private final LoginFailureHandler failureHandler;
-    private final OAuthUserService userService;
+    private final OAuthUserServiceV1 oAuthUserServiceV1;
     private final UserNamePasswordAuthenticationProvider provider;
     private final TokenProvider tokenProvider;
     private final HttpAuthTokenSupport tokenSupport;

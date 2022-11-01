@@ -9,33 +9,33 @@ import site.archive.common.exception.common.DuplicateResourceException;
 import site.archive.domain.user.BaseUser;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRepository;
-import site.archive.dto.v1.auth.BasicRegisterCommand;
-import site.archive.dto.v1.auth.OAuthRegisterCommand;
-import site.archive.dto.v1.user.BaseUserDto;
+import site.archive.dto.v1.auth.BasicRegisterCommandV1;
+import site.archive.dto.v1.auth.OAuthRegisterCommandV1;
+import site.archive.dto.v1.user.BaseUserDtoV1;
 import site.archive.service.message.MessagingService;
 
 @Service
 @Transactional
 @Slf4j
 @RequiredArgsConstructor
-public class UserRegisterService {
+public class UserRegisterServiceV1 {
 
     private final UserRepository userRepository;
     private final MessagingService messagingService;
 
-    public long getOrRegisterUser(BasicRegisterCommand registerCommand) {
+    public long getOrRegisterUser(BasicRegisterCommandV1 registerCommand) {
         var user = userRepository.findByMailAddress(registerCommand.getEmail())
                                  .orElseGet(() -> registerUser(registerCommand));
         return user.getId();
     }
 
-    public UserInfo getOrRegisterUserReturnInfo(BasicRegisterCommand registerCommand) {
+    public UserInfo getOrRegisterUserReturnInfo(BasicRegisterCommandV1 registerCommand) {
         var user = userRepository.findByMailAddress(registerCommand.getEmail())
                                  .orElseGet(() -> registerUser(registerCommand));
         return user.convertToUserInfo();
     }
 
-    public BaseUser registerUser(BasicRegisterCommand registerCommand) {
+    public BaseUser registerUser(BasicRegisterCommandV1 registerCommand) {
         try {
             var user = userRepository.save(registerCommand.toUserEntity());
             sendRegisterNotification(registerCommand, user);
@@ -45,12 +45,12 @@ public class UserRegisterService {
         }
     }
 
-    private void sendRegisterNotification(BasicRegisterCommand registerCommand, BaseUser user) {
-        if (registerCommand instanceof OAuthRegisterCommand oAuthRegisterCommand) {
+    private void sendRegisterNotification(BasicRegisterCommandV1 registerCommand, BaseUser user) {
+        if (registerCommand instanceof OAuthRegisterCommandV1 oAuthRegisterCommand) {
             var oauthProvider = oAuthRegisterCommand.getProvider().getRegistrationId();
-            messagingService.sendUserRegisterMessage(BaseUserDto.from(user), oauthProvider);
+            messagingService.sendUserRegisterMessage(BaseUserDtoV1.from(user), oauthProvider);
         } else {
-            messagingService.sendUserRegisterMessage(BaseUserDto.from(user), "Id/Password");
+            messagingService.sendUserRegisterMessage(BaseUserDtoV1.from(user), "Id/Password");
         }
     }
 

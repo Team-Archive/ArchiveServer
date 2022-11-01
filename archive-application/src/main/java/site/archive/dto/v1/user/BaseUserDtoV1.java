@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
-public class BaseUserDto {
+public class BaseUserDtoV1 {
 
     private final Long userId;
     private final String mailAddress;
@@ -24,14 +24,14 @@ public class BaseUserDto {
     // mutable field
     private String userType;
 
-    public static BaseUserDto from(BaseUser baseUser) {
-        return new BaseUserDto(baseUser.getId(),
-                               baseUser.getMailAddress(),
-                               baseUser.getRole(),
-                               baseUser.getCreatedAt(),
-                               baseUser.getProfileImage(),
-                               baseUser.getNickname(),
-                               baseUser.getUserType());
+    public static BaseUserDtoV1 from(BaseUser baseUser) {
+        return new BaseUserDtoV1(baseUser.getId(),
+                                 baseUser.getMailAddress(),
+                                 baseUser.getRole(),
+                                 baseUser.getCreatedAt(),
+                                 baseUser.getProfileImage(),
+                                 baseUser.getNickname(),
+                                 baseUser.getUserType());
     }
 
     public String getCreatedAt() {

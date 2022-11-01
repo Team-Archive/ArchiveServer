@@ -7,7 +7,7 @@ import org.springframework.security.core.AuthenticationException;
 import site.archive.common.exception.BaseException;
 import site.archive.common.exception.security.WrappingAuthenticationException;
 import site.archive.domain.user.UserInfo;
-import site.archive.dto.v1.auth.LoginCommand;
+import site.archive.dto.v1.auth.LoginCommandV1;
 import site.archive.service.user.UserAuthService;
 import site.archive.web.config.security.common.UserPrincipal;
 
@@ -24,12 +24,12 @@ public class UserNamePasswordAuthenticationProvider implements AuthenticationPro
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken passwordAuthenticationToken = (UsernamePasswordAuthenticationToken) authentication;
-        LoginCommand command = makeLoginCommandFormToken(passwordAuthenticationToken);
+        LoginCommandV1 command = makeLoginCommandFormToken(passwordAuthenticationToken);
         UserInfo userInfo = tryLoginOrThrow(command);
         return getCompleteAuthToken(userInfo, command.getPassword());
     }
 
-    private UserInfo tryLoginOrThrow(LoginCommand command) {
+    private UserInfo tryLoginOrThrow(LoginCommandV1 command) {
         try {
             return userAuthService.tryLoginAndReturnInfo(command);
         } catch (BaseException exception) {
@@ -37,10 +37,10 @@ public class UserNamePasswordAuthenticationProvider implements AuthenticationPro
         }
     }
 
-    private LoginCommand makeLoginCommandFormToken(UsernamePasswordAuthenticationToken token) {
+    private LoginCommandV1 makeLoginCommandFormToken(UsernamePasswordAuthenticationToken token) {
         String userName = token.getName();
         String password = (String) token.getCredentials();
-        return new LoginCommand(userName, password);
+        return new LoginCommandV1(userName, password);
     }
 
     private UsernamePasswordAuthenticationToken getCompleteAuthToken(UserInfo loginUser, String credential) {

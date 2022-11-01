@@ -10,7 +10,7 @@ import site.archive.domain.user.OAuthUser;
 import site.archive.domain.user.OAuthUserRepository;
 import site.archive.domain.user.PasswordUserRepository;
 import site.archive.domain.user.UserRepository;
-import site.archive.dto.v1.user.BaseUserDto;
+import site.archive.dto.v1.user.BaseUserDtoV1;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,13 +22,13 @@ public class UserService {
     private final PasswordUserRepository passwordUserRepository;
     private final OAuthUserRepository oAuthUserRepository;
 
-    public BaseUserDto findUserById(long userId) {
+    public BaseUserDtoV1 findUserById(long userId) {
         return userRepository.findById(userId)
-                             .map(BaseUserDto::from)
+                             .map(BaseUserDtoV1::from)
                              .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
     }
 
-    public BaseUserDto findSpecificUserById(long userId) {
+    public BaseUserDtoV1 findSpecificUserById(long userId) {
         var user = findUserById(userId);
         updateUserTypeWithProviderWhenOAuthUser(userId, user);
         return user;
@@ -55,7 +55,7 @@ public class UserService {
         userRepository.updateNickName(userId, nickname);
     }
 
-    private void updateUserTypeWithProviderWhenOAuthUser(long userId, BaseUserDto user) {
+    private void updateUserTypeWithProviderWhenOAuthUser(long userId, BaseUserDtoV1 user) {
         if (OAuthUser.OAUTH_TYPE.equals(user.getUserType())) {
             var oAuthType = oAuthUserRepository.findById(userId)
                                                .map(oAuthUser -> oAuthUser.getOAuthProvider().toString())
