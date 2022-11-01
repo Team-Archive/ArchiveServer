@@ -14,7 +14,7 @@ import site.archive.service.user.UserAuthService;
 @RestController
 @RequestMapping("/api/v2/auth")
 @RequiredArgsConstructor
-public class UserPasswordControllerV2 {
+public class UserAuthControllerV2 {
 
     private final UserAuthService userAuthService;
 
