@@ -1,33 +1,36 @@
 package site.archive.infra.user.oauth.provider.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.Map;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @ToString
 public class KakaoUserInfo {
 
-    private final String id;
-    private final Map<String, String> properties;
+    private String id;
+    private Map<String, String> properties;
 
     @JsonProperty(value = "kakao_account")
-    private final KakaoAccount kakaoAccount;
+    private KakaoAccount kakaoAccount;
 
     public String getEmail() {
         return kakaoAccount.getEmail();
     }
 
-    @RequiredArgsConstructor
+    @AllArgsConstructor
+    @NoArgsConstructor
     @Getter
     public static class KakaoAccount {
 
-        private final String email;
-        private final Map<String, String> profile;
+        private String email;
+        private Map<String, String> profile;
 
     }
 
