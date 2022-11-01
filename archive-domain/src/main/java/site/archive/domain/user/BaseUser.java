@@ -70,4 +70,8 @@ public class BaseUser extends BaseTimeEntity {
         return nickname != null ? nickname : mailAddress.substring(0, mailAddress.indexOf('@'));
     }
 
+    public String getProfileImage() {
+        return profileImage != null ? profileImage : "";
+    }
+
 }
