@@ -11,7 +11,7 @@ import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRepository;
 import site.archive.dto.v1.auth.BasicRegisterCommandV1;
 import site.archive.dto.v1.auth.OAuthRegisterCommandV1;
-import site.archive.dto.v1.user.BaseUserDto;
+import site.archive.dto.v1.user.BaseUserDtoV1;
 import site.archive.service.message.MessagingService;
 
 @Service
@@ -48,9 +48,9 @@ public class UserRegisterServiceV1 {
     private void sendRegisterNotification(BasicRegisterCommandV1 registerCommand, BaseUser user) {
         if (registerCommand instanceof OAuthRegisterCommandV1 oAuthRegisterCommand) {
             var oauthProvider = oAuthRegisterCommand.getProvider().getRegistrationId();
-            messagingService.sendUserRegisterMessage(BaseUserDto.from(user), oauthProvider);
+            messagingService.sendUserRegisterMessage(BaseUserDtoV1.from(user), oauthProvider);
         } else {
-            messagingService.sendUserRegisterMessage(BaseUserDto.from(user), "Id/Password");
+            messagingService.sendUserRegisterMessage(BaseUserDtoV1.from(user), "Id/Password");
         }
     }
 

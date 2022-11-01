@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class ArchiveImageUrlResponseDto {
+public class ArchiveImageUrlResponseDtoV1 {
 
     private final String imageUrl;
 

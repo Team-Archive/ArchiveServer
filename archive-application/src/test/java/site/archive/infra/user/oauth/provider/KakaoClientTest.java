@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import site.archive.common.exception.user.OAuthRegisterFailException;
 import site.archive.domain.user.OAuthProvider;
-import site.archive.dto.v1.user.OAuthRegisterRequestDto;
+import site.archive.dto.v1.user.OAuthRegisterRequestDtoV1;
 import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
 
 import java.util.Collections;
@@ -35,7 +35,7 @@ class KakaoClientTest {
         var kakaoUserInfoResponse = new ResponseEntity<>(kakaoUserInfo, HttpStatus.OK);
 
         var kakaoClient = new KakaoClient(restTemplate);
-        var oAuthRegisterDto = new OAuthRegisterRequestDto(kakaoClient.support(), "token");
+        var oAuthRegisterDto = new OAuthRegisterRequestDtoV1(kakaoClient.support(), "token");
 
         given(restTemplate.exchange(any(), any(), any(), eq(KakaoUserInfo.class), any(Object.class)))
             .willReturn(kakaoUserInfoResponse);
@@ -55,7 +55,7 @@ class KakaoClientTest {
         var kakaoUserInfoUnauthorizedResponse = new ResponseEntity<>(kakaoUserInfo, HttpStatus.UNAUTHORIZED);
 
         var kakaoClient = new KakaoClient(restTemplate);
-        var oAuthRegisterDto = new OAuthRegisterRequestDto(kakaoClient.support(), "token");
+        var oAuthRegisterDto = new OAuthRegisterRequestDtoV1(kakaoClient.support(), "token");
 
         given(restTemplate.exchange(any(), any(), any(), eq(KakaoUserInfo.class), any(Object.class)))
             .willReturn(kakaoUserInfoUnauthorizedResponse);

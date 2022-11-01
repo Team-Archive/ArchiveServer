@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import site.archive.dto.v1.archive.ArchiveImageUrlResponseDto;
+import site.archive.dto.v1.archive.ArchiveImageUrlResponseDtoV1;
 import site.archive.service.archive.ArchiveImageService;
 
 import static site.archive.service.archive.ArchiveImageService.ARCHIVE_IMAGE_DIRECTORY;
@@ -26,10 +26,10 @@ public class ArchiveImageControllerV2 {
     @PostMapping(path = "/image/upload",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArchiveImageUrlResponseDto> uploadImage(@RequestParam("image") MultipartFile imageFile) {
+    public ResponseEntity<ArchiveImageUrlResponseDtoV1> uploadImage(@RequestParam("image") MultipartFile imageFile) {
         imageService.verifyImageFile(imageFile);
         var imageUri = imageService.upload(ARCHIVE_IMAGE_DIRECTORY, imageFile);
-        return ResponseEntity.ok(new ArchiveImageUrlResponseDto(imageUri));
+        return ResponseEntity.ok(new ArchiveImageUrlResponseDtoV1(imageUri));
     }
 
     @Operation(summary = "이미지 제거")

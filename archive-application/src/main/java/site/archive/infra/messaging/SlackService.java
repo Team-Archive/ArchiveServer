@@ -8,7 +8,7 @@ import com.slack.api.model.block.composition.BlockCompositions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import site.archive.common.exception.infra.SlackException;
-import site.archive.dto.v1.user.BaseUserDto;
+import site.archive.dto.v1.user.BaseUserDtoV1;
 import site.archive.infra.messaging.config.SlackProperty;
 import site.archive.service.message.MessagingService;
 
@@ -29,7 +29,7 @@ public class SlackService implements MessagingService {
     }
 
     @Override
-    public void sendUserRegisterMessage(final BaseUserDto baseUser, final String registerType) {
+    public void sendUserRegisterMessage(final BaseUserDtoV1 baseUser, final String registerType) {
         try {
             slackClient.chatPostMessage(req -> req
                                                    .channel(slackProperty.getChannel())

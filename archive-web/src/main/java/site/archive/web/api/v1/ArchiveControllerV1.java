@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import site.archive.domain.user.UserInfo;
-import site.archive.dto.v1.archive.ArchiveCountResponseDto;
-import site.archive.dto.v1.archive.ArchiveDto;
-import site.archive.dto.v1.archive.ArchiveImageUrlResponseDto;
-import site.archive.dto.v1.archive.ArchiveListResponseDto;
+import site.archive.dto.v1.archive.ArchiveCountResponseDtoV1;
+import site.archive.dto.v1.archive.ArchiveDtoV1;
+import site.archive.dto.v1.archive.ArchiveImageUrlResponseDtoV1;
+import site.archive.dto.v1.archive.ArchiveListResponseDtoV1;
 import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.archive.ArchiveService;
 import site.archive.web.api.resolver.annotation.RequestUser;
@@ -37,14 +37,14 @@ public class ArchiveControllerV1 {
 
     @Operation(summary = "아카이브 리스트 조회", description = "홈 뷰 - 아카이브 리스트 조회")
     @GetMapping
-    public ResponseEntity<ArchiveListResponseDto> archiveListView(@RequestUser UserInfo user) {
+    public ResponseEntity<ArchiveListResponseDtoV1> archiveListView(@RequestUser UserInfo user) {
         return ResponseEntity.ok(archiveService.getAllArchive(user));
     }
 
     @RequirePermission(handler = ArchiveAdminOrAuthorChecker.class, id = "id")
     @Operation(summary = "아카이브 상세 조회", description = "상세 뷰 - 아카이브 상세 조회")
     @GetMapping("/{id}")
-    public ResponseEntity<ArchiveDto> archiveSpecificView(@PathVariable Long id) {
+    public ResponseEntity<ArchiveDtoV1> archiveSpecificView(@PathVariable Long id) {
         return ResponseEntity.ok(archiveService.getOneArchiveById(id));
     }
 
@@ -58,23 +58,23 @@ public class ArchiveControllerV1 {
     @Deprecated
     @Operation(summary = "[Deprecated -> /api/v2/user/profile/image/upload] 이미지 업로드")
     @PostMapping(path = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArchiveImageUrlResponseDto> uploadImage(@RequestParam("image") MultipartFile imageFile) {
+    public ResponseEntity<ArchiveImageUrlResponseDtoV1> uploadImage(@RequestParam("image") MultipartFile imageFile) {
         imageService.verifyImageFile(imageFile);
         var imageUri = imageService.upload(ARCHIVE_IMAGE_DIRECTORY, imageFile);
-        return ResponseEntity.ok(new ArchiveImageUrlResponseDto(imageUri));
+        return ResponseEntity.ok(new ArchiveImageUrlResponseDtoV1(imageUri));
     }
 
     @Operation(summary = "아키이브 추가")
     @PostMapping
-    public ResponseEntity<Object> addArchive(@RequestUser UserInfo user, @RequestBody ArchiveDto archiveDto) {
-        archiveService.save(archiveDto, user.getUserId());
+    public ResponseEntity<Object> addArchive(@RequestUser UserInfo user, @RequestBody ArchiveDtoV1 archiveDtoV1) {
+        archiveService.save(archiveDtoV1, user.getUserId());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Operation(summary = "아카이브 개수 조회")
     @GetMapping("/count")
-    public ResponseEntity<ArchiveCountResponseDto> countArchive(@RequestUser UserInfo user) {
-        var archiveCountDto = new ArchiveCountResponseDto(archiveService.countArchive(user));
+    public ResponseEntity<ArchiveCountResponseDtoV1> countArchive(@RequestUser UserInfo user) {
+        var archiveCountDto = new ArchiveCountResponseDtoV1(archiveService.countArchive(user));
         return ResponseEntity.ok(archiveCountDto);
     }
 

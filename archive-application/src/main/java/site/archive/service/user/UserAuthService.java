@@ -12,8 +12,8 @@ import site.archive.domain.user.PasswordUser;
 import site.archive.domain.user.PasswordUserRepository;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRepository;
-import site.archive.dto.v1.auth.LoginCommand;
-import site.archive.dto.v1.user.UserPasswordResetRequestDto;
+import site.archive.dto.v1.auth.LoginCommandV1;
+import site.archive.dto.v1.user.UserPasswordResetRequestDtoV1;
 import site.archive.infra.mail.MailService;
 
 @Service
@@ -26,7 +26,7 @@ public class UserAuthService {
     private final PasswordEncoder encoder;
     private final MailService mailService;
 
-    public UserInfo tryLoginAndReturnInfo(LoginCommand command) throws LoginFailException {
+    public UserInfo tryLoginAndReturnInfo(LoginCommandV1 command) throws LoginFailException {
         var user = verifyPasswordReturnUser(command.getEmail(), command.getPassword());
         return user.convertToUserInfo();
     }
@@ -41,10 +41,10 @@ public class UserAuthService {
     }
 
     @Transactional
-    public void resetPassword(UserPasswordResetRequestDto userPasswordResetRequestDto) {
+    public void resetPassword(UserPasswordResetRequestDtoV1 userPasswordResetRequestDtoV1) {
         var passwordUser = verifyPasswordReturnUser(
-            userPasswordResetRequestDto.getEmail(), userPasswordResetRequestDto.getCurrentPassword());
-        passwordUser.updatePassword(encoder.encode(userPasswordResetRequestDto.getNewPassword()), false);
+            userPasswordResetRequestDtoV1.getEmail(), userPasswordResetRequestDtoV1.getCurrentPassword());
+        passwordUser.updatePassword(encoder.encode(userPasswordResetRequestDtoV1.getNewPassword()), false);
     }
 
     public boolean isTemporaryPasswordLogin(long userId) {

@@ -11,8 +11,8 @@ import site.archive.domain.archive.custom.ArchivePageable;
 import site.archive.domain.like.Like;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRepository;
-import site.archive.dto.v1.archive.ArchiveDto;
-import site.archive.dto.v1.archive.ArchiveListResponseDto;
+import site.archive.dto.v1.archive.ArchiveDtoV1;
+import site.archive.dto.v1.archive.ArchiveListResponseDtoV1;
 import site.archive.dto.v2.ArchiveLikeResponseDto;
 import site.archive.dto.v2.MyArchiveResponseDto;
 
@@ -39,12 +39,12 @@ public class ArchiveService {
      * @param userInfo 현재 유저의 정보
      * @return archive list
      */
-    public ArchiveListResponseDto getAllArchive(UserInfo userInfo) {
+    public ArchiveListResponseDtoV1 getAllArchive(UserInfo userInfo) {
         var authorId = userInfo.getUserId();
         var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
-                                           .map(ArchiveDto::simpleFrom)
+                                           .map(ArchiveDtoV1::simpleFrom)
                                            .toList();
-        return ArchiveListResponseDto.from(archiveDtos);
+        return ArchiveListResponseDtoV1.from(archiveDtos);
     }
 
     /**
@@ -56,12 +56,12 @@ public class ArchiveService {
      * @param authorId 조회하고자 하는 아카이브의 작성자 아이디
      * @return archive list
      */
-    public ArchiveListResponseDto getAllArchive(UserInfo userInfo, Long authorId) {
+    public ArchiveListResponseDtoV1 getAllArchive(UserInfo userInfo, Long authorId) {
         var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
                                            .filter(hasViewAuthority(userInfo.getUserId()))
-                                           .map(ArchiveDto::simpleFrom)
+                                           .map(ArchiveDtoV1::simpleFrom)
                                            .toList();
-        return ArchiveListResponseDto.from(archiveDtos);
+        return ArchiveListResponseDtoV1.from(archiveDtos);
     }
 
     public List<ArchiveLikeResponseDto> getAllArchive(Long currentUserId, List<Long> archiveIds) {
@@ -102,10 +102,10 @@ public class ArchiveService {
      * @param archiveId 상세 조회하려는 Archive id
      * @return Archive
      */
-    public ArchiveDto getOneArchiveById(Long archiveId) {
+    public ArchiveDtoV1 getOneArchiveById(Long archiveId) {
         var archive = archiveRepository.findById(archiveId)
                                        .orElseThrow(() -> new ResourceNotFoundException("조회하려는 아카이브가 존재하지 않습니다"));
-        return ArchiveDto.specificFrom(archive);
+        return ArchiveDtoV1.specificFrom(archive);
     }
 
     /**
@@ -118,11 +118,11 @@ public class ArchiveService {
      * @param archiveId 상세 조회하려는 Archive id
      * @return Archive
      */
-    public ArchiveDto getOneArchiveById(UserInfo userInfo, Long archiveId) {
+    public ArchiveDtoV1 getOneArchiveById(UserInfo userInfo, Long archiveId) {
         var archive = archiveRepository.findById(archiveId)
                                        .filter(hasViewAuthority(userInfo.getUserId()))
                                        .orElseThrow(() -> new UnauthorizedResourceException("존재하지 않거나 권한이 없는 아카이브"));
-        return ArchiveDto.specificFrom(archive);
+        return ArchiveDtoV1.specificFrom(archive);
     }
 
     @Transactional
@@ -133,13 +133,13 @@ public class ArchiveService {
     }
 
     @Transactional
-    public void save(ArchiveDto archiveDto, Long authorId) {
+    public void save(ArchiveDtoV1 archiveDtoV1, Long authorId) {
         var user = userRepository.findById(authorId)
                                  .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
-        var archive = archiveRepository.save(archiveDto.toEntity(user));
-        archiveDto.getImages().stream()
-                  .map(archiveImageDto -> archiveImageDto.toEntity(archive))
-                  .forEach(archive::addImage);
+        var archive = archiveRepository.save(archiveDtoV1.toEntity(user));
+        archiveDtoV1.getImages().stream()
+                    .map(archiveImageDto -> archiveImageDto.toEntity(archive))
+                    .forEach(archive::addImage);
     }
 
     public long countArchive(UserInfo userInfo) {
