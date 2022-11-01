@@ -1,6 +1,7 @@
 package site.archive.infra.user.oauth;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.ProviderNotFoundException;
 import org.springframework.stereotype.Service;
 import site.archive.dto.v1.auth.OAuthRegisterCommand;
@@ -10,6 +11,7 @@ import site.archive.infra.user.oauth.provider.OAuthProviderClient;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OAuthUserService {
 
@@ -23,6 +25,7 @@ public class OAuthUserService {
                                                       .orElseThrow(() ->
                                                                        new ProviderNotFoundException(
                                                                            "There is no suitable register provider client for " + provider));
+        log.debug("oauth provider access token: {}", oAuthRegisterRequestDto);
         return oAuthProviderClient.getOAuthRegisterInfo(oAuthRegisterRequestDto);
     }
 
