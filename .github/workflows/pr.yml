@@ -1,4 +1,4 @@
-name: Build for pull request
+name: Test and Build for pull request
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - '**'
 
 jobs:
-  build:
+  test-build:
     runs-on: ubuntu-latest
     env:
       DEV_DB_URL: ${{ secrets.DEV_DB_URL }}
@@ -25,7 +25,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Test
+        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+        with:
+          arguments: clean test
       - name: Build with Gradle
         uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
         with:
-          arguments: :archive-web:build
+          arguments: clean :archive-web:build
