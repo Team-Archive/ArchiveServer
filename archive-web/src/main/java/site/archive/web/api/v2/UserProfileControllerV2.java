@@ -17,6 +17,7 @@ import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.user.UserProfileImageService;
 import site.archive.service.user.UserService;
 import site.archive.web.api.resolver.annotation.RequestUser;
+import site.archive.web.config.security.util.FileUtils;
 
 import static site.archive.service.archive.ArchiveImageService.USER_PROFILE_IMAGE_DIRECTORY;
 
@@ -41,7 +42,7 @@ public class UserProfileControllerV2 {
                  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> uploadProfileImage(@RequestUser UserInfo user,
                                                    @RequestParam("image") MultipartFile imageFile) {
-        imageService.verifyImageFile(imageFile);
+        FileUtils.verifyImageFile(imageFile);
 
         var outdatedImageUri = userService.findUserById(user.getUserId()).getProfileImage();
         var imageUri = imageService.update(USER_PROFILE_IMAGE_DIRECTORY, outdatedImageUri, imageFile);

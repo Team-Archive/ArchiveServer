@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import site.archive.dto.v1.archive.ArchiveImageUrlResponseDtoV1;
 import site.archive.service.archive.ArchiveImageService;
+import site.archive.web.config.security.util.FileUtils;
 
 import static site.archive.service.archive.ArchiveImageService.ARCHIVE_IMAGE_DIRECTORY;
 
@@ -27,7 +28,7 @@ public class ArchiveImageControllerV2 {
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArchiveImageUrlResponseDtoV1> uploadImage(@RequestParam("image") MultipartFile imageFile) {
-        imageService.verifyImageFile(imageFile);
+        FileUtils.verifyImageFile(imageFile);
         var imageUri = imageService.upload(ARCHIVE_IMAGE_DIRECTORY, imageFile);
         return ResponseEntity.ok(new ArchiveImageUrlResponseDtoV1(imageUri));
     }

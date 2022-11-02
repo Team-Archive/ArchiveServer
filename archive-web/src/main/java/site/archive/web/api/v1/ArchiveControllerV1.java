@@ -24,6 +24,7 @@ import site.archive.service.archive.ArchiveService;
 import site.archive.web.api.resolver.annotation.RequestUser;
 import site.archive.web.config.security.authz.ArchiveAdminOrAuthorChecker;
 import site.archive.web.config.security.authz.annotation.RequirePermission;
+import site.archive.web.config.security.util.FileUtils;
 
 import static site.archive.service.archive.ArchiveImageService.ARCHIVE_IMAGE_DIRECTORY;
 
@@ -59,7 +60,7 @@ public class ArchiveControllerV1 {
     @Operation(summary = "[Deprecated -> /api/v2/user/profile/image/upload] 이미지 업로드")
     @PostMapping(path = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArchiveImageUrlResponseDtoV1> uploadImage(@RequestParam("image") MultipartFile imageFile) {
-        imageService.verifyImageFile(imageFile);
+        FileUtils.verifyImageFile(imageFile);
         var imageUri = imageService.upload(ARCHIVE_IMAGE_DIRECTORY, imageFile);
         return ResponseEntity.ok(new ArchiveImageUrlResponseDtoV1(imageUri));
     }

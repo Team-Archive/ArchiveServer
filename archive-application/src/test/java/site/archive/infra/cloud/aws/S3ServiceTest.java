@@ -12,7 +12,6 @@ import site.archive.infra.cloud.aws.config.AwsS3Property;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
@@ -21,7 +20,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
-import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 
 class S3ServiceTest {
 
@@ -46,18 +44,6 @@ class S3ServiceTest {
                                                 AwsS3Property.class);
         amazonS3 = mock(AmazonS3.class);
         s3Service = new S3Service(amazonS3, s3Property);
-    }
-
-    @Test
-    void verifyImageFileTest() {
-        // given
-        var imageFile = new MockMultipartFile("imageFile", "imageFile.png", IMAGE_PNG_VALUE, new byte[0]);
-        var textFile = new MockMultipartFile("textFile", "textFile.txt", TEXT_PLAIN_VALUE, new byte[0]);
-
-        // when & then
-        assertDoesNotThrow(() -> s3Service.verifyImageFile(imageFile));
-        assertThatThrownBy(() -> s3Service.verifyImageFile(textFile))
-            .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("image file upload에 성공하면 CDN address로 시작하고, originalFileName으로 끝나는 이미지 주소를 반환한다")
