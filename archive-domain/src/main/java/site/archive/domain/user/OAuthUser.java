@@ -27,4 +27,10 @@ public class OAuthUser extends BaseUser {
         super(mailAddress, role);
         this.oAuthProvider = provider;
     }
+
+    @Override
+    public String getUserType() {
+        return this.getOAuthProvider().getRegistrationId();
+    }
+
 }
