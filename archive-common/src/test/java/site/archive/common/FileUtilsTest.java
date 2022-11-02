@@ -1,4 +1,4 @@
-package site.archive.web.config.security.util;
+package site.archive.common;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;

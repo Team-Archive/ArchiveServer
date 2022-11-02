@@ -17,7 +17,7 @@ import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.user.UserProfileImageService;
 import site.archive.service.user.UserService;
 import site.archive.web.api.resolver.annotation.RequestUser;
-import site.archive.web.config.security.util.FileUtils;
+import site.archive.common.FileUtils;
 
 import static site.archive.service.archive.ArchiveImageService.USER_PROFILE_IMAGE_DIRECTORY;
 

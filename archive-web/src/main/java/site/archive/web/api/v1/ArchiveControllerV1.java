@@ -24,7 +24,7 @@ import site.archive.service.archive.ArchiveService;
 import site.archive.web.api.resolver.annotation.RequestUser;
 import site.archive.web.config.security.authz.ArchiveAdminOrAuthorChecker;
 import site.archive.web.config.security.authz.annotation.RequirePermission;
-import site.archive.web.config.security.util.FileUtils;
+import site.archive.common.FileUtils;
 
 import static site.archive.service.archive.ArchiveImageService.ARCHIVE_IMAGE_DIRECTORY;
 

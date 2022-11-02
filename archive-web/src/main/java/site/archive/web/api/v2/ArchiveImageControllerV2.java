@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import site.archive.dto.v1.archive.ArchiveImageUrlResponseDtoV1;
 import site.archive.service.archive.ArchiveImageService;
-import site.archive.web.config.security.util.FileUtils;
+import site.archive.common.FileUtils;
 
 import static site.archive.service.archive.ArchiveImageService.ARCHIVE_IMAGE_DIRECTORY;
 

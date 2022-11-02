@@ -1,4 +1,4 @@
-package site.archive.web.config.security.util;
+package site.archive.common;
 
 import org.springframework.web.multipart.MultipartFile;
 
