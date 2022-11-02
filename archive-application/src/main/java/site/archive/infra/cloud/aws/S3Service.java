@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import site.archive.common.FileUtils;
 import site.archive.common.exception.infra.FileInvalidException;
 import site.archive.infra.cloud.aws.config.AwsS3Property;
 import site.archive.service.archive.ArchiveImageService;
@@ -45,21 +46,21 @@ public class S3Service implements ArchiveImageService {
 
     @Override
     public void remove(String fileUri) {
-        var fileNameStartIndex = fileUri.indexOf(SEPARATOR, HTTPS_URI_PREFIX.length() + 1);
-        var fileName = fileUri.substring(fileNameStartIndex + 1).replace(SEPARATOR_CODE, SEPARATOR); // except Separator
-        var bucket = s3Property.getBucketName();
-        try {
-            amazonS3.deleteObject(bucket, fileName);
-        } catch (AmazonServiceException e) {
-            throw new IllegalStateException("Failed to remove the file (%s)".formatted(fileName), e);
+        if (FileUtils.isFileUrl(fileUri)) {
+            var fileNameStartIndex = fileUri.indexOf(SEPARATOR, HTTPS_URI_PREFIX.length() + 1);
+            var fileName = fileUri.substring(fileNameStartIndex + 1).replace(SEPARATOR_CODE, SEPARATOR); // except Separator
+            var bucket = s3Property.getBucketName();
+            try {
+                amazonS3.deleteObject(bucket, fileName);
+            } catch (AmazonServiceException e) {
+                throw new IllegalStateException("Failed to remove the file (%s)".formatted(fileName), e);
+            }
         }
     }
 
     @Override
     public String update(String directory, String outdatedFileUri, MultipartFile imageFile) {
-        if (outdatedFileUri != null) {
-            remove(outdatedFileUri);
-        }
+        remove(outdatedFileUri);
         return upload(directory, imageFile);
     }
 
