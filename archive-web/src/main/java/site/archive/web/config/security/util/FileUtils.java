@@ -10,6 +10,9 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 public class FileUtils {
 
+    private static final String HTTP = "http://";
+    private static final String HTTPS = "https://";
+
     private FileUtils() {
     }
 
@@ -18,6 +21,10 @@ public class FileUtils {
                    .contains(imageFile.getContentType())) {
             throw new IllegalStateException("FIle uploaded is not an image");
         }
+    }
+
+    public static boolean isFileUrl(final String file) {
+        return file.startsWith(HTTP) || file.startsWith(HTTPS);
     }
 
 }
