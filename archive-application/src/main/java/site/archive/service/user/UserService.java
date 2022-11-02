@@ -28,10 +28,10 @@ public class UserService {
                              .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
     }
 
-    public BaseUserDtoV1 findSpecificUserById(long userId) {
-        var user = findUserById(userId);
-        updateUserTypeWithProviderWhenOAuthUser(userId, user);
-        return user;
+    public SpecificUserDtoV1 findSpecificUserById(long userId) {
+        var user = userRepository.findById(userId)
+                                 .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
+        return SpecificUserDtoV1.from(user);
     }
 
     public boolean existsEmail(String email) {
