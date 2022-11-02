@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.archive.common.exception.common.DuplicateFieldValueException;
 import site.archive.common.exception.common.ResourceNotFoundException;
-import site.archive.domain.user.OAuthUser;
 import site.archive.domain.user.OAuthUserRepository;
 import site.archive.domain.user.PasswordUserRepository;
 import site.archive.domain.user.UserRepository;
 import site.archive.dto.v1.user.BaseUserDtoV1;
+import site.archive.dto.v1.user.SpecificUserDtoV1;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,10 +28,10 @@ public class UserService {
                              .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
     }
 
-    public BaseUserDtoV1 findSpecificUserById(long userId) {
-        var user = findUserById(userId);
-        updateUserTypeWithProviderWhenOAuthUser(userId, user);
-        return user;
+    public SpecificUserDtoV1 findSpecificUserById(long userId) {
+        var user = userRepository.findById(userId)
+                                 .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
+        return SpecificUserDtoV1.from(user);
     }
 
     public boolean existsEmail(String email) {
@@ -53,15 +53,6 @@ public class UserService {
             throw new DuplicateFieldValueException("nickname", nickname);
         }
         userRepository.updateNickName(userId, nickname);
-    }
-
-    private void updateUserTypeWithProviderWhenOAuthUser(long userId, BaseUserDtoV1 user) {
-        if (OAuthUser.OAUTH_TYPE.equals(user.getUserType())) {
-            var oAuthType = oAuthUserRepository.findById(userId)
-                                               .map(oAuthUser -> oAuthUser.getOAuthProvider().toString())
-                                               .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 OAuth 유저가 존재하지 않습니다."));
-            user.updateSpecificUserType(oAuthType);
-        }
     }
 
 }
