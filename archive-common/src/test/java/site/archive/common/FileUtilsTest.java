@@ -29,11 +29,13 @@ class FileUtilsTest {
         var fileUrl1 = "http://file-aws.com";
         var fileUrl2 = "https://file-aws.com";
         var fileNotUrl = "file";
+        String fileNull = null;
 
         // when & then
         assertThat(FileUtils.isFileUrl(fileUrl1)).isTrue();
         assertThat(FileUtils.isFileUrl(fileUrl2)).isTrue();
         assertThat(FileUtils.isFileUrl(fileNotUrl)).isFalse();
+        assertThat(FileUtils.isFileUrl(fileNull)).isFalse();
     }
 
 }

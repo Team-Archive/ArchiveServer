@@ -24,7 +24,7 @@ public class FileUtils {
     }
 
     public static boolean isFileUrl(final String file) {
-        return file.startsWith(HTTP) || file.startsWith(HTTPS);
+        return file != null && (file.startsWith(HTTP) || file.startsWith(HTTPS));
     }
 
 }
