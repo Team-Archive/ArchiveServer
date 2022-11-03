@@ -35,13 +35,13 @@ class KakaoClientTest {
         var kakaoUserInfoResponse = new ResponseEntity<>(kakaoUserInfo, HttpStatus.OK);
 
         var kakaoClient = new KakaoClient(restTemplate);
-        var oAuthRegisterDto = new OAuthRegisterRequestDtoV1(kakaoClient.support(), "token");
+        var oAuthRegisterDto = new OAuthRegisterRequestDtoV1(kakaoClient.getProvider().getRegistrationId(), "token");
 
         given(restTemplate.exchange(any(), any(), any(), eq(KakaoUserInfo.class), any(Object.class)))
             .willReturn(kakaoUserInfoResponse);
 
         // when
-        var kakaoRegisterCommand = kakaoClient.getOAuthRegisterInfo(oAuthRegisterDto);
+        var kakaoRegisterCommand = kakaoClient.getOAuthRegisterInfo(oAuthRegisterDto.getToken());
 
         // then
         assertThat(kakaoRegisterCommand.getProvider()).isEqualTo(OAuthProvider.KAKAO);
@@ -55,14 +55,14 @@ class KakaoClientTest {
         var kakaoUserInfoUnauthorizedResponse = new ResponseEntity<>(kakaoUserInfo, HttpStatus.UNAUTHORIZED);
 
         var kakaoClient = new KakaoClient(restTemplate);
-        var oAuthRegisterDto = new OAuthRegisterRequestDtoV1(kakaoClient.support(), "token");
+        var oAuthRegisterDto = new OAuthRegisterRequestDtoV1(kakaoClient.getProvider().getRegistrationId(), "token");
 
         given(restTemplate.exchange(any(), any(), any(), eq(KakaoUserInfo.class), any(Object.class)))
             .willReturn(kakaoUserInfoUnauthorizedResponse);
 
         // when & then
         var exception = assertThrows(OAuthRegisterFailException.class,
-                                     () -> kakaoClient.getOAuthRegisterInfo(oAuthRegisterDto));
+                                     () -> kakaoClient.getOAuthRegisterInfo(oAuthRegisterDto.getToken()));
         assertThat(exception.getMessage()).contains(OAuthProvider.KAKAO.getRegistrationId(),
                                                     "UserInfoUrl Response error");
     }

@@ -2,6 +2,7 @@ package site.archive.infra.user.oauth;
 
 import org.junit.Test;
 import org.springframework.security.authentication.ProviderNotFoundException;
+import site.archive.domain.user.OAuthProvider;
 import site.archive.dto.v1.user.OAuthRegisterRequestDtoV1;
 import site.archive.infra.user.oauth.provider.AppleClient;
 import site.archive.infra.user.oauth.provider.KakaoClient;
@@ -37,7 +38,7 @@ class OAuthUserServiceTest {
         var oAuthUserService = new OAuthUserService(providerClients);
 
         // mocking
-        when(appleClient.support()).thenReturn("apple");
+        when(appleClient.getProvider()).thenReturn(OAuthProvider.APPLE);
         when(appleClient.getOAuthRegisterInfo(any())).thenReturn(null);
 
         // when & then

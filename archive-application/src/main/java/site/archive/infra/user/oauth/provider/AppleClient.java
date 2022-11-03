@@ -16,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 import site.archive.common.exception.user.OAuthRegisterFailException;
 import site.archive.domain.user.OAuthProvider;
 import site.archive.dto.v1.auth.OAuthRegisterCommandV1;
-import site.archive.dto.v1.user.OAuthRegisterRequestDtoV1;
 import site.archive.infra.user.oauth.provider.dto.ApplePublicKeys;
 import site.archive.infra.user.oauth.provider.dto.AppleTokenPayload;
 
@@ -38,16 +37,24 @@ public class AppleClient implements OAuthProviderClient {
     private final RestTemplate restTemplate;
 
     @Override
-    public String support() {
-        return OAuthProvider.APPLE.getRegistrationId();
+    public OAuthProvider getProvider() {
+        return OAuthProvider.APPLE;
     }
 
     @Override
-    public OAuthRegisterCommandV1 getOAuthRegisterInfo(OAuthRegisterRequestDtoV1 oAuthRegisterRequestDtoV1) {
-        var jwtToken = getSignedJWT(oAuthRegisterRequestDtoV1.getToken());
+    public OAuthRegisterCommandV1 getOAuthRegisterInfo(String accessToken) {
+        var jwtToken = getSignedJWT(accessToken);
         var payload = getAppleTokenPayload(jwtToken);
         AppleTokenVerifier.verify(objectMapper, restTemplate, appleOAuthProperty, jwtToken, payload);
         return new OAuthRegisterCommandV1(payload.getEmail(), OAuthProvider.APPLE);
+    }
+
+    @Override
+    public String getEmail(String accessToken) {
+        var jwtToken = getSignedJWT(accessToken);
+        var payload = getAppleTokenPayload(jwtToken);
+        AppleTokenVerifier.verify(objectMapper, restTemplate, appleOAuthProperty, jwtToken, payload);
+        return payload.getEmail();
     }
 
     private SignedJWT getSignedJWT(final String jwtToken) {
