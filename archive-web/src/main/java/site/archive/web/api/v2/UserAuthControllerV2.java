@@ -36,9 +36,9 @@ public class UserAuthControllerV2 {
 
     @Operation(summary = "[NoAuth] 패스워드 유저 회원가입")
     @PostMapping("/register")
-    public ResponseEntity<Void> registerPasswordUser(@Validated @RequestBody PasswordRegisterRequestDto registerRequest) {
-        registerRequest.updatePasswordToEncrypt(encoder.encode(registerRequest.getPassword()));
-        var userInfo = userRegisterService.registerUser(registerRequest).convertToUserInfo();
+    public ResponseEntity<Void> registerPasswordUser(@Validated @RequestBody PasswordRegisterRequestDto passwordRegisterRequest) {
+        passwordRegisterRequest.updatePasswordToEncrypt(encoder.encode(passwordRegisterRequest.getPassword()));
+        var userInfo = userRegisterService.registerUser(passwordRegisterRequest).convertToUserInfo();
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(userInfo));
         return ResponseEntity.ok().build();
     }

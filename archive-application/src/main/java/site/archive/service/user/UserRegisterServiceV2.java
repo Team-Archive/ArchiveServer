@@ -22,9 +22,9 @@ public class UserRegisterServiceV2 {
     private final UserRepository userRepository;
     private final MessagingService messagingService;
 
-    public BaseUser registerUser(PasswordRegisterRequestDto registerCommand) {
+    public BaseUser registerUser(PasswordRegisterRequestDto registerRequest) {
         try {
-            var user = userRepository.save(registerCommand.toUserEntity());
+            var user = userRepository.save(registerRequest.toUserEntity());
             messagingService.sendUserRegisterMessage(BaseUserDtoV1.from(user), PasswordUser.PASSWORD_TYPE);
             return user;
         } catch (DataIntegrityViolationException e) {
