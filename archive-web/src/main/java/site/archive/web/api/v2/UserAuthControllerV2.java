@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.archive.dto.v1.user.UserPasswordResetRequestDtoV1;
+import site.archive.dto.v2.OAuthUserInfoRequestDto;
 import site.archive.dto.v2.PasswordRegisterRequestDto;
 import site.archive.infra.user.oauth.OAuthUserService;
 import site.archive.service.user.UserAuthService;
@@ -38,7 +39,16 @@ public class UserAuthControllerV2 {
     @PostMapping("/register")
     public ResponseEntity<Void> registerPasswordUser(@Validated @RequestBody PasswordRegisterRequestDto passwordRegisterRequest) {
         passwordRegisterRequest.updatePasswordToEncrypt(encoder.encode(passwordRegisterRequest.getPassword()));
-        var userInfo = userRegisterService.registerUser(passwordRegisterRequest).convertToUserInfo();
+        var userInfo = userRegisterService.registerUser(passwordRegisterRequest);
+        SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(userInfo));
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "[NoAuth] 소셜 유저 회원가입")
+    @PostMapping("/register/social")
+    public ResponseEntity<Void> registerSocialUser(@Validated @RequestBody OAuthUserInfoRequestDto oAuthUserInfoRequest) {
+        var oAuthRegisterRequest = oAuthUserService.getOAuthRegisterInfo(oAuthUserInfoRequest);
+        var userInfo = userRegisterService.registerUser(oAuthRegisterRequest);
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(userInfo));
         return ResponseEntity.ok().build();
     }
