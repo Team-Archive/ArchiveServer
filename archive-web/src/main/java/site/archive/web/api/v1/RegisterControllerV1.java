@@ -26,7 +26,7 @@ public class RegisterControllerV1 {
     private final PasswordEncoder encoder;
 
     @Deprecated
-    @Operation(summary = "[NoAuth] 패스워드 유저 회원가입")
+    @Operation(summary = "[Deprecated -> /api/v2/auth/register] 패스워드 유저 회원가입")
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@Validated @RequestBody PasswordRegisterCommandV1 command) {
         command.setPassword(encoder.encode(command.getPassword()));
@@ -36,7 +36,7 @@ public class RegisterControllerV1 {
     }
 
     @Deprecated
-    @Operation(summary = "[NoAuth] 소셜 로그인 유저 회원가입 및 로그인")
+    @Operation(summary = "[Deprecated -> /api/v2/auth/register/social, login/social] 소셜 로그인 유저 회원가입 및 로그인")
     @PostMapping("/social")
     public ResponseEntity<Void> registerOrLoginSocialUser(@Validated @RequestBody OAuthRegisterRequestDtoV1 oAuthRegisterRequestDtoV1) {
         var oAuthRegisterInfo = oAuthUserService.getOAuthRegisterInfo(oAuthRegisterRequestDtoV1);
