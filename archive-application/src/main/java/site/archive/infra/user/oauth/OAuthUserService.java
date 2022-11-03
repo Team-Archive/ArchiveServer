@@ -19,14 +19,17 @@ public class OAuthUserService {
 
     public OAuthRegisterCommandV1 getOAuthRegisterInfo(OAuthRegisterRequestDtoV1 oAuthRegisterRequestDtoV1) {
         var provider = oAuthRegisterRequestDtoV1.getProvider();
-        var oAuthProviderClient = oAuthProviderClients.stream()
-                                                      .filter(client -> client.support().equals(provider))
-                                                      .findFirst()
-                                                      .orElseThrow(() ->
-                                                                       new ProviderNotFoundException(
-                                                                           "There is no suitable register provider client for " + provider));
+        var oAuthProviderClient = getOAuthProviderClient(provider);
         log.debug("oauth provider access token: {}", oAuthRegisterRequestDtoV1);
         return oAuthProviderClient.getOAuthRegisterInfo(oAuthRegisterRequestDtoV1);
+    }
+
+    private OAuthProviderClient getOAuthProviderClient(String provider) {
+        return oAuthProviderClients.stream()
+                                   .filter(client -> client.support().equals(provider))
+                                   .findFirst()
+                                   .orElseThrow(() -> new ProviderNotFoundException(
+                                       "There is no suitable register provider client for " + provider));
     }
 
 }
