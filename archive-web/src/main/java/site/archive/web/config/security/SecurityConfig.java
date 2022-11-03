@@ -54,6 +54,7 @@ public class SecurityConfig {
                        .antMatchers("/api/v1/**").permitAll()
                        .antMatchers("/api/v2/user/duplicate/**").permitAll()
                        .antMatchers("/api/v2/auth/register/**").permitAll()
+                       .antMatchers("/api/v2/auth/login/social").permitAll()
                        .antMatchers("/login/**").permitAll()
                        .antMatchers(HttpMethod.GET, "/exception/**").permitAll()
                        .anyRequest().authenticated().and()
