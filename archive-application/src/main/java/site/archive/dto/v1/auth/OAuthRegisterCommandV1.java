@@ -2,6 +2,7 @@ package site.archive.dto.v1.auth;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import site.archive.common.ArchiveStringUtils;
 import site.archive.domain.user.BaseUser;
 import site.archive.domain.user.OAuthProvider;
 import site.archive.domain.user.OAuthUser;
@@ -18,7 +19,12 @@ public class OAuthRegisterCommandV1 extends BasicRegisterCommandV1 {
         this.provider = provider;
     }
 
+    @Override
     public BaseUser toUserEntity() {
-        return new OAuthUser(getEmail(), UserRole.GENERAL, provider);
+        return new OAuthUser(getEmail(),
+                             UserRole.GENERAL,
+                             provider,
+                             ArchiveStringUtils.extractIdFromMail(getEmail()));
     }
+
 }

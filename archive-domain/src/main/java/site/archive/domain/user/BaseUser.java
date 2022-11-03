@@ -60,6 +60,12 @@ public class BaseUser extends BaseTimeEntity {
         this.mailAddress = mailAddress;
     }
 
+    protected BaseUser(String mailAddress, UserRole role, String nickname) {
+        this.role = role;
+        this.mailAddress = mailAddress;
+        this.nickname = nickname;
+    }
+
     public UserInfo convertToUserInfo() {
         return new UserInfo(mailAddress, role, id);
     }

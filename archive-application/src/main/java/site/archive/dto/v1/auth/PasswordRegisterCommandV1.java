@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import site.archive.common.ArchiveStringUtils;
 import site.archive.domain.user.BaseUser;
 import site.archive.domain.user.PasswordUser;
 import site.archive.domain.user.UserRole;
@@ -29,6 +30,10 @@ public class PasswordRegisterCommandV1 extends BasicRegisterCommandV1 {
 
     @Override
     public BaseUser toUserEntity() {
-        return new PasswordUser(getEmail(), UserRole.GENERAL, getPassword());
+        return new PasswordUser(getEmail(),
+                                UserRole.GENERAL,
+                                getPassword(),
+                                ArchiveStringUtils.extractIdFromMail(getEmail()));
     }
+
 }
