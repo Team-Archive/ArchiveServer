@@ -1,12 +1,14 @@
 package site.archive.infra.user.oauth.provider;
 
+import site.archive.domain.user.OAuthProvider;
 import site.archive.dto.v1.auth.OAuthRegisterCommandV1;
-import site.archive.dto.v1.user.OAuthRegisterRequestDtoV1;
 
 public interface OAuthProviderClient {
 
-    String support();
+    OAuthProvider getProvider();
 
-    OAuthRegisterCommandV1 getOAuthRegisterInfo(OAuthRegisterRequestDtoV1 oAuthRegisterRequestDtoV1);
+    OAuthRegisterCommandV1 getOAuthRegisterInfo(String accessToken);
+
+    String getEmail(String accessToken);
 
 }

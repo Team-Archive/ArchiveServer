@@ -23,8 +23,8 @@ public class OAuthUser extends BaseUser {
     @Enumerated(EnumType.STRING)
     private OAuthProvider oAuthProvider;
 
-    public OAuthUser(String mailAddress, UserRole role, OAuthProvider provider) {
-        super(mailAddress, role);
+    public OAuthUser(String mailAddress, UserRole role, OAuthProvider provider, String nickname) {
+        super(mailAddress, role, nickname);
         this.oAuthProvider = provider;
     }
 

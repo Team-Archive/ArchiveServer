@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import site.archive.common.ArchiveStringUtils;
 import site.archive.domain.common.BaseTimeEntity;
 
 import javax.persistence.Column;
@@ -59,12 +60,18 @@ public class BaseUser extends BaseTimeEntity {
         this.mailAddress = mailAddress;
     }
 
+    protected BaseUser(String mailAddress, UserRole role, String nickname) {
+        this.role = role;
+        this.mailAddress = mailAddress;
+        this.nickname = nickname;
+    }
+
     public UserInfo convertToUserInfo() {
         return new UserInfo(mailAddress, role, id);
     }
 
     public String getNickname() {
-        return nickname != null ? nickname : mailAddress.substring(0, mailAddress.indexOf('@'));
+        return nickname != null ? nickname : ArchiveStringUtils.extractIdFromMail(mailAddress);
     }
 
     public String getProfileImage() {

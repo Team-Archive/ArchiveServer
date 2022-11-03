@@ -53,6 +53,9 @@ public class SlackService implements MessagingService {
                                                            ":email: `이메일`: %s",
                                                            baseUser.getMailAddress())))),
                                                        Blocks.section(section -> section.text(BlockCompositions.markdownText(String.format(
+                                                           ":speaking_head_in_silhouette: `닉네임`: %s",
+                                                           baseUser.getNickname())))),
+                                                       Blocks.section(section -> section.text(BlockCompositions.markdownText(String.format(
                                                            ":date: `가입시간`: %s",
                                                            baseUser.getCreatedAt()))))
                                                    )));

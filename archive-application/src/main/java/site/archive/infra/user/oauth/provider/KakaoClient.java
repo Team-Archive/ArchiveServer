@@ -12,8 +12,6 @@ import org.springframework.web.client.RestTemplate;
 import site.archive.common.exception.user.OAuthRegisterFailException;
 import site.archive.domain.user.OAuthProvider;
 import site.archive.dto.v1.auth.OAuthRegisterCommandV1;
-import site.archive.dto.v1.user.OAuthRegisterRequestDtoV1;
-import site.archive.infra.user.oauth.provider.dto.KakaoProviderRequirements;
 import site.archive.infra.user.oauth.provider.dto.KakaoUserInfo;
 
 @Component
@@ -27,18 +25,23 @@ public class KakaoClient implements OAuthProviderClient {
     private String userInfoUrl;
 
     @Override
-    public String support() {
-        return OAuthProvider.KAKAO.getRegistrationId();
+    public OAuthProvider getProvider() {
+        return OAuthProvider.KAKAO;
     }
 
     @Override
-    public OAuthRegisterCommandV1 getOAuthRegisterInfo(OAuthRegisterRequestDtoV1 oAuthRegisterRequestDtoV1) {
-        var userEmail = getUserEmail(KakaoProviderRequirements.from(oAuthRegisterRequestDtoV1));
+    public OAuthRegisterCommandV1 getOAuthRegisterInfo(String accessToken) {
+        var userEmail = getUserEmail(accessToken);
         return new OAuthRegisterCommandV1(userEmail, OAuthProvider.KAKAO);
     }
 
-    private String getUserEmail(KakaoProviderRequirements requirements) {
-        var entity = userInfoRequestEntity(requirements.getKakaoAccessToken());
+    @Override
+    public String getEmail(String accessToken) {
+        return getUserEmail(accessToken);
+    }
+
+    private String getUserEmail(String accessToken) {
+        var entity = userInfoRequestEntity(accessToken);
         var response = restTemplate.exchange(userInfoUrl, HttpMethod.GET, entity, KakaoUserInfo.class);
         var kakaoUserInfo = response.getBody();
 

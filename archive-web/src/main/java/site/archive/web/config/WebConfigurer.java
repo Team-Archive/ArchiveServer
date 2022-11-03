@@ -38,7 +38,9 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new InjectTokenInterceptor(tokenProvider, tokenSupport))
-                .addPathPatterns("/api/v1/auth/**");
+                .addPathPatterns("/api/v1/auth/**",
+                                 "/api/v2/auth/register/**",
+                                 "/api/v2/auth/login/social");
     }
 
 }

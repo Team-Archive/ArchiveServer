@@ -25,8 +25,8 @@ public class PasswordUser extends BaseUser {
     @Column(name = "is_temporary_password", columnDefinition = "boolean default false")
     private Boolean isTemporaryPassword;
 
-    public PasswordUser(String mailAddress, UserRole role, String password) {
-        super(mailAddress, role);
+    public PasswordUser(String mailAddress, UserRole role, String password, String nickname) {
+        super(mailAddress, role, nickname);
         this.password = password;
     }
 

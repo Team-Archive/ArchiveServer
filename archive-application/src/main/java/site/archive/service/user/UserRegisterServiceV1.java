@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.archive.common.exception.common.DuplicateResourceException;
 import site.archive.domain.user.BaseUser;
+import site.archive.domain.user.PasswordUser;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRepository;
 import site.archive.dto.v1.auth.BasicRegisterCommandV1;
@@ -50,7 +51,7 @@ public class UserRegisterServiceV1 {
             var oauthProvider = oAuthRegisterCommand.getProvider().getRegistrationId();
             messagingService.sendUserRegisterMessage(BaseUserDtoV1.from(user), oauthProvider);
         } else {
-            messagingService.sendUserRegisterMessage(BaseUserDtoV1.from(user), "Id/Password");
+            messagingService.sendUserRegisterMessage(BaseUserDtoV1.from(user), PasswordUser.PASSWORD_TYPE);
         }
     }
 
