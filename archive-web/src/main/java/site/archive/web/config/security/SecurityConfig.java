@@ -53,6 +53,7 @@ public class SecurityConfig {
                    .authorizeRequests()
                        .antMatchers("/api/v1/**").permitAll()
                        .antMatchers("/api/v2/user/duplicate/**").permitAll()
+                       .antMatchers("/api/v2/auth/register/**").permitAll()
                        .antMatchers("/login/**").permitAll()
                        .antMatchers(HttpMethod.GET, "/exception/**").permitAll()
                        .anyRequest().authenticated().and()
