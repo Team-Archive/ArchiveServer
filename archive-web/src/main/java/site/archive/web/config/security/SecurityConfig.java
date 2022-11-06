@@ -51,6 +51,7 @@ public class SecurityConfig {
                    .logout().disable()
                    .headers().frameOptions().sameOrigin().and()
                    .authorizeRequests()
+                       .antMatchers("/actuator/**").permitAll()
                        .antMatchers("/api/v1/**").permitAll()
                        .antMatchers("/api/v2/user/duplicate/**").permitAll()
                        .antMatchers("/api/v2/auth/register/**").permitAll()

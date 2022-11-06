@@ -22,4 +22,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'io.rest-assured:rest-assured-all:4.5.1'
     testImplementation 'io.rest-assured:rest-assured:4.5.1'
+
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-registry-prometheus")
 }
