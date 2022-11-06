@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# can use rule files but now not use
+#rule_files:
+#  - "alert.rules"
+
+scrape_configs:
+  - job_name: 'archive-prod-monitor'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ '{archive-prod-ip:port}' ]
+  - job_name: 'archive-dev-monitor'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ '{archive-dev-ip:port}' ]
+

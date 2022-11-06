@@ -21,3 +21,12 @@ server:
       rotate: true
       file-date-format: .yyyy-MM-dd
       max-days: 7
+
+# For metrics
+management:
+  endpoints:
+    prometheus:
+      enabled: true
+    web:
+      exposure:
+        include: prometheus, metrics, health
