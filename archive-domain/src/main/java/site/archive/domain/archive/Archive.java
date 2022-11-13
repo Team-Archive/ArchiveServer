@@ -99,4 +99,8 @@ public class Archive extends BaseTimeEntity {
                     .findFirst();
     }
 
+    public void updateToPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
 }
