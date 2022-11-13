@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,15 @@ public class ArchiveControllerV2 {
     public ResponseEntity<ArchiveCountResponseDto> countArchiveOfCurrentMonth(@RequestUser UserInfo userInfo) {
         var count = archiveService.countArchiveOfCurrentMonth(userInfo);
         return ResponseEntity.ok(new ArchiveCountResponseDto(count));
+    }
+
+    @Operation(summary = "아카이브 공개여부 설정/수정")
+    @PutMapping("/{archiveId}")
+    public ResponseEntity<Void> archivePublicPrivate(@RequestUser UserInfo userInfo,
+                                                     @PathVariable Long archiveId,
+                                                     @RequestParam(value = "isPublic") Boolean isPublic) {
+        archiveService.updateArchivePublicPrivate(userInfo, archiveId, isPublic);
+        return ResponseEntity.noContent().build();
     }
 
 }

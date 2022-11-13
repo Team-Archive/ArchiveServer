@@ -154,6 +154,12 @@ public class ArchiveService {
                                 .map(archive -> archive.getAuthor().getId());
     }
 
+    @Transactional
+    public void updateArchivePublicPrivate(UserInfo userInfo, Long archiveId, Boolean isPublic) {
+        var archive = getOneArchiveOnlyHasAuthority(userInfo, archiveId);
+        archive.updateToPublic(isPublic);
+    }
+
     private Archive getOneArchiveOnlyHasAuthority(UserInfo userInfo, Long archiveId) {
         return archiveRepository.findById(archiveId)
                                 .filter(hasViewAuthority(userInfo.getUserId()))
