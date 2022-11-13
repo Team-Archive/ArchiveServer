@@ -119,9 +119,7 @@ public class ArchiveService {
      * @return Archive
      */
     public ArchiveDtoV1 getOneArchiveById(UserInfo userInfo, Long archiveId) {
-        var archive = archiveRepository.findById(archiveId)
-                                       .filter(hasViewAuthority(userInfo.getUserId()))
-                                       .orElseThrow(() -> new UnauthorizedResourceException("존재하지 않거나 권한이 없는 아카이브"));
+        var archive = getOneArchiveOnlyHasAuthority(userInfo, archiveId);
         return ArchiveDtoV1.specificFrom(archive);
     }
 
@@ -154,6 +152,12 @@ public class ArchiveService {
     public Optional<Long> getArchiveAuthorId(Long archiveId) {
         return archiveRepository.findById(archiveId)
                                 .map(archive -> archive.getAuthor().getId());
+    }
+
+    private Archive getOneArchiveOnlyHasAuthority(UserInfo userInfo, Long archiveId) {
+        return archiveRepository.findById(archiveId)
+                                .filter(hasViewAuthority(userInfo.getUserId()))
+                                .orElseThrow(() -> new UnauthorizedResourceException("존재하지 않거나 권한이 없는 아카이브"));
     }
 
     private Predicate<Archive> hasViewAuthority(Long currentUserId) {
