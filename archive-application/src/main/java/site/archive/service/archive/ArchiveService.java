@@ -13,6 +13,7 @@ import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRepository;
 import site.archive.dto.v1.archive.ArchiveDtoV1;
 import site.archive.dto.v1.archive.ArchiveListResponseDtoV1;
+import site.archive.dto.v2.ArchiveDtoV2;
 import site.archive.dto.v2.ArchiveLikeResponseDto;
 import site.archive.dto.v2.MyArchiveResponseDto;
 
@@ -118,9 +119,9 @@ public class ArchiveService {
      * @param archiveId 상세 조회하려는 Archive id
      * @return Archive
      */
-    public ArchiveDtoV1 getOneArchiveById(UserInfo userInfo, Long archiveId) {
+    public ArchiveDtoV2 getOneArchiveById(UserInfo userInfo, Long archiveId) {
         var archive = getOneArchiveOnlyHasAuthority(userInfo, archiveId);
-        return ArchiveDtoV1.specificFrom(archive);
+        return ArchiveDtoV2.specificFrom(archive);
     }
 
     @Transactional
