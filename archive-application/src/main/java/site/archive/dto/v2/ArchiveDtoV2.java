@@ -40,6 +40,7 @@ public class ArchiveDtoV2 {
         var archiveImages = archive.getArchiveImages().stream()
                                    .map(ArchiveImageDtoV1::from)
                                    .toList();
+        var author = archive.getAuthor();
         return ArchiveDtoV2.builder()
                            .archiveId(archive.getId())
                            .name(archive.getName())
@@ -48,39 +49,10 @@ public class ArchiveDtoV2 {
                            .mainImage(archive.getMainImage())
                            .companions(archive.getCompanions())
                            .images(archiveImages)
-                           .authorId(archive.getAuthor().getId())
-                           .nickname(archive.getAuthor().getNickname())
-                           .profileImage(archive.getAuthor().getProfileImage())
+                           .authorId(author.getId())
+                           .nickname(author.getNickname())
+                           .profileImage(author.getProfileImage())
                            .isPublic(archive.getIsPublic())
                            .build();
     }
-
-    public static ArchiveDtoV2 simpleFrom(Archive archive) {
-        return ArchiveDtoV2.builder()
-                           .archiveId(archive.getId())
-                           .name(archive.getName())
-                           .watchedOn(archive.getWatchedOn().format(YY_MM_DD_FORMATTER))
-                           .emotion(archive.getEmotion())
-                           .companions(archive.getCompanions())
-                           .mainImage(archive.getMainImage())
-                           .authorId(archive.getAuthor().getId())
-                           .nickname(archive.getAuthor().getNickname())
-                           .profileImage(archive.getAuthor().getProfileImage())
-                           .isPublic(archive.getIsPublic())
-                           .build();
-    }
-
-    public Archive toEntity(BaseUser user) {
-        var defaultIsPublic = this.isPublic != null && this.isPublic;
-        return Archive.builder()
-                      .name(name)
-                      .watchedOn(LocalDate.parse(watchedOn, YY_MM_DD_FORMATTER))
-                      .emotion(emotion)
-                      .mainImage(mainImage)
-                      .companions(companions)
-                      .author(user)
-                      .isPublic(defaultIsPublic)
-                      .build();
-    }
-
 }

@@ -141,16 +141,6 @@ public class ArchiveService {
                     .forEach(archive::addImage);
     }
 
-    @Transactional
-    public void save(ArchiveDtoV2 archiveDtoV2, Long authorId) {
-        var user = userRepository.findById(authorId)
-                                 .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
-        var archive = archiveRepository.save(archiveDtoV2.toEntity(user));
-        archiveDtoV2.getImages().stream()
-                    .map(archiveImageDto -> archiveImageDto.toEntity(archive))
-                    .forEach(archive::addImage);
-    }
-
     public long countArchive(UserInfo userInfo) {
         var authorId = userInfo.getUserId();
         return archiveRepository.countArchiveByAuthorId(authorId);
