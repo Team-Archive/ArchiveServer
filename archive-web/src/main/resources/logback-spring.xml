@@ -88,7 +88,7 @@
             <appender-ref ref="WARN_ERROR_LOG_FILE"/>
         </logger>
 
-        <logger name="org.hibernate.SQL" level="info" additivity="false">
+        <logger name="net.ttddyy.dsproxy.listener" level="debug" additivity="false">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="LOG_FILE"/>
             <appender-ref ref="WARN_ERROR_LOG_FILE"/>
