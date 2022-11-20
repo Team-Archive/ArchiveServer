@@ -36,10 +36,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     // 임시 비멀번호로 로그인 한 경우, 205 반환
     private void setHttpStatusByTemporaryPasswordLogin(HttpServletResponse httpServletResponse, UserInfo authToken, String successToken) {
+        tokenSupport.injectToken(httpServletResponse, successToken);
         if (userAuthService.isTemporaryPasswordLogin(authToken.getUserId())) {
             httpServletResponse.setStatus(HttpStatus.RESET_CONTENT.value());
         } else {
-            tokenSupport.injectToken(httpServletResponse, successToken);
             httpServletResponse.setStatus(HttpStatus.OK.value());
         }
     }

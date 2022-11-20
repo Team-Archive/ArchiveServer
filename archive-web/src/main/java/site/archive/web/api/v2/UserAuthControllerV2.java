@@ -19,6 +19,7 @@ import site.archive.infra.user.oauth.OAuthUserService;
 import site.archive.service.user.UserAuthService;
 import site.archive.service.user.UserRegisterServiceV2;
 import site.archive.service.user.UserService;
+import site.archive.web.api.resolver.annotation.RequestUser;
 import site.archive.web.config.security.token.jwt.JwtAuthenticationToken;
 
 @RestController
@@ -34,8 +35,9 @@ public class UserAuthControllerV2 {
 
     @Operation(summary = "비밀번호 초기화 - 새로운 비밀번호 설정")
     @PostMapping("/password/reset")
-    public ResponseEntity<Void> resetPassword(@Validated @RequestBody UserPasswordResetRequestDtoV1 userPasswordResetRequestDtoV1) {
-        userAuthService.resetPassword(userPasswordResetRequestDtoV1);
+    public ResponseEntity<Void> resetPassword(@RequestUser UserInfo userInfo,
+                                              @Validated @RequestBody UserPasswordResetRequestDtoV1 userPasswordResetRequestDtoV1) {
+        userAuthService.resetPassword(userInfo, userPasswordResetRequestDtoV1);
         return ResponseEntity.ok().build();
     }
 

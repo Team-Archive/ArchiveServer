@@ -1,11 +1,11 @@
 package site.archive.web.config.security.authn;
 
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import site.archive.common.exception.BaseException;
-import site.archive.common.exception.security.WrappingAuthenticationException;
 import site.archive.domain.user.UserInfo;
 import site.archive.dto.v1.auth.LoginCommandV1;
 import site.archive.service.user.UserAuthService;
@@ -33,7 +33,7 @@ public class UserNamePasswordAuthenticationProvider implements AuthenticationPro
         try {
             return userAuthService.tryLoginAndReturnInfo(command);
         } catch (BaseException exception) {
-            throw new WrappingAuthenticationException(exception);
+            throw new BadCredentialsException(exception.getMessage());
         }
     }
 
