@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import site.archive.domain.archive.custom.ArchivePageable;
 import site.archive.domain.user.UserInfo;
-import site.archive.dto.v1.archive.ArchiveDtoV1;
 import site.archive.dto.v1.archive.ArchiveListResponseDtoV1;
 import site.archive.dto.v2.ArchiveCountResponseDto;
+import site.archive.dto.v2.ArchiveDtoV2;
 import site.archive.dto.v2.MyArchiveListResponseDto;
 import site.archive.service.archive.ArchiveService;
 import site.archive.web.api.resolver.annotation.RequestUser;
@@ -45,7 +45,7 @@ public class ArchiveControllerV2 {
 
     @Operation(summary = "아카이브 상세 조회")
     @GetMapping("/{archiveId}")
-    public ResponseEntity<ArchiveDtoV1> archiveSpecificView(@RequestUser UserInfo userInfo,
+    public ResponseEntity<ArchiveDtoV2> archiveSpecificView(@RequestUser UserInfo userInfo,
                                                             @PathVariable Long archiveId) {
         return ResponseEntity.ok(archiveService.getOneArchiveById(userInfo, archiveId));
     }
