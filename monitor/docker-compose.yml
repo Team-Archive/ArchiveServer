@@ -1,0 +1,87 @@
+networks:
+  monitor-net:
+    driver: bridge
+
+volumes:
+  prometheus_data: { }
+  grafana_data: { }
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.39.1
+    ports:
+      - "9090:9090"
+    container_name: prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
+
+  grafana:
+    image: grafana/grafana:9.2.3
+    ports:
+      - "3000:3000"
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_DOMAIN=${ARCHIVE_DOMAIN}
+      - GF_SERVER_ROOT_URL=https://${ARCHIVE_DOMAIN}/monitor
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+    restart: unless-stopped
+    networks:
+      - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
+
+
+## Current not use alert-manager, node-exporter
+#  alertmanager:
+#    image: prom/alertmanager
+#    container_name: alertmanager
+#    volumes:
+#      - ./alertmanager:/etc/alertmanager
+#    command:
+#      - '--config.file=/etc/alertmanager/config.yml'
+#      - '--storage.path=/alertmanager'
+#    restart: unless-stopped
+#    expose:
+#      - 9093
+#    networks:
+#      - monitor-net
+#    labels:
+#      org.label-schema.group: "monitoring"
+#
+#  nodeexporter:
+#    image: prom/node-exporter
+#    container_name: nodeexporter
+#    volumes:
+#      - /proc:/host/proc:ro
+#      - /sys:/host/sys:ro
+#      - /:/rootfs:ro
+#    command:
+#      - '--path.procfs=/host/proc'
+#      - '--path.rootfs=/rootfs'
+#      - '--path.sysfs=/host/sys'
+#      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+#    restart: unless-stopped
+#    expose:
+#      - 9100
+#    networks:
+#      - monitor-net
+#    labels:
+#      org.label-schema.group: "monitoring"

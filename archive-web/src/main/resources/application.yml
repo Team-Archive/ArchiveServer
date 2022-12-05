@@ -1,0 +1,32 @@
+spring:
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      file-size-threshold: 1MB
+      location: /tmp
+      max-file-size: 5MB
+      max-request-size: 20MB
+server:
+  port: 8080
+  tomcat:
+    basedir: .
+    accesslog:
+      enabled: true
+      directory: logs
+      pattern: '%h %l %u %t "%r" %s %b %D'
+      prefix: access
+      suffix: .log
+      rename-on-rotate: true
+      rotate: true
+      file-date-format: .yyyy-MM-dd
+      max-days: 7
+
+# For metrics
+management:
+  endpoints:
+    prometheus:
+      enabled: true
+    web:
+      exposure:
+        include: prometheus, metrics, health
