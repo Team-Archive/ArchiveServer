@@ -1,4 +1,4 @@
-package site.archive.web.config.cache;
+package site.archive.common.cache;
 
 import lombok.Getter;
 
