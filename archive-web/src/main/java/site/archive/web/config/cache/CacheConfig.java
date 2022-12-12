@@ -7,6 +7,7 @@ import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import site.archive.common.cache.CacheType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CacheConfig {
                      .map(cache -> new CaffeineCache(cache.getName(),
                                                      Caffeine.newBuilder()
                                                              .expireAfterWrite(cache.getExpireAfterWrite(), TimeUnit.SECONDS)
-                                                             .maximumSize(1)
+                                                             .maximumSize(cache.getMaximumSize())
                                                              .recordStats()
                                                              .build()))
                      .toList();
