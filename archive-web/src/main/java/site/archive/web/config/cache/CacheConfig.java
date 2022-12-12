@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCache;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,11 @@ public class CacheConfig {
         var cacheManager = new SimpleCacheManager();
         cacheManager.setCaches(caches());
         return cacheManager;
+    }
+
+    @Bean
+    public KeyGenerator keyGenerator() {
+        return new CustomKeyGenerator();
     }
 
     private List<CaffeineCache> caches() {

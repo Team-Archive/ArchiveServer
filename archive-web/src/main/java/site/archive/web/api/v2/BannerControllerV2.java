@@ -19,7 +19,7 @@ import site.archive.domain.banner.BannerType;
 import site.archive.dto.v2.BannerListResponseDto;
 import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.banner.BannerService;
-import site.archive.web.config.cache.CacheType.CacheInfo;
+import site.archive.common.cache.CacheType.CacheInfo;
 
 import static site.archive.service.archive.ArchiveImageService.BANNER_MAIN_IMAGE_DIRECTORY;
 import static site.archive.service.archive.ArchiveImageService.BANNER_SUMMARY_IMAGE_DIRECTORY;
