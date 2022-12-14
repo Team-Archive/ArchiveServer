@@ -3,7 +3,9 @@ package site.archive.web.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -41,6 +43,15 @@ public class WebConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/api/v1/auth/**",
                                  "/api/v2/auth/register/**",
                                  "/api/v2/auth/login/social");
+    }
+
+    // TODO: 정적 페이지 주소로 설정 예정
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .exposedHeaders(HttpHeaders.AUTHORIZATION)
+                .allowedMethods("*")
+                .allowedOriginPatterns("*");
     }
 
 }
