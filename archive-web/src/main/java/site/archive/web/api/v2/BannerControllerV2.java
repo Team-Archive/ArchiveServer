@@ -2,6 +2,8 @@ package site.archive.web.api.v2;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import site.archive.common.FileUtils;
 import site.archive.domain.banner.BannerType;
 import site.archive.dto.v2.BannerListResponseDto;
 import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.banner.BannerService;
-import site.archive.common.FileUtils;
+import site.archive.common.cache.CacheType.CacheInfo;
 
 import static site.archive.service.archive.ArchiveImageService.BANNER_MAIN_IMAGE_DIRECTORY;
 import static site.archive.service.archive.ArchiveImageService.BANNER_SUMMARY_IMAGE_DIRECTORY;
@@ -30,12 +33,14 @@ public class BannerControllerV2 {
     private final ArchiveImageService imageService;
 
     @Operation(summary = "배너 조회")
+    @Cacheable(CacheInfo.BANNERS)
     @GetMapping
     public ResponseEntity<BannerListResponseDto> archiveCommunityBannerView() {
         return ResponseEntity.ok(bannerService.getAllBanner());
     }
 
     @Operation(summary = "배너 생성 (업로드) - 이미지 타입")
+    @CacheEvict(CacheInfo.BANNERS)
     @PostMapping(path = "/type/image",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,6 +53,7 @@ public class BannerControllerV2 {
     }
 
     @Operation(summary = "배너 생성 (업로드) - URL 타입")
+    @CacheEvict(CacheInfo.BANNERS)
     @PostMapping(path = "/type/url",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,6 +65,7 @@ public class BannerControllerV2 {
     }
 
     @Operation(summary = "배너 제거")
+    @CacheEvict(CacheInfo.BANNERS)
     @DeleteMapping("/{bannerId}")
     public ResponseEntity<Void> deleteArchiveCommunityBanner(@PathVariable Long bannerId) {
         bannerService.deleteBanner(bannerId);
