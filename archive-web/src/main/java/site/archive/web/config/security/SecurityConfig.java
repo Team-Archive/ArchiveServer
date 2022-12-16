@@ -45,7 +45,8 @@ public class SecurityConfig {
                                                    AuthenticationManager authenticationManager)
         throws Exception {
         // @formatter:off
-        return http.csrf().disable()
+        return http.cors().and()
+                   .csrf().disable()
                    .formLogin().disable()
                    .httpBasic().disable()
                    .logout().disable()
