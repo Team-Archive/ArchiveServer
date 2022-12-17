@@ -17,8 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import site.archive.web.config.security.authn.BodyCredentialAuthenticationFilter;
 import site.archive.web.config.security.authn.CustomAuthenticationEntryPoint;
+import site.archive.web.config.security.authn.LoginAuthenticationFilter;
 import site.archive.web.config.security.authn.UserNamePasswordAuthenticationProvider;
 import site.archive.web.config.security.authz.CustomAccessDeniedHandler;
 import site.archive.web.config.security.common.handler.LoginFailureHandler;
@@ -115,8 +115,8 @@ public class SecurityConfig {
         return source;
     }
 
-    private BodyCredentialAuthenticationFilter bodyCredentialAuthenticationFilter(AuthenticationManager manager, ObjectMapper mapper) {
-        var filter = new BodyCredentialAuthenticationFilter("/api/v1/auth/login", manager, mapper);
+    private LoginAuthenticationFilter bodyCredentialAuthenticationFilter(AuthenticationManager manager, ObjectMapper mapper) {
+        var filter = new LoginAuthenticationFilter("/api/v1/auth/login", manager, mapper);
         filter.setAuthenticationSuccessHandler(successHandler);
         filter.setAuthenticationFailureHandler(failureHandler);
         return filter;

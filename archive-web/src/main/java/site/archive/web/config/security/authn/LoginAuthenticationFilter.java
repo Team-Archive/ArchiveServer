@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-public class BodyCredentialAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private final ObjectMapper mapper;
 
-    public BodyCredentialAuthenticationFilter(String defaultFilterProcessesUrl,
-                                              AuthenticationManager authenticationManager,
-                                              ObjectMapper mapper) {
+    public LoginAuthenticationFilter(String defaultFilterProcessesUrl,
+                                     AuthenticationManager authenticationManager,
+                                     ObjectMapper mapper) {
         super(defaultFilterProcessesUrl, authenticationManager);
         this.mapper = mapper;
     }
