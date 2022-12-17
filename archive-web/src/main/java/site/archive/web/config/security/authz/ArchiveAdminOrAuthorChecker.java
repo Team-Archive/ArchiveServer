@@ -11,7 +11,9 @@ public class ArchiveAdminOrAuthorChecker implements ArchivePermissionHandler {
 
     private final ArchiveService archiveService;
 
-    // TODO: 권한 문제는 Service 단에서 처리하는게 Query를 1번으로 수행할 수 있어 더 효율적
+    /*
+    권한 문제는 Service 단에서 처리하는게 Query를 1번으로 수행할 수 있어 더 효율적
+     */
     @Override
     public boolean checkParam(UserInfo requester, Object id) {
         if (!(id instanceof Long)) {
@@ -25,6 +27,11 @@ public class ArchiveAdminOrAuthorChecker implements ArchivePermissionHandler {
         return archiveService.getArchiveAuthorId((Long) id)
                              .filter(authorId -> authorId == requester.getUserId())
                              .isPresent();
+    }
+
+    @Override
+    public boolean checkParam(UserInfo requester) {
+        return false;
     }
 
 }
