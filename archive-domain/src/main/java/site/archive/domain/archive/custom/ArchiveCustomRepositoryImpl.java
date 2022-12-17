@@ -4,8 +4,10 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import site.archive.common.DateTimeUtil;
+import site.archive.common.cache.CacheType;
 import site.archive.domain.archive.Archive;
 import site.archive.domain.archive.Emotion;
 import site.archive.domain.archive.QArchive;
@@ -42,6 +44,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
                    .fetch();
     }
 
+    @Cacheable(CacheType.CacheInfo.ARCHIVE_COMMUNITIES)
     @Override
     public List<Archive> findFirstPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
         var archiveQuery = archiveSelectQueryWithAuthor(pageable);
@@ -52,6 +55,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
                    .fetch();
     }
 
+    @Cacheable(CacheType.CacheInfo.ARCHIVE_COMMUNITIES)
     @Override
     public List<Archive> findNextPageOnlyPublic(ArchivePageable pageable, int pageElementSize) {
         var archiveQuery = archiveSelectQueryWithAuthor(pageable);

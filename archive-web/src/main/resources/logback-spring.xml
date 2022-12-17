@@ -149,6 +149,13 @@
             <appender-ref ref="LOG_FILE"/>
             <appender-ref ref="SENTRY"/>
         </logger>
+
+
+        <logger name="site.archive.web.config.security.token" level="info" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOG_FILE"/>
+            <appender-ref ref="SENTRY"/>
+        </logger>
     </springProfile>
 
 </configuration>
