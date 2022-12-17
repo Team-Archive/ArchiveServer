@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import site.archive.common.FileUtils;
+import site.archive.common.cache.CacheType.CacheInfo;
 import site.archive.domain.banner.BannerType;
 import site.archive.dto.v2.BannerListResponseDto;
 import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.banner.BannerService;
-import site.archive.common.cache.CacheType.CacheInfo;
+import site.archive.web.config.security.authz.AdminChecker;
+import site.archive.web.config.security.authz.annotation.RequirePermission;
 
 import static site.archive.service.archive.ArchiveImageService.BANNER_MAIN_IMAGE_DIRECTORY;
 import static site.archive.service.archive.ArchiveImageService.BANNER_SUMMARY_IMAGE_DIRECTORY;
@@ -41,6 +43,7 @@ public class BannerControllerV2 {
 
     @Operation(summary = "배너 생성 (업로드) - 이미지 타입")
     @CacheEvict(CacheInfo.BANNERS)
+    @RequirePermission(handler = AdminChecker.class)
     @PostMapping(path = "/type/image",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,6 +57,7 @@ public class BannerControllerV2 {
 
     @Operation(summary = "배너 생성 (업로드) - URL 타입")
     @CacheEvict(CacheInfo.BANNERS)
+    @RequirePermission(handler = AdminChecker.class)
     @PostMapping(path = "/type/url",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,6 +70,7 @@ public class BannerControllerV2 {
 
     @Operation(summary = "배너 제거")
     @CacheEvict(CacheInfo.BANNERS)
+    @RequirePermission(handler = AdminChecker.class)
     @DeleteMapping("/{bannerId}")
     public ResponseEntity<Void> deleteArchiveCommunityBanner(@PathVariable Long bannerId) {
         bannerService.deleteBanner(bannerId);

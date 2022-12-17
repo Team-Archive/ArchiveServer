@@ -4,14 +4,16 @@ import lombok.RequiredArgsConstructor;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRole;
 import site.archive.service.archive.ArchiveService;
-import site.archive.web.config.security.authz.permissionhandler.ArchivePermissionHandler;
+import site.archive.web.config.security.authz.permissionhandler.PermissionHandler;
 
 @RequiredArgsConstructor
-public class ArchiveAdminOrAuthorChecker implements ArchivePermissionHandler {
+public class AdminOrAuthorChecker implements PermissionHandler {
 
     private final ArchiveService archiveService;
 
-    // TODO: 권한 문제는 Service 단에서 처리하는게 Query를 1번으로 수행할 수 있어 더 효율적
+    /*
+    권한 문제는 Service 단에서 처리하는게 Query를 1번으로 수행할 수 있어 더 효율적
+     */
     @Override
     public boolean checkParam(UserInfo requester, Object id) {
         if (!(id instanceof Long)) {
@@ -25,6 +27,11 @@ public class ArchiveAdminOrAuthorChecker implements ArchivePermissionHandler {
         return archiveService.getArchiveAuthorId((Long) id)
                              .filter(authorId -> authorId == requester.getUserId())
                              .isPresent();
+    }
+
+    @Override
+    public boolean checkParam(UserInfo requester) {
+        return false;
     }
 
 }

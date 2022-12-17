@@ -22,7 +22,7 @@ import site.archive.dto.v1.archive.ArchiveListResponseDtoV1;
 import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.archive.ArchiveService;
 import site.archive.web.api.resolver.annotation.RequestUser;
-import site.archive.web.config.security.authz.ArchiveAdminOrAuthorChecker;
+import site.archive.web.config.security.authz.AdminOrAuthorChecker;
 import site.archive.web.config.security.authz.annotation.RequirePermission;
 import site.archive.common.FileUtils;
 
@@ -42,14 +42,14 @@ public class ArchiveControllerV1 {
         return ResponseEntity.ok(archiveService.getAllArchive(user));
     }
 
-    @RequirePermission(handler = ArchiveAdminOrAuthorChecker.class, id = "id")
+    @RequirePermission(handler = AdminOrAuthorChecker.class, id = "id")
     @Operation(summary = "아카이브 상세 조회", description = "상세 뷰 - 아카이브 상세 조회")
     @GetMapping("/{id}")
     public ResponseEntity<ArchiveDtoV1> archiveSpecificView(@PathVariable Long id) {
         return ResponseEntity.ok(archiveService.getOneArchiveById(id));
     }
 
-    @RequirePermission(handler = ArchiveAdminOrAuthorChecker.class, id = "id")
+    @RequirePermission(handler = AdminOrAuthorChecker.class, id = "id")
     @Operation(summary = "아카이브 삭제", description = "아카이브 제거 - 실제 제거 X")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {

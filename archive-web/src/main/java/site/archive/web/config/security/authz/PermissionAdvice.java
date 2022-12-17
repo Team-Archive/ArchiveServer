@@ -8,13 +8,15 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
+import site.archive.domain.user.UserInfo;
 import site.archive.web.config.security.authz.annotation.RequirePermission;
+import site.archive.web.config.security.authz.permissionhandler.PermissionHandler;
 import site.archive.web.config.security.util.SecurityUtils;
 
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class ArchivePermissionAdvice {
+public class PermissionAdvice {
 
     private final ApplicationContext context;
 
@@ -26,11 +28,16 @@ public class ArchivePermissionAdvice {
         var requester = SecurityUtils.getCurrentUserInfo();
 
         var idParam = getParamObjByName(joinPoint.getArgs(), signature, annotation.id());
-        if (idParam != null && !permissionHandler.checkParam(requester, idParam)) {
+        if (!hasPermission(permissionHandler, requester, idParam)) {
             throw new AccessDeniedException("리소스에 접근 권한이 없습니다");
         }
 
         return joinPoint.proceed();
+    }
+
+    private boolean hasPermission(PermissionHandler permissionHandler, UserInfo requester, Object idParam) {
+        return permissionHandler.checkParam(requester, idParam)
+               || permissionHandler.checkParam(requester);
     }
 
     private Object getParamObjByName(Object[] args, MethodSignature signature, String paramName) {
