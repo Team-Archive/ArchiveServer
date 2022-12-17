@@ -45,13 +45,4 @@ public class WebConfigurer implements WebMvcConfigurer {
                                  "/api/v2/auth/login/social");
     }
 
-    // TODO: 정적 페이지 주소로 설정 예정
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .exposedHeaders(HttpHeaders.AUTHORIZATION)
-                .allowedMethods("*")
-                .allowedOriginPatterns("*");
-    }
-
 }

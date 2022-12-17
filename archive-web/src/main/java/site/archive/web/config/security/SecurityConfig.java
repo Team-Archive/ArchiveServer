@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -13,6 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import site.archive.web.config.security.authn.BodyCredentialAuthenticationFilter;
 import site.archive.web.config.security.authn.CustomAuthenticationEntryPoint;
 import site.archive.web.config.security.authn.UserNamePasswordAuthenticationProvider;
@@ -23,6 +27,8 @@ import site.archive.web.config.security.oauth.OAuthUserServiceV1;
 import site.archive.web.config.security.token.HttpAuthTokenSupport;
 import site.archive.web.config.security.token.TokenProvider;
 import site.archive.web.config.security.token.jwt.JwtTokenPersistFilter;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -45,7 +51,7 @@ public class SecurityConfig {
                                                    AuthenticationManager authenticationManager)
         throws Exception {
         // @formatter:off
-        return http.cors().and()
+        return http.cors().configurationSource(corsConfigurationSource()).and()
                    .csrf().disable()
                    .formLogin().disable()
                    .httpBasic().disable()
@@ -93,6 +99,20 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationProvider authenticationProvider) {
         return new ProviderManager(authenticationProvider);
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        var configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*"); // TODO: 정적 페이지 주소로 설정 예정
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setExposedHeaders(List.of(HttpHeaders.AUTHORIZATION));
+        configuration.setMaxAge(3600L);
+
+        var source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", configuration);
+        return source;
     }
 
     private BodyCredentialAuthenticationFilter bodyCredentialAuthenticationFilter(AuthenticationManager manager, ObjectMapper mapper) {
