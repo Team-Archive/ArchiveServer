@@ -9,7 +9,7 @@ import site.archive.domain.archive.Archive;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRole;
 import site.archive.service.archive.ArchiveService;
-import site.archive.web.config.security.authz.ArchiveAdminOrAuthorChecker;
+import site.archive.web.config.security.authz.AdminOrAuthorChecker;
 
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ class ArchiveAdminOrAuthorCheckerTest {
 
     private final long POST_ID = 11;
     @InjectMocks
-    private ArchiveAdminOrAuthorChecker handler;
+    private AdminOrAuthorChecker handler;
 
     @Mock
     private ArchiveService archiveService;

@@ -10,13 +10,13 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import site.archive.domain.user.UserInfo;
 import site.archive.web.config.security.authz.annotation.RequirePermission;
-import site.archive.web.config.security.authz.permissionhandler.ArchivePermissionHandler;
+import site.archive.web.config.security.authz.permissionhandler.PermissionHandler;
 import site.archive.web.config.security.util.SecurityUtils;
 
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class ArchivePermissionAdvice {
+public class PermissionAdvice {
 
     private final ApplicationContext context;
 
@@ -35,7 +35,7 @@ public class ArchivePermissionAdvice {
         return joinPoint.proceed();
     }
 
-    private boolean hasPermission(ArchivePermissionHandler permissionHandler, UserInfo requester, Object idParam) {
+    private boolean hasPermission(PermissionHandler permissionHandler, UserInfo requester, Object idParam) {
         return permissionHandler.checkParam(requester, idParam)
                || permissionHandler.checkParam(requester);
     }

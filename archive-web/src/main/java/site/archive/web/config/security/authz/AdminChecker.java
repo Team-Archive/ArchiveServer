@@ -2,9 +2,9 @@ package site.archive.web.config.security.authz;
 
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRole;
-import site.archive.web.config.security.authz.permissionhandler.ArchivePermissionHandler;
+import site.archive.web.config.security.authz.permissionhandler.PermissionHandler;
 
-public class ArchiveAdminChecker implements ArchivePermissionHandler {
+public class AdminChecker implements PermissionHandler {
 
     @Override
     public boolean checkParam(UserInfo requester, Object id) {

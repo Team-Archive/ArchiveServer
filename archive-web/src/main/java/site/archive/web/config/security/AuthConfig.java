@@ -10,8 +10,8 @@ import site.archive.service.archive.ArchiveService;
 import site.archive.service.user.UserAuthService;
 import site.archive.service.user.UserRegisterServiceV1;
 import site.archive.web.config.security.authn.UserNamePasswordAuthenticationProvider;
-import site.archive.web.config.security.authz.ArchiveAdminChecker;
-import site.archive.web.config.security.authz.ArchiveAdminOrAuthorChecker;
+import site.archive.web.config.security.authz.AdminChecker;
+import site.archive.web.config.security.authz.AdminOrAuthorChecker;
 import site.archive.web.config.security.common.handler.LoginFailureHandler;
 import site.archive.web.config.security.common.handler.LoginSuccessHandler;
 import site.archive.web.config.security.oauth.OAuthUserServiceV1;
@@ -65,13 +65,13 @@ public class AuthConfig {
     }
 
     @Bean
-    public ArchiveAdminOrAuthorChecker archiveAdminOrAuthorChecker(ArchiveService archiveService) {
-        return new ArchiveAdminOrAuthorChecker(archiveService);
+    public AdminOrAuthorChecker adminOrAuthorChecker(ArchiveService archiveService) {
+        return new AdminOrAuthorChecker(archiveService);
     }
 
     @Bean
-    public ArchiveAdminChecker archiveAdminChecker() {
-        return new ArchiveAdminChecker();
+    public AdminChecker adminChecker() {
+        return new AdminChecker();
     }
 
 }

@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import site.archive.domain.user.UserInfo;
 import site.archive.domain.user.UserRole;
 import site.archive.service.archive.ArchiveService;
-import site.archive.web.config.security.authz.permissionhandler.ArchivePermissionHandler;
+import site.archive.web.config.security.authz.permissionhandler.PermissionHandler;
 
 @RequiredArgsConstructor
-public class ArchiveAdminOrAuthorChecker implements ArchivePermissionHandler {
+public class AdminOrAuthorChecker implements PermissionHandler {
 
     private final ArchiveService archiveService;
 
