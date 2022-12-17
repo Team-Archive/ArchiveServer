@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import site.archive.web.config.security.authn.AdminLoginAuthenticationFilter;
 import site.archive.web.config.security.authn.CustomAuthenticationEntryPoint;
 import site.archive.web.config.security.authn.LoginAuthenticationFilter;
 import site.archive.web.config.security.authn.UserNamePasswordAuthenticationProvider;
@@ -69,7 +70,9 @@ public class SecurityConfig {
                    .exceptionHandling()
                         .authenticationEntryPoint(customAuthenticationEntryPoint)
                         .accessDeniedHandler(customAccessDeniedHandler).and()
-                   .addFilterBefore(bodyCredentialAuthenticationFilter(authenticationManager, mapper),
+                   .addFilterBefore(loginAuthenticationFilter(authenticationManager, mapper),
+                                    UsernamePasswordAuthenticationFilter.class)
+                   .addFilterBefore(adminLoginAuthenticationFilter(authenticationManager, mapper),
                                     UsernamePasswordAuthenticationFilter.class)
                    .addFilterBefore(tokenPersistFilter(),
                                     UsernamePasswordAuthenticationFilter.class)
@@ -115,8 +118,15 @@ public class SecurityConfig {
         return source;
     }
 
-    private LoginAuthenticationFilter bodyCredentialAuthenticationFilter(AuthenticationManager manager, ObjectMapper mapper) {
+    private LoginAuthenticationFilter loginAuthenticationFilter(AuthenticationManager manager, ObjectMapper mapper) {
         var filter = new LoginAuthenticationFilter("/api/v1/auth/login", manager, mapper);
+        filter.setAuthenticationSuccessHandler(successHandler);
+        filter.setAuthenticationFailureHandler(failureHandler);
+        return filter;
+    }
+
+    private AdminLoginAuthenticationFilter adminLoginAuthenticationFilter(AuthenticationManager manager, ObjectMapper mapper) {
+        var filter = new AdminLoginAuthenticationFilter("/api/v1/auth/login/admin", manager, mapper);
         filter.setAuthenticationSuccessHandler(successHandler);
         filter.setAuthenticationFailureHandler(failureHandler);
         return filter;
