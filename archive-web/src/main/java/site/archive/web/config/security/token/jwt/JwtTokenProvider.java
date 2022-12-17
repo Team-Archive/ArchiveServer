@@ -49,7 +49,6 @@ public class JwtTokenProvider implements TokenProvider {
             log.debug("토큰 파싱 결과; id: {}, email: {}, role: {}", info.getUserId(), info.getMailAddress(), info.getUserRole());
             return info;
         } catch (Exception e) {
-            log.warn("토큰 파싱 실패!", e);
             throw new TokenNotFoundException();
         }
     }
