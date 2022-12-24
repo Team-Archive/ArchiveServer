@@ -6,7 +6,7 @@ import site.archive.domain.common.BaseTimeEntity;
 import site.archive.domain.report.Report;
 import site.archive.domain.report.ReportRepository;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor

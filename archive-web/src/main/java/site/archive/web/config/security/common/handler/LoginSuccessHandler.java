@@ -11,8 +11,8 @@ import site.archive.web.config.security.common.UserPrincipal;
 import site.archive.web.config.security.token.HttpAuthTokenSupport;
 import site.archive.web.config.security.token.TokenProvider;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @Slf4j

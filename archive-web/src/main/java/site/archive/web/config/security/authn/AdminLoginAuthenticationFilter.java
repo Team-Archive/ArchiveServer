@@ -10,8 +10,8 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import site.archive.domain.user.UserRole;
 import site.archive.web.config.security.common.UserPrincipal;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 

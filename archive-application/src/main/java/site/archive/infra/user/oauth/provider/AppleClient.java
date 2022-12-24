@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -151,7 +150,6 @@ public class AppleClient implements OAuthProviderClient {
     }
 
     @ConfigurationProperties(prefix = "spring.security.oauth2.client.registration.apple")
-    @ConstructorBinding
     @AllArgsConstructor
     @Getter
     public static class AppleOAuthProperty {

@@ -30,7 +30,7 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: none
       naming:

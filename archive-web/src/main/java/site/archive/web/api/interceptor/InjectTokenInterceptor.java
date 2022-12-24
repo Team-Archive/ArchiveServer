@@ -8,8 +8,8 @@ import site.archive.web.config.security.token.HttpAuthTokenSupport;
 import site.archive.web.config.security.token.TokenProvider;
 import site.archive.web.config.security.token.jwt.JwtAuthenticationToken;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 public class InjectTokenInterceptor implements HandlerInterceptor {

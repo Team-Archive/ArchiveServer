@@ -7,9 +7,9 @@ import site.archive.domain.user.BaseUser;
 import site.archive.domain.user.PasswordUser;
 import site.archive.domain.user.UserRole;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 
 @Getter
 @NoArgsConstructor
