@@ -15,6 +15,7 @@ import java.util.HashMap;
 @Slf4j
 public class JwtTokenProvider implements TokenProvider {
 
+    private static final long DAY_30 = 1000L * 60 * 60 * 24 * 30;
     private final String secretKey;
     private final ObjectMapper mapper;
 
@@ -24,8 +25,6 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     public String createToken(UserInfo info) {
-        Date date = new Date();
-        date.setTime(date.getTime() + 1000L * 60 * 60 * 24 * 30);
         return Jwts
                    .builder()
                    .setSubject("user")
@@ -33,9 +32,15 @@ public class JwtTokenProvider implements TokenProvider {
                    .setHeaderParam("typ", "JWT")
                    .setHeaderParam("alg", "ES56")
                    .setHeaderParam("kid", "default")
-                   .setExpiration(date)
+                   .setExpiration(getTokenExpiredDate())
                    .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
                    .compact();
+    }
+
+    private Date getTokenExpiredDate() {
+        Date date = new Date();
+        date.setTime(date.getTime() + DAY_30);
+        return date;
     }
 
     public UserInfo parseUserInfoFromToken(String token) {
