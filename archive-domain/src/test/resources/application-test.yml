@@ -3,7 +3,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true

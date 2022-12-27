@@ -3,6 +3,8 @@ package site.archive.domain;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.ext.ScriptUtils;
+import org.testcontainers.jdbc.JdbcDatabaseDelegate;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
@@ -17,6 +19,12 @@ public abstract class MySQLTestContainer {
                                .withUsername("test")
                                .withPassword("test-archive");
         MY_SQL_CONTAINER.start();
+
+        var jdbcDatabaseDelegate = new JdbcDatabaseDelegate(MY_SQL_CONTAINER, "");
+        ScriptUtils.runInitScript(jdbcDatabaseDelegate, "sql/default/ddl.sql");
+        ScriptUtils.runInitScript(jdbcDatabaseDelegate, "sql/default/user.sql");
+        ScriptUtils.runInitScript(jdbcDatabaseDelegate, "sql/default/like.sql");
+        ScriptUtils.runInitScript(jdbcDatabaseDelegate, "sql/default/archive.sql");
     }
 
     @DynamicPropertySource
