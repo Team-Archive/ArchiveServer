@@ -57,7 +57,7 @@ spring:
       await_termination_seconds: 120
 
 jwt:
-  secret-key: testKey
+  secret-key: ${JWT_SECRET_KEY}
 
 # s3 configuration
 cloud:
