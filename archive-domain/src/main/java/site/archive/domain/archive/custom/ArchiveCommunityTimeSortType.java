@@ -65,7 +65,10 @@ public enum ArchiveCommunityTimeSortType {
 
     static {
         Arrays.stream(values())
-              .forEach(sortType -> sortTypeMap.put(sortType.getFieldName(), sortType));
+              .forEach(sortType -> {
+                  sortTypeMap.put(sortType.getFieldName(), sortType);
+                  sortTypeMap.put(sortType.name(), sortType);
+              });
     }
 
     private final String fieldName;
