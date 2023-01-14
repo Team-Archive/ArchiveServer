@@ -1,6 +1,5 @@
 package site.archive.web.api.v2;
 
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,6 +19,7 @@ import site.archive.domain.banner.BannerType;
 import site.archive.dto.v2.BannerListResponseDto;
 import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.banner.BannerService;
+import site.archive.web.api.docs.swagger.BannerControllerV2Docs;
 import site.archive.web.config.security.authz.AdminChecker;
 import site.archive.web.config.security.authz.annotation.RequirePermission;
 
@@ -29,19 +29,17 @@ import static site.archive.service.archive.ArchiveImageService.BANNER_SUMMARY_IM
 @RestController
 @RequestMapping("/api/v2/banner")
 @RequiredArgsConstructor
-public class BannerControllerV2 {
+public class BannerControllerV2 implements BannerControllerV2Docs {
 
     private final BannerService bannerService;
     private final ArchiveImageService imageService;
 
-    @Operation(summary = "배너 조회")
     @Cacheable(CacheInfo.BANNERS)
     @GetMapping
     public ResponseEntity<BannerListResponseDto> archiveCommunityBannerView() {
         return ResponseEntity.ok(bannerService.getAllBanner());
     }
 
-    @Operation(summary = "배너 생성 (업로드) - 이미지 타입")
     @CacheEvict(CacheInfo.BANNERS)
     @RequirePermission(handler = AdminChecker.class)
     @PostMapping(path = "/type/image",
@@ -55,7 +53,6 @@ public class BannerControllerV2 {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "배너 생성 (업로드) - URL 타입")
     @CacheEvict(CacheInfo.BANNERS)
     @RequirePermission(handler = AdminChecker.class)
     @PostMapping(path = "/type/url",
@@ -68,7 +65,6 @@ public class BannerControllerV2 {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "배너 제거")
     @CacheEvict(CacheInfo.BANNERS)
     @RequirePermission(handler = AdminChecker.class)
     @DeleteMapping("/{bannerId}")
