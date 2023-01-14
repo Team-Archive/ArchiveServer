@@ -65,7 +65,10 @@ public enum ArchiveCommunityTimeSortType {
 
     static {
         Arrays.stream(values())
-              .forEach(sortType -> sortTypeMap.put(sortType.getFieldName(), sortType));
+              .forEach(sortType -> {
+                  sortTypeMap.put(sortType.getFieldName(), sortType);
+                  sortTypeMap.put(sortType.name(), sortType);
+              });
     }
 
     private final String fieldName;
@@ -77,7 +80,7 @@ public enum ArchiveCommunityTimeSortType {
     public static ArchiveCommunityTimeSortType of(String fieldName) {
         var sortType = sortTypeMap.get(fieldName);
         if (sortType == null) {
-            throw new IllegalArgumentException("SortType 값이 올바르지 않습니다");
+            throw new IllegalArgumentException("SortType 값이 존재하지 않습니다.");
         }
         return sortType;
     }

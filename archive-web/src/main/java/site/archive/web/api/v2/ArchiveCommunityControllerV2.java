@@ -2,6 +2,7 @@ package site.archive.web.api.v2;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class ArchiveCommunityControllerV2 {
     @Operation(summary = "아카이브 전시소통 리스트 조회")
     @GetMapping
     public ResponseEntity<List<ArchiveCommunityResponseDto>> archiveCommunityView(@RequestUser UserInfo user,
-                                                                                  ArchivePageable pageable) {
+                                                                                  @ParameterObject ArchivePageable pageable) {
         if (pageable.isRequestFirstPage()) {
             return ResponseEntity.ok(archiveCommunityService.getCommunityFirstPage(user.getUserId(), pageable));
         }

@@ -9,6 +9,7 @@ spring:
       max-request-size: 20MB
 server:
   port: 8080
+  forward-headers-strategy: FRAMEWORK
   tomcat:
     basedir: .
     accesslog:

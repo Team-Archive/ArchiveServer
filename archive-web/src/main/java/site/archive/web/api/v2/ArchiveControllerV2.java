@@ -2,6 +2,7 @@ package site.archive.web.api.v2;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class ArchiveControllerV2 {
     @Operation(summary = "나의 관람 뷰 (아카이브 리스트)", description = "홈 뷰 - 아카이브 리스트 조회")
     @GetMapping
     public ResponseEntity<MyArchiveListResponseDto> archiveListView(@RequestUser UserInfo userInfo,
-                                                                    ArchivePageable pageable) {
+                                                                    @ParameterObject ArchivePageable pageable) {
         var archiveCount = archiveService.countArchive(userInfo);
         var myArchives = pageable.isRequestFirstPage()
                          ? archiveService.getAllArchiveFirstPage(userInfo, pageable)

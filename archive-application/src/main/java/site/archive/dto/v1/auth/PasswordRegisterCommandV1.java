@@ -9,8 +9,8 @@ import site.archive.domain.user.BaseUser;
 import site.archive.domain.user.PasswordUser;
 import site.archive.domain.user.UserRole;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter

@@ -58,15 +58,15 @@ public class SecurityConfig {
                    .httpBasic().disable()
                    .logout().disable()
                    .headers().frameOptions().sameOrigin().and()
-                   .authorizeRequests()
-                       .antMatchers("/actuator/**").permitAll()
-                       .antMatchers("/api/v1/**").permitAll()
-                       .antMatchers("/api/v2/user/duplicate/**").permitAll()
-                       .antMatchers("/api/v2/auth/register/**").permitAll()
-                       .antMatchers("/api/v2/auth/login/social").permitAll()
-                       .antMatchers("/login/**").permitAll()
-                       .antMatchers(HttpMethod.GET, "/exception/**").permitAll()
-                       .anyRequest().authenticated().and()
+                   .authorizeHttpRequests(auth -> auth
+                      .requestMatchers("/actuator/**").permitAll()
+                      .requestMatchers("/api/v1/**").permitAll()
+                      .requestMatchers("/api/v2/user/duplicate/**").permitAll()
+                      .requestMatchers("/api/v2/auth/register/**").permitAll()
+                      .requestMatchers("/api/v2/auth/login/social").permitAll()
+                      .requestMatchers("/login/**").permitAll()
+                      .requestMatchers(HttpMethod.GET, "/exception/**").permitAll()
+                      .anyRequest().authenticated())
                    .exceptionHandling()
                         .authenticationEntryPoint(customAuthenticationEntryPoint)
                         .accessDeniedHandler(customAccessDeniedHandler).and()
@@ -86,12 +86,12 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().antMatchers("/h2-console/**",
-                                                 "/favicon.ico",
-                                                 "/error",
-                                                 "/swagger-ui/**",
-                                                 "/swagger-resources/**",
-                                                 "/v3/api-docs");
+        return web -> web.ignoring().requestMatchers("/h2-console/**",
+                                                     "/favicon.ico",
+                                                     "/error",
+                                                     "/swagger-ui/**",
+                                                     "/swagger-resources/**",
+                                                     "/v3/api-docs/**");
     }
 
     @Bean
@@ -115,6 +115,7 @@ public class SecurityConfig {
 
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", configuration);
+        source.registerCorsConfiguration("/exception/**", configuration);
         return source;
     }
 

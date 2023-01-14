@@ -7,7 +7,6 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +47,6 @@ public class AsyncConfiguration implements AsyncConfigurer {
     }
 
     @ConfigurationProperties(prefix = "spring.mail.executor")
-    @ConstructorBinding
     @AllArgsConstructor
     @Getter
     @ToString
