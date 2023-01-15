@@ -7,11 +7,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import site.archive.domain.archive.Archive;
+import site.archive.domain.archive.CoverImageType;
 import site.archive.domain.archive.Emotion;
 import site.archive.domain.user.BaseUser;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import static site.archive.common.DateTimeUtil.YY_MM_DD_FORMATTER;
 
@@ -26,7 +28,8 @@ public class ArchiveDtoV1 {
     private String watchedOn;
     private Emotion emotion;
     private String mainImage;
-    private Boolean isPublic;       // Default value is false
+    private Boolean isPublic;               // Default value is false
+    private CoverImageType coverImageType;  // Default value is EMOTION_COVER
 
     private long authorId;
 
@@ -60,11 +63,13 @@ public class ArchiveDtoV1 {
                            .mainImage(archive.getMainImage())
                            .authorId(archive.getAuthor().getId())
                            .isPublic(archive.getIsPublic())
+                           .coverImageType(archive.getCoverImageType())
                            .build();
     }
 
     public Archive toEntity(BaseUser user) {
-        var defaultIsPublic = this.isPublic != null && this.isPublic;
+        var archivePublic = this.isPublic != null && this.isPublic;
+        var archiveCoverImageType = Objects.requireNonNullElse(coverImageType, CoverImageType.EMOTION_COVER);
         return Archive.builder()
                       .name(name)
                       .watchedOn(LocalDate.parse(watchedOn, YY_MM_DD_FORMATTER))
@@ -72,7 +77,8 @@ public class ArchiveDtoV1 {
                       .mainImage(mainImage)
                       .companions(companions)
                       .author(user)
-                      .isPublic(defaultIsPublic)
+                      .isPublic(archivePublic)
+                      .coverImageType(archiveCoverImageType)
                       .build();
     }
 
