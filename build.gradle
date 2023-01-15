@@ -15,7 +15,7 @@ ext {
     testContainerVersion = "1.17.2"
 }
 
-subprojects { // 추후 root project 제거시 subproject 로 수정
+subprojects {
     apply {
         plugin 'java'
         plugin 'io.spring.dependency-management'
