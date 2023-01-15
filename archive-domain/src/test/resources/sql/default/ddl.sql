@@ -1,17 +1,18 @@
 -- Test table ddl
 create table if not exists archive
 (
-    archive_id bigint auto_increment primary key,
-    created_at timestamp  default CURRENT_TIMESTAMP null,
-    is_deleted tinyint(1) default 0                 null,
-    updated_at timestamp  default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP,
-    companions varchar(255)                         null,
-    emotion    varchar(255)                         null,
-    main_image varchar(255)                         null,
-    name       varchar(100)                         not null,
-    watched_on timestamp                            null,
-    author_id  bigint                               not null,
-    is_public  tinyint(1) default 0                 null
+    archive_id       bigint auto_increment primary key,
+    created_at       timestamp   default CURRENT_TIMESTAMP null,
+    is_deleted       tinyint(1)  default 0                 null,
+    updated_at       timestamp   default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP,
+    companions       varchar(255)                          null,
+    emotion          varchar(255)                          null,
+    main_image       varchar(255)                          null,
+    name             varchar(100)                          not null,
+    watched_on       timestamp                             null,
+    author_id        bigint                                not null,
+    is_public        tinyint(1)  default 0                 null,
+    cover_image_type varchar(20) default 'EMOTION_COVER'   not null
 );
 
 create table if not exists archive_image

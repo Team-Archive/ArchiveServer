@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import site.archive.domain.archive.Archive;
+import site.archive.domain.archive.CoverImageType;
 import site.archive.domain.archive.Emotion;
 
 import static site.archive.common.DateTimeUtil.YY_MM_DD_FORMATTER;
@@ -19,6 +20,7 @@ public class MyArchiveResponseDto {
     private final Emotion emotion;
     private final String mainImage;
     private final Boolean isPublic;
+    private final CoverImageType coverImageType;
     private final Long authorId;
     private final Long likeCount;
     private final Long dateMilli;
@@ -34,6 +36,7 @@ public class MyArchiveResponseDto {
                                    .emotion(archive.getEmotion())
                                    .mainImage(archive.getMainImage())
                                    .isPublic(archive.getIsPublic())
+                                   .coverImageType(archive.getCoverImageType())
                                    .authorId(author.getId())
                                    .likeCount(likeCount)
                                    .dateMilli(dateMilli)
