@@ -36,6 +36,14 @@ public class ArchiveDtoV2 {
     private List<String> companions;
     private List<ArchiveImageDtoV1> images;
 
+    /**
+     * 아카이브 상세 조회 DTO V2
+     * 아카이브 작가의 닉네임, 프로필이미지 포함
+     * 아카이브 연결 이미지들을 다 포함
+     *
+     * @param archive Archive Entity
+     * @return ArchiveDtoV2 archive specific DTO
+     */
     public static ArchiveDtoV2 specificFrom(Archive archive) {
         var archiveImages = archive.getArchiveImages().stream()
                                    .map(ArchiveImageDtoV1::from)

@@ -36,6 +36,13 @@ public class ArchiveDtoV1 {
     private List<String> companions;
     private List<ArchiveImageDtoV1> images;
 
+    /**
+     * 아카이브 상세 조회 DTO V1
+     * 아카이브 연결 이미지들을 다 포함
+     *
+     * @param archive Archive Entity
+     * @return ArchiveDtoV1 archive specific DTO
+     */
     public static ArchiveDtoV1 specificFrom(Archive archive) {
         var archiveImages = archive.getArchiveImages().stream()
                                    .map(ArchiveImageDtoV1::from)
@@ -53,6 +60,13 @@ public class ArchiveDtoV1 {
                            .build();
     }
 
+    /**
+     * 아카이브 리스트 조회 DTO
+     * 아카이브 연결 이미지들을 포함하고 있지 않음
+     *
+     * @param archive archive entity
+     * @return ArchiveDtoV1 archive simple DTO
+     */
     public static ArchiveDtoV1 simpleFrom(Archive archive) {
         return ArchiveDtoV1.builder()
                            .archiveId(archive.getId())
