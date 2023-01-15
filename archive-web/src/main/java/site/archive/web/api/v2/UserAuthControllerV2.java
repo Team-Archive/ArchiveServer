@@ -1,6 +1,5 @@
 package site.archive.web.api.v2;
 
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,12 +19,13 @@ import site.archive.service.user.UserAuthService;
 import site.archive.service.user.UserRegisterServiceV2;
 import site.archive.service.user.UserService;
 import site.archive.web.api.resolver.annotation.RequestUser;
+import site.archive.web.api.docs.swagger.UserAuthControllerV2Docs;
 import site.archive.web.config.security.token.jwt.JwtAuthenticationToken;
 
 @RestController
 @RequestMapping("/api/v2/auth")
 @RequiredArgsConstructor
-public class UserAuthControllerV2 {
+public class UserAuthControllerV2 implements UserAuthControllerV2Docs {
 
     private final UserService userService;
     private final UserAuthService userAuthService;
@@ -33,7 +33,6 @@ public class UserAuthControllerV2 {
     private final OAuthUserService oAuthUserService;
     private final PasswordEncoder encoder;
 
-    @Operation(summary = "비밀번호 초기화 - 새로운 비밀번호 설정")
     @PostMapping("/password/reset")
     public ResponseEntity<Void> resetPassword(@RequestUser UserInfo userInfo,
                                               @Validated @RequestBody UserPasswordResetRequestDtoV1 userPasswordResetRequestDtoV1) {
@@ -41,7 +40,6 @@ public class UserAuthControllerV2 {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "[NoAuth] 패스워드 유저 회원가입")
     @PostMapping("/register")
     public ResponseEntity<Void> registerPasswordUser(@Validated @RequestBody PasswordRegisterRequestDto passwordRegisterRequest) {
         passwordRegisterRequest.updatePasswordToEncrypt(encoder.encode(passwordRegisterRequest.getPassword()));
@@ -50,7 +48,6 @@ public class UserAuthControllerV2 {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "[NoAuth] 소셜 유저 회원가입")
     @PostMapping("/register/social")
     public ResponseEntity<Void> registerSocialUser(@Validated @RequestBody OAuthUserInfoRequestDto oAuthUserInfoRequest) {
         var oAuthRegisterRequest = oAuthUserService.getOAuthRegisterInfo(oAuthUserInfoRequest);
@@ -59,7 +56,6 @@ public class UserAuthControllerV2 {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "[NoAuth] 소셜 유저 로그인")
     @PostMapping("/login/social")
     public ResponseEntity<Void> loginSocialUser(@Validated @RequestBody OAuthLoginRequestDto oAuthLoginRequestDto) {
         var oAuthEmail = oAuthUserService.getOAuthEmail(oAuthLoginRequestDto);

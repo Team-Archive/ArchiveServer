@@ -1,6 +1,5 @@
 package site.archive.web.api.v2;
 
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,16 +10,16 @@ import site.archive.dto.v2.ArchiveLikeListResponseDto;
 import site.archive.service.archive.ArchiveService;
 import site.archive.service.like.LikeService;
 import site.archive.web.api.resolver.annotation.RequestUser;
+import site.archive.web.api.docs.swagger.ArchiveLikeControllerV2Docs;
 
 @RestController
 @RequestMapping("/api/v2/archive/like")
 @RequiredArgsConstructor
-public class ArchiveLikeControllerV2 {
+public class ArchiveLikeControllerV2 implements ArchiveLikeControllerV2Docs {
 
     private final ArchiveService archiveService;
     private final LikeService likeService;
 
-    @Operation(summary = "좋아요 한 Archive 조회")
     @GetMapping
     public ResponseEntity<ArchiveLikeListResponseDto> archiveLikeListView(@RequestUser UserInfo userInfo) {
         var archiveIds = likeService.likeArchiveIds(userInfo.getUserId());

@@ -1,6 +1,5 @@
 package site.archive.web.api.v1;
 
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,19 +13,19 @@ import site.archive.dto.v1.auth.PasswordRegisterCommandV1;
 import site.archive.dto.v1.user.OAuthRegisterRequestDtoV1;
 import site.archive.infra.user.oauth.OAuthUserService;
 import site.archive.service.user.UserRegisterServiceV1;
+import site.archive.web.api.docs.swagger.RegisterControllerV1Docs;
 import site.archive.web.config.security.token.jwt.JwtAuthenticationToken;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class RegisterControllerV1 {
+public class RegisterControllerV1 implements RegisterControllerV1Docs {
 
     private final UserRegisterServiceV1 userRegisterServiceV1;
     private final OAuthUserService oAuthUserService;
     private final PasswordEncoder encoder;
 
     @Deprecated
-    @Operation(summary = "[Deprecated -> /api/v2/auth/register] 패스워드 유저 회원가입")
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@Validated @RequestBody PasswordRegisterCommandV1 command) {
         command.setPassword(encoder.encode(command.getPassword()));
@@ -36,7 +35,6 @@ public class RegisterControllerV1 {
     }
 
     @Deprecated
-    @Operation(summary = "[Deprecated -> /api/v2/auth/register/social, login/social] 소셜 로그인 유저 회원가입 및 로그인")
     @PostMapping("/social")
     public ResponseEntity<Void> registerOrLoginSocialUser(@Validated @RequestBody OAuthRegisterRequestDtoV1 oAuthRegisterRequestDtoV1) {
         var oAuthRegisterInfo = oAuthUserService.getOAuthRegisterInfo(oAuthRegisterRequestDtoV1);

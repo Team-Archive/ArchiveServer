@@ -1,6 +1,5 @@
 package site.archive.web.api.v2;
 
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,6 +19,7 @@ import site.archive.domain.banner.BannerType;
 import site.archive.dto.v2.BannerListResponseDto;
 import site.archive.service.archive.ArchiveImageService;
 import site.archive.service.banner.BannerService;
+import site.archive.web.api.docs.swagger.BannerControllerV2Docs;
 import site.archive.web.config.security.authz.AdminChecker;
 import site.archive.web.config.security.authz.annotation.RequirePermission;
 
@@ -29,46 +29,42 @@ import static site.archive.service.archive.ArchiveImageService.BANNER_SUMMARY_IM
 @RestController
 @RequestMapping("/api/v2/banner")
 @RequiredArgsConstructor
-public class BannerControllerV2 {
+public class BannerControllerV2 implements BannerControllerV2Docs {
 
     private final BannerService bannerService;
     private final ArchiveImageService imageService;
 
-    @Operation(summary = "배너 조회")
     @Cacheable(CacheInfo.BANNERS)
     @GetMapping
     public ResponseEntity<BannerListResponseDto> archiveCommunityBannerView() {
         return ResponseEntity.ok(bannerService.getAllBanner());
     }
 
-    @Operation(summary = "배너 생성 (업로드) - 이미지 타입")
     @CacheEvict(CacheInfo.BANNERS)
     @RequirePermission(handler = AdminChecker.class)
     @PostMapping(path = "/type/image",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createArchiveCommunityBanner(@RequestParam MultipartFile summaryImage,
-                                                             @RequestParam MultipartFile mainImage) {
+    public ResponseEntity<Void> createArchiveCommunityBanner(@RequestParam(name = "summaryImage") MultipartFile summaryImage,
+                                                             @RequestParam(name = "mainImage") MultipartFile mainImage) {
         var summaryImageUri = imageUploadAndGetUri(BANNER_SUMMARY_IMAGE_DIRECTORY, summaryImage);
         var mainImageUri = imageUploadAndGetUri(BANNER_MAIN_IMAGE_DIRECTORY, mainImage);
         bannerService.createBanner(summaryImageUri, mainImageUri, BannerType.IMAGE);
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "배너 생성 (업로드) - URL 타입")
     @CacheEvict(CacheInfo.BANNERS)
     @RequirePermission(handler = AdminChecker.class)
     @PostMapping(path = "/type/url",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createArchiveCommunityBanner(@RequestParam MultipartFile summaryImage,
+    public ResponseEntity<Void> createArchiveCommunityBanner(@RequestParam(name = "summaryImage") MultipartFile summaryImage,
                                                              @RequestParam String mainContentUrl) {
         var summaryImageUri = imageUploadAndGetUri(BANNER_SUMMARY_IMAGE_DIRECTORY, summaryImage);
         bannerService.createBanner(summaryImageUri, mainContentUrl, BannerType.URL);
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "배너 제거")
     @CacheEvict(CacheInfo.BANNERS)
     @RequirePermission(handler = AdminChecker.class)
     @DeleteMapping("/{bannerId}")
