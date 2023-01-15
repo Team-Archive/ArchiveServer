@@ -13,12 +13,13 @@ import site.archive.dto.v1.archive.EmailDuplicateResponseDtoV1;
 import site.archive.dto.v2.NicknameDuplicateResponseDto;
 import site.archive.dto.v2.UserNicknameUpdateRequest;
 import site.archive.service.user.UserService;
+import site.archive.web.api.docs.swagger.UserControllerV2Docs;
 import site.archive.web.api.resolver.annotation.RequestUser;
 
 @RestController
 @RequestMapping("/api/v2/user")
 @RequiredArgsConstructor
-public class UserControllerV2 {
+public class UserControllerV2 implements UserControllerV2Docs {
 
     private final UserService userService;
 
