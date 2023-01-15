@@ -45,8 +45,8 @@ public class BannerControllerV2 implements BannerControllerV2Docs {
     @PostMapping(path = "/type/image",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createArchiveCommunityBanner(@RequestParam MultipartFile summaryImage,
-                                                             @RequestParam MultipartFile mainImage) {
+    public ResponseEntity<Void> createArchiveCommunityBanner(@RequestParam(name = "summaryImage") MultipartFile summaryImage,
+                                                             @RequestParam(name = "mainImage") MultipartFile mainImage) {
         var summaryImageUri = imageUploadAndGetUri(BANNER_SUMMARY_IMAGE_DIRECTORY, summaryImage);
         var mainImageUri = imageUploadAndGetUri(BANNER_MAIN_IMAGE_DIRECTORY, mainImage);
         bannerService.createBanner(summaryImageUri, mainImageUri, BannerType.IMAGE);
@@ -58,7 +58,7 @@ public class BannerControllerV2 implements BannerControllerV2Docs {
     @PostMapping(path = "/type/url",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
                  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createArchiveCommunityBanner(@RequestParam MultipartFile summaryImage,
+    public ResponseEntity<Void> createArchiveCommunityBanner(@RequestParam(name = "summaryImage") MultipartFile summaryImage,
                                                              @RequestParam String mainContentUrl) {
         var summaryImageUri = imageUploadAndGetUri(BANNER_SUMMARY_IMAGE_DIRECTORY, summaryImage);
         bannerService.createBanner(summaryImageUri, mainContentUrl, BannerType.URL);
