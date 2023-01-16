@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import site.archive.common.DateTimeUtils;
 import site.archive.domain.archive.Archive;
 import site.archive.domain.archive.CoverImageType;
 import site.archive.domain.archive.Emotion;
@@ -14,8 +15,6 @@ import site.archive.domain.user.BaseUser;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-
-import static site.archive.common.DateTimeUtil.YY_MM_DD_FORMATTER;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -50,7 +49,7 @@ public class ArchiveDtoV1 {
         return ArchiveDtoV1.builder()
                            .archiveId(archive.getId())
                            .name(archive.getName())
-                           .watchedOn(archive.getWatchedOn().format(YY_MM_DD_FORMATTER))
+                           .watchedOn(archive.getWatchedOn().format(DateTimeUtils.getYymmddFormatter()))
                            .emotion(archive.getEmotion())
                            .mainImage(archive.getMainImage())
                            .companions(archive.getCompanions())
@@ -71,7 +70,7 @@ public class ArchiveDtoV1 {
         return ArchiveDtoV1.builder()
                            .archiveId(archive.getId())
                            .name(archive.getName())
-                           .watchedOn(archive.getWatchedOn().format(YY_MM_DD_FORMATTER))
+                           .watchedOn(archive.getWatchedOn().format(DateTimeUtils.getYymmddFormatter()))
                            .emotion(archive.getEmotion())
                            .companions(archive.getCompanions())
                            .mainImage(archive.getMainImage())
@@ -86,7 +85,7 @@ public class ArchiveDtoV1 {
         var archiveCoverImageType = Objects.requireNonNullElse(coverImageType, CoverImageType.EMOTION_COVER);
         return Archive.builder()
                       .name(name)
-                      .watchedOn(LocalDate.parse(watchedOn, YY_MM_DD_FORMATTER))
+                      .watchedOn(LocalDate.parse(watchedOn, DateTimeUtils.getYymmddFormatter()))
                       .emotion(emotion)
                       .mainImage(mainImage)
                       .companions(companions)

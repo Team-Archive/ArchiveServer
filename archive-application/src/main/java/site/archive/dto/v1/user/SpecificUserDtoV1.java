@@ -2,7 +2,7 @@ package site.archive.dto.v1.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import site.archive.common.DateTimeUtil;
+import site.archive.common.DateTimeUtils;
 import site.archive.domain.user.BaseUser;
 import site.archive.domain.user.UserRole;
 
@@ -19,7 +19,7 @@ public class SpecificUserDtoV1 {
     private final String userType;
 
     public static SpecificUserDtoV1 from(BaseUser baseUser) {
-        var createdAt = DateTimeUtil.DATE_TIME_FORMATTER.format(baseUser.getCreatedAt());
+        var createdAt = DateTimeUtils.getDateTimeFormatter().format(baseUser.getCreatedAt());
         return new SpecificUserDtoV1(baseUser.getId(),
                                      baseUser.getMailAddress(),
                                      baseUser.getRole(),

@@ -6,7 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
-import site.archive.common.DateTimeUtil;
+import site.archive.common.DateTimeUtils;
 import site.archive.common.cache.CacheType;
 import site.archive.domain.archive.Archive;
 import site.archive.domain.archive.Emotion;
@@ -77,7 +77,7 @@ public class ArchiveCustomRepositoryImpl implements ArchiveCustomRepository {
 
     @Override
     public long countArchiveOfCurrentMonthByAuthorId(Long authorId) {
-        var firstDateOfCurrentMonth = DateTimeUtil.firstDateTimeOfMonth();
+        var firstDateOfCurrentMonth = DateTimeUtils.firstDateTimeOfMonth();
         var firstDateOfNextMonth = firstDateOfCurrentMonth.plusMonths(1);
         var currentMonthWhere = QArchive.archive.createdAt.goe(firstDateOfCurrentMonth)
                                                           .and(QArchive.archive.createdAt.lt(firstDateOfNextMonth));
