@@ -1,10 +1,12 @@
-package site.archive.common.exception;
+package site.archive.common.exception
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.http.HttpStatus;
+import com.fasterxml.jackson.annotation.JsonFormat
+import org.springframework.http.HttpStatus
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum ExceptionCode {
+enum class ExceptionCode(val status: HttpStatus,
+                         val code: String,
+                         val message: String) {
 
     // Global
     NO_VALUE(HttpStatus.BAD_REQUEST, "Global001", "필요한 값이 없거나 전달된 값에 문제가 있습니다."),
@@ -16,6 +18,7 @@ public enum ExceptionCode {
 
     // Infra
     FAILED_FILE_UPLOAD(HttpStatus.INTERNAL_SERVER_ERROR, "Infra001", "(File IO) Failed to stream of upload file"),
+    SLACK_MESSAGE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "Infra002", "Sending slack message failed"),
 
     // Common
     DUPLICATED_RESOURCE(HttpStatus.CONFLICT, "Common001", "이미 존재하는 리소스 입니다"),
@@ -33,27 +36,5 @@ public enum ExceptionCode {
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "Security002", "토큰 정보가 올바르지 않았습니다"),
     AUTHENTICATION_FAILURE(HttpStatus.UNAUTHORIZED, "Security003", "인증에 실패하였습니다"),
     ;
-
-    private final HttpStatus status;
-    private final String code;
-    private final String message;
-
-    ExceptionCode(final HttpStatus status, final String code, final String message) {
-        this.status = status;
-        this.message = message;
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
 
 }

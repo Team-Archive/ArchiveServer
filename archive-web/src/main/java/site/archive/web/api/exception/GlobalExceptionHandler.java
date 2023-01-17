@@ -95,7 +95,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BaseException.class)
     protected ResponseEntity<ExceptionResponse> handleBaseException(final BaseException e) {
         log.error("BaseException ", e);
-        final var errorCode = e.getErrorCode();
+        final var errorCode = e.getExceptionCode();
         final var response = e.getAdditionalMessage()
                               .map(additionalMessage -> ExceptionResponse.of(errorCode, additionalMessage))
                               .orElse(ExceptionResponse.of(errorCode));
