@@ -2,9 +2,12 @@ plugins {
     id 'org.springframework.boot' version '3.0.0'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
-}
 
-version = '2.0.1'
+    // for kotlin
+    id 'org.jetbrains.kotlin.jvm' version '1.7.22'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.7.22'
+    id "org.jetbrains.kotlin.plugin.jpa" version '1.7.22'
+}
 
 repositories {
     mavenCentral()
@@ -15,14 +18,19 @@ ext {
     testContainerVersion = "1.17.2"
 }
 
-subprojects { // 추후 root project 제거시 subproject 로 수정
+subprojects {
     apply {
-        plugin 'java'
-        plugin 'io.spring.dependency-management'
         plugin 'org.springframework.boot'
+        plugin 'io.spring.dependency-management'
+        plugin 'java'
+        plugin 'org.jetbrains.kotlin.jvm'
+        plugin 'org.jetbrains.kotlin.plugin.spring'
+        plugin 'org.jetbrains.kotlin.plugin.jpa'
     }
 
     group = 'site.archive'
+    version = '2.0.1'
+    sourceCompatibility = '17'
 
     java {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -46,6 +54,11 @@ subprojects { // 추후 root project 제거시 subproject 로 수정
         testImplementation "org.testcontainers:testcontainers:${testContainerVersion}"
         testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
         testImplementation "org.testcontainers:mysql:${testContainerVersion}"
+
+        // for kotlin
+        implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+        implementation 'org.jetbrains.kotlin:kotlin-reflect'
+        implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     }
 
     configurations {
@@ -57,6 +70,22 @@ subprojects { // 추후 root project 제거시 subproject 로 수정
     tasks.named('test') {
         useJUnitPlatform()
     }
+
+    // for kotlin
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_17
+            freeCompilerArgs = ["-Xjsr305=strict"]
+        }
+    }
+
+    // for kotlin
+    allOpen {
+        annotation("javax.persistence.Entity")
+        annotation("javax.persistence.MappedSuperclass")
+        annotation("javax.persistence.Embeddable")
+    }
+
 }
 
 configure(allprojects.findAll { it.name != 'archive-common' }) {

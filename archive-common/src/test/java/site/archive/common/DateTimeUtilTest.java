@@ -16,25 +16,25 @@ class DateTimeUtilTest {
 
     @Test
     void YY_MM_DD_formatterTest() {
-        var convertedDate = dummyDate.format(DateTimeUtil.YY_MM_DD_FORMATTER);
+        var convertedDate = dummyDate.format(DateTimeUtils.getYymmddFormatter());
         assertThat(convertedDate).isEqualTo("95/09/25");
     }
 
     @Test
     void DATE_TIME_formatterTest() {
-        var convertedDateTime = dummyDateTime.format(DateTimeUtil.DATE_TIME_FORMATTER);
+        var convertedDateTime = dummyDateTime.format(DateTimeUtils.getDateTimeFormatter());
         assertThat(convertedDateTime).isEqualTo("1995-09-25 11:11:11");
     }
 
     @Test
     void dateOfMonthTest() {
-        DateTimeUtil.changeClock(LocalDate.of(2022, 7, 2));
-        var julFirstDate = DateTimeUtil.firstDateTimeOfMonth();
+        DateTimeUtils.changeClock(LocalDate.of(2022, 7, 2));
+        var julFirstDate = DateTimeUtils.firstDateTimeOfMonth();
         assertThat(julFirstDate).isEqualTo(LocalDateTime.of(2022, 7, 1, 0, 0));
 
         var augFirstDate = julFirstDate.plusMonths(1);
-        DateTimeUtil.changeClock(LocalDate.of(2022, 8, 22));
-        assertThat(augFirstDate).isEqualTo(DateTimeUtil.firstDateTimeOfMonth());
+        DateTimeUtils.changeClock(LocalDate.of(2022, 8, 22));
+        assertThat(augFirstDate).isEqualTo(DateTimeUtils.firstDateTimeOfMonth());
     }
 
 }

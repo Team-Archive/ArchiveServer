@@ -3,7 +3,7 @@ package site.archive.domain.archive.custom;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.Getter;
-import site.archive.common.DateTimeUtil;
+import site.archive.common.DateTimeUtils;
 import site.archive.domain.archive.Archive;
 import site.archive.domain.archive.QArchive;
 
@@ -17,13 +17,13 @@ public enum ArchiveCommunityTimeSortType {
     CREATED_AT("createdAt") {
         @Override
         public BooleanExpression getLtWhere(QArchive archive, final long milli) {
-            var lastCreatedAtOfPage = DateTimeUtil.fromMilli(milli).toLocalDateTime();
+            var lastCreatedAtOfPage = DateTimeUtils.fromMilli(milli).toLocalDateTime();
             return archive.createdAt.lt(lastCreatedAtOfPage);
         }
 
         @Override
         public BooleanExpression getEqWhere(QArchive archive, long milli) {
-            var lastCreatedAtOfPage = DateTimeUtil.fromMilli(milli).toLocalDateTime();
+            var lastCreatedAtOfPage = DateTimeUtils.fromMilli(milli).toLocalDateTime();
             return archive.createdAt.eq(lastCreatedAtOfPage);
         }
 
@@ -34,19 +34,19 @@ public enum ArchiveCommunityTimeSortType {
 
         @Override
         public long convertToMillis(Archive archive) {
-            return archive.getCreatedAt().atZone(DateTimeUtil.ASIA_SEOUL_ZONE).toInstant().toEpochMilli();
+            return archive.getCreatedAt().atZone(DateTimeUtils.getAsiaSeoulZone()).toInstant().toEpochMilli();
         }
     },
     WATCHED_ON("watchedOn") {
         @Override
         public BooleanExpression getLtWhere(QArchive archive, final long milli) {
-            var lastWatchedOnOfPage = DateTimeUtil.fromMilli(milli).toLocalDate();
+            var lastWatchedOnOfPage = DateTimeUtils.fromMilli(milli).toLocalDate();
             return archive.watchedOn.lt(lastWatchedOnOfPage);
         }
 
         @Override
         public BooleanExpression getEqWhere(QArchive archive, long milli) {
-            var lastWatchedOnOfPage = DateTimeUtil.fromMilli(milli).toLocalDate();
+            var lastWatchedOnOfPage = DateTimeUtils.fromMilli(milli).toLocalDate();
             return archive.watchedOn.eq(lastWatchedOnOfPage);
         }
 
@@ -57,7 +57,7 @@ public enum ArchiveCommunityTimeSortType {
 
         @Override
         public long convertToMillis(Archive archive) {
-            return archive.getWatchedOn().atStartOfDay(DateTimeUtil.ASIA_SEOUL_ZONE).toInstant().toEpochMilli();
+            return archive.getWatchedOn().atStartOfDay(DateTimeUtils.getAsiaSeoulZone()).toInstant().toEpochMilli();
         }
     };
 

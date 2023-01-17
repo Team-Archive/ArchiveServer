@@ -4,11 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import site.archive.common.DateTimeUtils;
 import site.archive.domain.archive.Archive;
 import site.archive.domain.archive.CoverImageType;
 import site.archive.domain.archive.Emotion;
-
-import static site.archive.common.DateTimeUtil.YY_MM_DD_FORMATTER;
 
 @RequiredArgsConstructor
 @Builder
@@ -37,7 +36,7 @@ public class ArchiveLikeResponseDto {
         return ArchiveLikeResponseDto.builder()
                                      .archiveId(archive.getId())
                                      .name(archive.getName())
-                                     .watchedOn(archive.getWatchedOn().format(YY_MM_DD_FORMATTER))
+                                     .watchedOn(archive.getWatchedOn().format(DateTimeUtils.getYymmddFormatter()))
                                      .emotion(archive.getEmotion())
                                      .mainImage(archive.getMainImage())
                                      .coverImageType(archive.getCoverImageType())

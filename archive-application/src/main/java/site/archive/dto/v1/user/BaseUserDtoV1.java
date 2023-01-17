@@ -2,7 +2,7 @@ package site.archive.dto.v1.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import site.archive.common.DateTimeUtil;
+import site.archive.common.DateTimeUtils;
 import site.archive.domain.user.BaseUser;
 import site.archive.domain.user.UserRole;
 
@@ -29,7 +29,7 @@ public class BaseUserDtoV1 {
     }
 
     public String getCreatedAt() {
-        return DateTimeUtil.DATE_TIME_FORMATTER.format(this.createdAt);
+        return DateTimeUtils.getDateTimeFormatter().format(this.createdAt);
     }
 
 }
