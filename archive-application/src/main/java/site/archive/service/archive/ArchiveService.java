@@ -19,6 +19,7 @@ import site.archive.dto.v2.MyArchiveResponseDto;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -43,7 +44,7 @@ public class ArchiveService {
     public ArchiveListResponseDtoV1 getAllArchive(UserInfo userInfo) {
         var authorId = userInfo.getUserId();
         var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
-                                           .map(ArchiveDtoV1::simpleFrom)
+                                           .map(ArchiveDtoV1::simpleForm)
                                            .toList();
         return ArchiveListResponseDtoV1.from(archiveDtos);
     }
@@ -60,7 +61,7 @@ public class ArchiveService {
     public ArchiveListResponseDtoV1 getAllArchive(UserInfo userInfo, Long authorId) {
         var archiveDtos = archiveRepository.findAllByAuthorId(authorId).stream()
                                            .filter(hasViewAuthority(userInfo.getUserId()))
-                                           .map(ArchiveDtoV1::simpleFrom)
+                                           .map(ArchiveDtoV1::simpleForm)
                                            .toList();
         return ArchiveListResponseDtoV1.from(archiveDtos);
     }
@@ -106,7 +107,7 @@ public class ArchiveService {
     public ArchiveDtoV1 getOneArchiveById(Long archiveId) {
         var archive = archiveRepository.findById(archiveId)
                                        .orElseThrow(() -> new ResourceNotFoundException("조회하려는 아카이브가 존재하지 않습니다"));
-        return ArchiveDtoV1.specificFrom(archive);
+        return ArchiveDtoV1.specificForm(archive);
     }
 
     /**
@@ -136,9 +137,9 @@ public class ArchiveService {
         var user = userRepository.findById(authorId)
                                  .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
         var archive = archiveRepository.save(archiveDtoV1.toEntity(user));
-        archiveDtoV1.getImages().stream()
-                    .map(archiveImageDto -> archiveImageDto.toEntity(archive))
-                    .forEach(archive::addImage);
+        Objects.requireNonNull(archiveDtoV1.getImages()).stream()
+               .map(archiveImageDto -> archiveImageDto.toEntity(archive))
+               .forEach(archive::addImage);
     }
 
     public long countArchive(UserInfo userInfo) {
