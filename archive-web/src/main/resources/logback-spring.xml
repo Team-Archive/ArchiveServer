@@ -88,10 +88,21 @@
             <appender-ref ref="WARN_ERROR_LOG_FILE"/>
         </logger>
 
+        <!-- Spring boot 3.0에서 지원하지 않는 이슈가 있음 -->
         <logger name="net.ttddyy.dsproxy.listener" level="debug" additivity="false">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="LOG_FILE"/>
             <appender-ref ref="WARN_ERROR_LOG_FILE"/>
+        </logger>
+
+        <!-- 위 모듈이 현재 지원이 되지 않기에 쿼리 로깅을 위한 임시 로거를 추가 -->
+        <logger name="org.hibernate.SQL" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOG_FILE"/>
+        </logger>
+        <logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="LOG_FILE"/>
         </logger>
 
         <logger name="com.zaxxer.hikari.pool.HikariPool" level="info" additivity="false">
