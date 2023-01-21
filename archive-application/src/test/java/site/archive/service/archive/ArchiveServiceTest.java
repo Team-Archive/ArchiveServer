@@ -113,7 +113,7 @@ class ArchiveServiceTest {
         assertThat(allArchives.getArchiveCount()).isEqualTo(archivePublicCount);
         allArchives.getArchives()
                    .forEach(archiveDto -> {
-                       assertThat(archiveDto.getIsPublic()).isTrue();
+                       assertThat(archiveDto.isPublic()).isTrue();
                        assertThat(archiveDto.getAuthorId()).isEqualTo(USER_ID);
                    });
     }

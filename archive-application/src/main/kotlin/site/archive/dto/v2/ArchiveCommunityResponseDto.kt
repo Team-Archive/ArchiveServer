@@ -5,7 +5,7 @@ import site.archive.domain.archive.Archive
 import site.archive.domain.archive.CoverImageType
 import site.archive.domain.archive.Emotion
 
-class ArchiveCommunityResponseDto(
+data class ArchiveCommunityResponseDto(
     val archiveId: Long,
     val name: String,
     val watchedOn: String,

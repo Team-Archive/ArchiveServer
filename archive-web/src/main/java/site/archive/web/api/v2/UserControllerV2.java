@@ -38,7 +38,7 @@ public class UserControllerV2 implements UserControllerV2Docs {
     @PutMapping("/nickname")
     public ResponseEntity<Void> updateProfileNickname(@RequestUser UserInfo user,
                                                       @RequestBody UserNicknameUpdateRequest request) {
-        userService.updateUserNickname(user.getUserId(), request.nickname());
+        userService.updateUserNickname(user.getUserId(), request.getNickname());
         return ResponseEntity.noContent().build();
     }
 

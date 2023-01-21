@@ -1,6 +1,6 @@
 package site.archive.dto.v2
 
-class MyArchiveListResponseDto(
+data class MyArchiveListResponseDto(
     val archiveCount: Long,
     val archives: List<MyArchiveResponseDto>
 ) {

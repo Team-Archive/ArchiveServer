@@ -1,3 +1,3 @@
 package site.archive.dto.v2
 
-class LikesRequestDto(val archiveIds: List<Long>)
+data class LikesRequestDto(val archiveIds: List<Long>)
