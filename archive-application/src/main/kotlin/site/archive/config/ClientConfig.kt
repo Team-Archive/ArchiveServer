@@ -15,11 +15,6 @@ import java.util.function.Supplier
 class ClientConfig {
 
     @Bean
-    fun restTemplateBuilder(): RestTemplateBuilder {
-        return RestTemplateBuilder()
-    }
-
-    @Bean
     fun restTemplate(restTemplateBuilder: RestTemplateBuilder): RestTemplate {
         return restTemplateBuilder
             .requestFactory(Supplier { BufferingClientHttpRequestFactory(SimpleClientHttpRequestFactory()) })
