@@ -4,7 +4,7 @@ import site.archive.domain.archive.Archive
 import site.archive.domain.archive.ArchiveImage
 
 data class ArchiveImageDtoV1(
-    val archiveImageId: Long,
+    val archiveImageId: Long?,
     val image: String,
     val review: String,
     val backgroundColor: String

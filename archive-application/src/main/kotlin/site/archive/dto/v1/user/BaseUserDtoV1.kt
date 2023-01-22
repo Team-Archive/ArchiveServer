@@ -6,7 +6,7 @@ import site.archive.domain.user.UserRole
 import java.time.LocalDateTime
 
 data class BaseUserDtoV1(
-    val userId: Long,
+    val userId: Long?,
     val mailAddress: String,
     val userRole: UserRole,
     val profileImage: String,

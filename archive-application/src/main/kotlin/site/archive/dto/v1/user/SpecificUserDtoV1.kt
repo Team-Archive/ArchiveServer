@@ -5,7 +5,7 @@ import site.archive.domain.user.BaseUser
 import site.archive.domain.user.UserRole
 
 data class SpecificUserDtoV1(
-    val userId: Long,
+    val userId: Long?,
     val mailAddress: String,
     val userRole: UserRole,
     val createdAt: String,

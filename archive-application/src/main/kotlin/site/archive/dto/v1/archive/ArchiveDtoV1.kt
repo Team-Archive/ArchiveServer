@@ -10,7 +10,7 @@ import java.time.LocalDate
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ArchiveDtoV1(
-    val archiveId: Long,
+    val archiveId: Long?,
     val name: String,
     val watchedOn: String,
     val emotion: Emotion,

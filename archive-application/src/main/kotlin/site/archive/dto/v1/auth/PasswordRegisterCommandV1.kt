@@ -9,6 +9,7 @@ import site.archive.domain.user.UserRole
 
 class PasswordRegisterCommandV1(
     email: String,
+
     @field: NotBlank(message = "비밀번호는 필수 입력 항목입니다.")
     @field: Pattern(
         regexp = "(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9@$!%*#?&]{8,20}$",
