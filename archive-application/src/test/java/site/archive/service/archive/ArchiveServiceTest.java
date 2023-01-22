@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import site.archive.common.exception.common.UnauthorizedResourceException;
 import site.archive.domain.archive.Archive;
 import site.archive.domain.archive.ArchiveRepository;
+import site.archive.domain.archive.CoverImageType;
 import site.archive.domain.archive.Emotion;
 import site.archive.domain.user.BaseUser;
 import site.archive.domain.user.UserInfo;
@@ -158,6 +159,7 @@ class ArchiveServiceTest {
     private List<Archive> dummyArchives(BaseUser user) {
         return List.of(
             Archive.builder()
+                   .id(1L)
                    .name("archive_1")
                    .author(user)
                    .watchedOn(LocalDate.now())
@@ -167,6 +169,7 @@ class ArchiveServiceTest {
                    .isPublic(true)
                    .build(),
             Archive.builder()
+                   .id(2L)
                    .name("archive_2")
                    .author(user)
                    .watchedOn(LocalDate.now())
@@ -188,6 +191,7 @@ class ArchiveServiceTest {
                       .mainImage("main_image_1")
                       .companions(Collections.emptyList())
                       .isPublic(isPublic)
+                      .coverImageType(CoverImageType.EMOTION_COVER)
                       .build();
     }
 
