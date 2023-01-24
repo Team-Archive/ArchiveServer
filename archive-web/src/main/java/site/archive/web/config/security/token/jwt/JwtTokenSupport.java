@@ -17,7 +17,7 @@ public class JwtTokenSupport implements HttpAuthTokenSupport {
     public String extractToken(HttpServletRequest target) {
         try {
             String tokenTypeAndStr = target.getHeader(HttpHeaders.AUTHORIZATION);
-            log.debug("Parsing token in header: {}", tokenTypeAndStr);
+            log.debug("Parsing token in header: {} - Request path: {}", tokenTypeAndStr, target.getRequestURI());
             return tokenTypeAndStr.split(" ")[1];
         } catch (Exception e) {
             throw new TokenNotFoundException();
