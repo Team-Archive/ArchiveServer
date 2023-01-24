@@ -40,7 +40,7 @@ public class BannerControllerV2 implements BannerControllerV2Docs {
         return ResponseEntity.ok(bannerService.getAllBanner());
     }
 
-    @CacheEvict(CacheInfo.BANNERS)
+    @CacheEvict(value = CacheInfo.BANNERS, allEntries = true)
     @RequirePermission(handler = AdminChecker.class)
     @PostMapping(path = "/type/image",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
@@ -53,7 +53,7 @@ public class BannerControllerV2 implements BannerControllerV2Docs {
         return ResponseEntity.noContent().build();
     }
 
-    @CacheEvict(CacheInfo.BANNERS)
+    @CacheEvict(value = CacheInfo.BANNERS, allEntries = true)
     @RequirePermission(handler = AdminChecker.class)
     @PostMapping(path = "/type/url",
                  consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
@@ -65,7 +65,7 @@ public class BannerControllerV2 implements BannerControllerV2Docs {
         return ResponseEntity.noContent().build();
     }
 
-    @CacheEvict(CacheInfo.BANNERS)
+    @CacheEvict(value = CacheInfo.BANNERS, allEntries = true)
     @RequirePermission(handler = AdminChecker.class)
     @DeleteMapping("/{bannerId}")
     public ResponseEntity<Void> deleteArchiveCommunityBanner(@PathVariable Long bannerId) {
