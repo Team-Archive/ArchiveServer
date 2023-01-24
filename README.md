@@ -6,17 +6,19 @@
 
 ## Tech stack
 
-- Jdk 17, Gradle
-- Spring framework
-    - Spring boot
+- Jdk 17, Kotlin, Gradle
+- Spring framework (v6.0.2)
+    - Spring boot (v3.0.0)
     - Spring security
     - Spring data jpa
     - Spring mail
     - ...
-- MySQL, JPA, QueryDSL
+- MySQL, JPA, QueryDSL, Caffeine cache
 - Junit5, Spring test, Mockito, Testcontainer
 - swagger, JWT
 
 ## Infra architecture
 
 ![architecture image](./assets/architecture.png)
+
+- Migrated to Oracle cloud
