@@ -3,7 +3,7 @@ name: Deploy for push
 on:
   push:
     branches:
-      - 'releases/**'
+      - 'temp/**' # currently use oracle server
 
 jobs:
   build-deploy:
