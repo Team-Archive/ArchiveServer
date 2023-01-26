@@ -15,13 +15,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     implementation 'io.sentry:sentry-logback:5.7.4'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
     testImplementation 'org.springframework.security:spring-security-test'
-    implementation 'io.rest-assured:rest-assured-all:4.5.1'
-    testImplementation 'io.rest-assured:rest-assured:4.5.1'
+    implementation 'io.rest-assured:rest-assured-all:5.2.1'
+    testImplementation 'io.rest-assured:rest-assured:5.2.1'
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")

@@ -9,7 +9,7 @@ import site.archive.domain.archive.Emotion;
 import site.archive.domain.archive.custom.ArchiveCommunityTimeSortType;
 import site.archive.domain.archive.custom.ArchivePageable;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class ArchivePageableArgumentResolver implements HandlerMethodArgumentResolver {
 

@@ -1,6 +1,5 @@
 package site.archive.web.api.v2;
 
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,34 +13,32 @@ import site.archive.dto.v1.archive.EmailDuplicateResponseDtoV1;
 import site.archive.dto.v2.NicknameDuplicateResponseDto;
 import site.archive.dto.v2.UserNicknameUpdateRequest;
 import site.archive.service.user.UserService;
+import site.archive.web.api.docs.swagger.UserControllerV2Docs;
 import site.archive.web.api.resolver.annotation.RequestUser;
 
 @RestController
 @RequestMapping("/api/v2/user")
 @RequiredArgsConstructor
-public class UserControllerV2 {
+public class UserControllerV2 implements UserControllerV2Docs {
 
     private final UserService userService;
 
-    @Operation(summary = "[NoAuth] 이메일 중복 검사")
     @GetMapping("/duplicate/email")
     public ResponseEntity<EmailDuplicateResponseDtoV1> checkDuplicatedEmail(@RequestParam(value = "value") String email) {
         var emailDuplicateResponseDto = new EmailDuplicateResponseDtoV1(userService.existsEmail(email));
         return ResponseEntity.ok(emailDuplicateResponseDto);
     }
 
-    @Operation(summary = "[NoAuth] 닉네임 중복 검사")
     @GetMapping("/duplicate/nickname")
     public ResponseEntity<NicknameDuplicateResponseDto> checkDuplicatedNickname(@RequestParam(value = "value") String nickname) {
         var nicknameDuplicateResponseDto = new NicknameDuplicateResponseDto(userService.existsNickname(nickname));
         return ResponseEntity.ok(nicknameDuplicateResponseDto);
     }
 
-    @Operation(summary = "프로필 닉네임 수정 (업데이트)")
     @PutMapping("/nickname")
     public ResponseEntity<Void> updateProfileNickname(@RequestUser UserInfo user,
                                                       @RequestBody UserNicknameUpdateRequest request) {
-        userService.updateUserNickname(user.getUserId(), request.nickname());
+        userService.updateUserNickname(user.getUserId(), request.getNickname());
         return ResponseEntity.noContent().build();
     }
 

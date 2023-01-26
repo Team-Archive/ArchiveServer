@@ -60,7 +60,7 @@ public class SlackService implements MessagingService {
                                                            baseUser.getCreatedAt()))))
                                                    )));
         } catch (IOException | SlackApiException e) {
-            throw new SlackException(e.getMessage());
+            throw new SlackException();
         }
     }
 

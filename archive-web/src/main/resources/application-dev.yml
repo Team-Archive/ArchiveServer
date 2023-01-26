@@ -30,7 +30,7 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: none
       naming:
@@ -57,7 +57,7 @@ spring:
       await_termination_seconds: 120
 
 jwt:
-  secret-key: testKey
+  secret-key: ${JWT_SECRET_KEY}
 
 # s3 configuration
 cloud:

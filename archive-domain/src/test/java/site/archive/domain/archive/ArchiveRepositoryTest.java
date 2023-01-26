@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import site.archive.common.DateTimeUtil;
+import site.archive.common.DateTimeUtils;
 import site.archive.domain.JpaTestSupport;
 
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ class ArchiveRepositoryTest extends JpaTestSupport {
         var eightAuthorId = 8L;
 
         // and - set current month to 2022.08
-        DateTimeUtil.changeClock(LocalDate.of(2022, 8, 11));
+        DateTimeUtils.changeClock(LocalDate.of(2022, 8, 11));
 
         // when
         var oneAuthorArchiveCount = archiveRepository.countArchiveOfCurrentMonthByAuthorId(oneAuthorId);

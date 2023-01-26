@@ -32,7 +32,7 @@ public class CacheConfig {
 
     private List<CaffeineCache> caches() {
         return Arrays.stream(CacheType.values())
-                     .map(cache -> new CaffeineCache(cache.getName(),
+                     .map(cache -> new CaffeineCache(cache.getKey(),
                                                      Caffeine.newBuilder()
                                                              .expireAfterWrite(cache.getExpireAfterWrite(), TimeUnit.SECONDS)
                                                              .maximumSize(cache.getMaximumSize())

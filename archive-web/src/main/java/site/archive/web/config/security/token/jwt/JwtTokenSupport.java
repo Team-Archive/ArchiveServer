@@ -5,8 +5,8 @@ import org.springframework.http.HttpHeaders;
 import site.archive.common.exception.security.TokenNotFoundException;
 import site.archive.web.config.security.token.HttpAuthTokenSupport;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Slf4j
 public class JwtTokenSupport implements HttpAuthTokenSupport {
@@ -17,7 +17,7 @@ public class JwtTokenSupport implements HttpAuthTokenSupport {
     public String extractToken(HttpServletRequest target) {
         try {
             String tokenTypeAndStr = target.getHeader(HttpHeaders.AUTHORIZATION);
-            log.debug("Parsing token in header: {}", tokenTypeAndStr);
+            log.debug("Parsing token in header: {} - Request path: {}", tokenTypeAndStr, target.getRequestURI());
             return tokenTypeAndStr.split(" ")[1];
         } catch (Exception e) {
             throw new TokenNotFoundException();
