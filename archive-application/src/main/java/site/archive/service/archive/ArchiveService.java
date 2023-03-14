@@ -133,6 +133,11 @@ public class ArchiveService {
     }
 
     @Transactional
+    public void deleteBulk(List<Long> id) {
+        archiveRepository.deleteAllById(id);
+    }
+
+    @Transactional
     public void save(ArchiveDtoV1 archiveDtoV1, Long authorId) {
         var user = userRepository.findById(authorId)
                                  .orElseThrow(() -> new ResourceNotFoundException("아이디에 해당하는 유저가 존재하지 않습니다."));
