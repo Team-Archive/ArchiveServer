@@ -2,7 +2,7 @@ name: health check dev server
 
 on:
   schedule:
-    - cron: '30 * * * *'
+    - cron: '*/15 * * * *'
 
 jobs:
   health-check:
