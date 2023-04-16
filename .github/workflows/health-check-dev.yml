@@ -1,0 +1,15 @@
+name: health check dev server
+
+on:
+  schedule:
+    - cron: '30 * * * *'
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: KimDoubleB/go-action@v1.6
+        with:
+          health_check_url: ${{ secrets.DEV_HEALTH_URL }}
+          slack_token: ${{ secrets.SLACK_TOKEN }}
+          slack_channel: ${{ secrets.SLACK_CHANNEL }}
