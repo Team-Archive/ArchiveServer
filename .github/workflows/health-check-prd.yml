@@ -12,4 +12,4 @@ jobs:
         with:
           health_check_url: ${{ secrets.PRD_HEALTH_URL }}
           slack_token: ${{ secrets.SLACK_TOKEN }}
-          slack_channel: ${{ secrets.SLACK_CHANNEL }}
+          slack_channel: ${{ secrets.SERVER_HEALTH_CHECKER_SLACK_CHANNEL }}
