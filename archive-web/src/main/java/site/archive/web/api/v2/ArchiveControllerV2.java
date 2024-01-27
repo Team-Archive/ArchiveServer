@@ -28,11 +28,11 @@ public class ArchiveControllerV2 implements ArchiveControllerV2Docs {
     @GetMapping
     public ResponseEntity<MyArchiveListResponseDto> archiveListView(@RequestUser UserInfo userInfo,
                                                                     ArchivePageable pageable) {
-        var archiveCount = archiveService.countArchive(userInfo);
+        // var archiveCount = archiveService.countArchive(userInfo);
         var myArchives = pageable.isRequestFirstPage()
                          ? archiveService.getAllArchiveFirstPage(userInfo, pageable)
                          : archiveService.getAllArchiveNextPage(userInfo, pageable);
-        return ResponseEntity.ok(MyArchiveListResponseDto.from(archiveCount, myArchives));
+        return ResponseEntity.ok(MyArchiveListResponseDto.from(myArchives.size(), myArchives));
     }
 
     @GetMapping("/other")
